@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import styles from './ApplyNow.module.css';
 
 const ApplyNow = () => {
@@ -14,29 +13,41 @@ const ApplyNow = () => {
         name: '',
         email: '',
         portfolio: '',
-        resumeUrl: ''
+        resumeData: '' // Changed to data instead of URL
     });
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        setStatus('Uploading resume...');
-        const storageRef = ref(storage, `resumes/${Date.now()}_${file.name}`);
+        // Firestore limit check (1MB)
+        if (file.size > 1024 * 1024) {
+            setStatus('File too large. Please keep it under 1MB.');
+            return;
+        }
+
+        setStatus('Processing resume...');
+
         try {
-            await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(storageRef);
-            setFormData({ ...formData, resumeUrl: url });
-            setStatus('Resume uploaded successfully.');
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                setFormData({ ...formData, resumeData: reader.result });
+                setStatus('Resume processed successfully.');
+            };
+            reader.onerror = (error) => {
+                console.error(error);
+                setStatus('Processing failed.');
+            };
         } catch (error) {
             console.error(error);
-            setStatus('Upload failed.');
+            setStatus('Processing failed.');
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.resumeUrl) {
+        if (!formData.resumeData) {
             setStatus('Please upload your resume first.');
             return;
         }
@@ -107,7 +118,7 @@ const ApplyNow = () => {
                             <label>Your Resume (PDF / Word)</label>
                             <div className={styles.fileUpload}>
                                 <input type="file" onChange={handleFileUpload} accept=".pdf,.doc,.docx" required />
-                                <p>{formData.resumeUrl ? 'Ready to go' : 'Upload your resume'}</p>
+                                <p>{formData.resumeData ? 'Ready to go' : 'Upload your resume'}</p>
                             </div>
                         </div>
 

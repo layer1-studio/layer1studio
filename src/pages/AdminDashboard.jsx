@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useContent } from '../hooks/useContent';
-import { auth, storage } from '../firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import styles from './AdminDashboard.module.css';
@@ -10,10 +9,14 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('projects');
     const { data: projects, addItem: addProject, deleteItem: deleteProject, updateItem: updateProject } = useContent('projects');
     const { data: careers, addItem: addCareer, deleteItem: deleteCareer, updateItem: updateCareer } = useContent('careers');
-    const { data: applications, deleteItem: deleteApplication } = useContent('applications');
+    const { data: applications, deleteItem: deleteApplication, updateItem: updateApplication } = useContent('applications');
     const navigate = useNavigate();
 
     // UI States
+    const [showArchived, setShowArchived] = useState(false);
+    const [expandedJobId, setExpandedJobId] = useState(null);
+    const [appSearchQuery, setAppSearchQuery] = useState('');
+    const [appStatusFilter, setAppStatusFilter] = useState('Active');
     const [editingProject, setEditingProject] = useState(null);
     const [editingCareer, setEditingCareer] = useState(null);
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
@@ -31,22 +34,29 @@ const AdminDashboard = () => {
         const file = e.target.files[0];
         if (!file) return;
 
+        if (file.size > 1024 * 1024) {
+            setUploadStatus('Image too large. Max 1MB.');
+            return;
+        }
+
         setUploading(true);
-        setUploadStatus('Uploading image...');
-        const storageRef = ref(storage, `projects/${Date.now()}_${file.name}`);
+        setUploadStatus('Processing image...');
 
         try {
-            await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(storageRef);
-            if (isEdit) {
-                setEditingProject({ ...editingProject, image: url });
-            } else {
-                setNewProject({ ...newProject, image: url });
-            }
-            setUploadStatus('Image uploaded successfully!');
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                const url = reader.result;
+                if (isEdit) {
+                    setEditingProject({ ...editingProject, image: url });
+                } else {
+                    setNewProject({ ...newProject, image: url });
+                }
+                setUploadStatus('Image processed successfully!');
+            };
         } catch (error) {
-            console.error("Upload failed:", error);
-            setUploadStatus('Upload failed. Check Firebase config.');
+            console.error("Processing failed:", error);
+            setUploadStatus('Processing failed.');
         } finally {
             setUploading(false);
         }
@@ -77,6 +87,21 @@ const AdminDashboard = () => {
         updateCareer(editingCareer.id, editingCareer);
         setEditingCareer(null);
     };
+
+    const handleUpdateStatus = (id, status) => {
+        updateApplication(id, { status });
+    };
+
+    const filteredApplications = applications.filter(app => {
+        const matchesSearch = app.name.toLowerCase().includes(appSearchQuery.toLowerCase()) ||
+            app.jobTitle.toLowerCase().includes(appSearchQuery.toLowerCase());
+
+        const statusMatch = appStatusFilter === 'All' ||
+            (appStatusFilter === 'Active' && app.status !== 'Rejected') ||
+            (app.status || 'New') === appStatusFilter;
+
+        return matchesSearch && statusMatch;
+    });
 
     return (
         <div className={styles.dashboard}>
@@ -216,57 +241,121 @@ const AdminDashboard = () => {
                             <div className={styles.list}>
                                 <h3>Open Roles</h3>
                                 {careers.map(c => (
-                                    <div key={c.id} className={styles.item}>
-                                        <div className={styles.itemInfo}>
-                                            <h4>{c.title}</h4>
-                                            <p>{c.location} • {c.type}</p>
+                                    <div key={c.id} className={styles.jobItemContainer}>
+                                        <div className={styles.item} onClick={() => setExpandedJobId(expandedJobId === c.id ? null : c.id)}>
+                                            <div className={styles.itemInfo}>
+                                                <h4>{c.title}</h4>
+                                                <p>{c.location} • {c.type}</p>
+                                            </div>
+                                            <div className={styles.itemActions}>
+                                                <button onClick={(e) => { e.stopPropagation(); setExpandedJobId(expandedJobId === c.id ? null : c.id); }} className={styles.viewBtn}>
+                                                    <span className="material-symbols-outlined">
+                                                        {expandedJobId === c.id ? 'expand_less' : 'expand_more'}
+                                                    </span>
+                                                </button>
+                                                {confirmDeleteId === c.id ? (
+                                                    <div className={styles.confirmGroup}>
+                                                        <span className={styles.confirmLabel}>Really delete?</span>
+                                                        <button onClick={(e) => { e.stopPropagation(); deleteCareer(c.id); }} className={styles.deleteBtn}>Delete</button>
+                                                        <button onClick={(e) => { e.stopPropagation(); setConfirmDeleteId(null); }} className={styles.cancelBtn}>Cancel</button>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <button onClick={(e) => { e.stopPropagation(); setEditingCareer(c); }} className={styles.editBtn}>Edit</button>
+                                                        <button onClick={(e) => { e.stopPropagation(); setConfirmDeleteId(c.id); }} className={styles.deleteBtn}>Delete</button>
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
-                                        <div className={styles.itemActions}>
-                                            {confirmDeleteId === c.id ? (
-                                                <div className={styles.confirmGroup}>
-                                                    <span className={styles.confirmLabel}>Really delete?</span>
-                                                    <button onClick={() => deleteCareer(c.id)} className={styles.deleteBtn}>Delete</button>
-                                                    <button onClick={() => setConfirmDeleteId(null)} className={styles.cancelBtn}>Cancel</button>
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    <button onClick={() => setEditingCareer(c)} className={styles.editBtn}>Edit</button>
-                                                    <button onClick={() => setConfirmDeleteId(c.id)} className={styles.deleteBtn}>Delete</button>
-                                                </>
-                                            )}
-                                        </div>
+                                        {expandedJobId === c.id && (
+                                            <div className={styles.jobPreview}>
+                                                <h5>Role Description</h5>
+                                                <p className={styles.previewText}>{c.description}</p>
+                                                {c.salary && <p className={styles.previewMeta}><strong>Salary:</strong> {c.salary}</p>}
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
                         </div>
                     ) : (
                         <div className={styles.section}>
-                            <div className={styles.list}>
+                            <div className={styles.sectionHeader}>
                                 <h3>Candidate Applications</h3>
-                                {applications.length === 0 ? <p className={styles.emptyMsg}>No applications yet.</p> : (
-                                    applications.map(app => (
-                                        <div key={app.id} className={styles.appCard}>
+                                <div className={styles.advancedFilters}>
+                                    <div className={styles.searchWrapper}>
+                                        <span className="material-symbols-outlined">search</span>
+                                        <input
+                                            type="text"
+                                            placeholder="Search name or role..."
+                                            value={appSearchQuery}
+                                            onChange={(e) => setAppSearchQuery(e.target.value)}
+                                            className={styles.searchInput}
+                                        />
+                                    </div>
+                                    <div className={styles.statusFilterGroup}>
+                                        <select
+                                            value={appStatusFilter}
+                                            onChange={(e) => setAppStatusFilter(e.target.value)}
+                                            className={styles.statusFilterSelect}
+                                        >
+                                            <option value="Active">Active Only</option>
+                                            <option value="All">All Applicants</option>
+                                            <option value="New">New</option>
+                                            <option value="Viewed">Viewed</option>
+                                            <option value="Interview">Interview</option>
+                                            <option value="Rejected">Archived</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.list}>
+                                {filteredApplications.length === 0 ? (
+                                    <p className={styles.emptyMsg}>
+                                        {showArchived ? 'No archived applications.' : 'No active applications yet.'}
+                                    </p>
+                                ) : (
+                                    filteredApplications.map(app => (
+                                        <div key={app.id} className={`${styles.appCard} ${styles[app.status?.toLowerCase() || 'new']}`}>
                                             <div className={styles.appHeader}>
-                                                <h4>{app.name}</h4>
-                                                <span className={styles.roleTag}>{app.jobTitle}</span>
+                                                <div className={styles.appMainInfo}>
+                                                    <h4>{app.name}</h4>
+                                                    <span className={styles.roleTag}>{app.jobTitle}</span>
+                                                </div>
+                                                <div className={styles.statusBadge}>
+                                                    <select
+                                                        value={app.status || 'New'}
+                                                        onChange={(e) => handleUpdateStatus(app.id, e.target.value)}
+                                                        className={styles.statusSelect}
+                                                    >
+                                                        <option value="New">New</option>
+                                                        <option value="Viewed">Viewed</option>
+                                                        <option value="Interview">Interview</option>
+                                                        <option value="Rejected">Rejected</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <p className={styles.appEmail}>{app.email}</p>
                                             <div className={styles.appLinks}>
-                                                <a href={app.resumeUrl} target="_blank" rel="noreferrer" className={styles.link}>
+                                                <a href={app.resumeData || app.resumeUrl} target="_blank" rel="noreferrer" download={app.resumeData ? `${app.name}_Resume` : undefined} className={styles.link}>
                                                     <span className="material-symbols-outlined">description</span> Resume
                                                 </a>
-                                                <a href={app.portfolio} target="_blank" rel="noreferrer" className={styles.link}>
-                                                    <span className="material-symbols-outlined">link</span> Portfolio
-                                                </a>
+                                                {app.portfolio && (
+                                                    <a href={app.portfolio} target="_blank" rel="noreferrer" className={styles.link}>
+                                                        <span className="material-symbols-outlined">link</span> Portfolio
+                                                    </a>
+                                                )}
                                             </div>
                                             <div className={styles.itemActions}>
                                                 {confirmDeleteId === app.id ? (
                                                     <div className={styles.confirmGroup}>
-                                                        <button onClick={() => deleteApplication(app.id)} className={styles.deleteBtn}>Archive Now</button>
-                                                        <button onClick={() => setConfirmDeleteId(null)} className={styles.cancelBtn}>No</button>
+                                                        <span className={styles.confirmLabel}>Permanent delete?</span>
+                                                        <button onClick={() => deleteApplication(app.id)} className={styles.deleteBtn}>Yes, Delete</button>
+                                                        <button onClick={() => setConfirmDeleteId(null)} className={styles.cancelBtn}>Cancel</button>
                                                     </div>
                                                 ) : (
-                                                    <button onClick={() => setConfirmDeleteId(app.id)} className={styles.deleteBtn}>Archive</button>
+                                                    <button onClick={() => setConfirmDeleteId(app.id)} className={styles.deleteBtn}>Delete permanently</button>
                                                 )}
                                             </div>
                                         </div>

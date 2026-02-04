@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -r https://github.com/layer1-studio/layer1studio.git -d dist"
   },
   "dependencies": {
     "firebase": "^12.8.0",
