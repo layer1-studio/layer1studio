@@ -1,0 +1,194 @@
+.portfolioPage {
+    padding-top: calc(var(--header-height) + 4rem);
+    padding-bottom: 8rem;
+}
+
+.header {
+    margin-bottom: 5rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(121, 197, 227, 0.1);
+    border: 1px solid rgba(121, 197, 227, 0.2);
+    border-radius: 100px;
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 2rem;
+}
+
+.italic {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: var(--slate-400);
+    max-width: 800px;
+    line-height: 1.4;
+}
+
+.filterGroup {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+}
+
+.filterBtn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    background: var(--navy-surface);
+    border: 1px solid var(--white-10);
+    color: var(--slate-300);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.filterBtn:hover {
+    border-color: var(--white-20);
+    background: var(--navy-accent);
+}
+
+.activeFilter {
+    background: #fff;
+    color: var(--navy-deep);
+    border-color: #fff;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.card {
+    background: var(--navy-surface);
+    border: 1px solid var(--white-5);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--white-10);
+    box-shadow: var(--shadow-premium-hover);
+}
+
+.imageWrapper {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 1s ease, opacity 0.5s ease;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 12, 16, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .image {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.card:hover .overlay {
+    opacity: 1;
+}
+
+.viewBtn {
+    background: #fff;
+    color: var(--navy-deep);
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .viewBtn {
+    transform: translateY(0);
+}
+
+.cardContent {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.cardText {
+    color: var(--slate-400);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.tagGroup {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    padding: 0.25rem 0.75rem;
+    background: rgba(121, 197, 227, 0.1);
+    border: 1px solid rgba(121, 197, 227, 0.2);
+    color: var(--primary);
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

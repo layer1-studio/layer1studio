@@ -1,0 +1,99 @@
+.philosophy {
+    padding: 8rem 0;
+    border-bottom: 1px solid var(--white-5);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: 2rem;
+}
+
+.description {
+    color: var(--slate-400);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+}
+
+.featureList {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.feature {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.iconWrapper {
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: rgba(121, 197, 227, 0.1);
+    border: 1px solid rgba(121, 197, 227, 0.2);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+}
+
+.featureTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.featureText {
+    color: var(--slate-500);
+    font-size: 1rem;
+}
+
+.visualWrapper {
+    position: relative;
+}
+
+.glassVisualization {
+    aspect-ratio: 1/1;
+    background: rgba(18, 24, 32, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--white-5);
+    border-radius: var(--radius-3xl);
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-premium);
+}
+
+.vizLogo {
+    width: 75%;
+    height: auto;
+    filter: drop-shadow(0 0 60px rgba(121, 197, 227, 0.3));
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.visualWrapper:hover .vizLogo {
+    transform: scale(1.05);
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .visualWrapper {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}

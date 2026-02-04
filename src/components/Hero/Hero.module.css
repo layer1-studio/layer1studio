@@ -1,0 +1,118 @@
+.hero {
+    position: relative;
+    padding-top: calc(var(--header-height) + 4rem);
+    padding-bottom: 6rem;
+    overflow: hidden;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    margin-bottom: 2rem;
+    background: rgba(121, 197, 227, 0.1);
+    border: 1px solid rgba(121, 197, 227, 0.2);
+    border-radius: 100px;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.title {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    font-weight: 800;
+}
+
+.subtitle {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    color: var(--slate-400);
+    max-width: 600px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.primaryButton {
+    background: var(--primary);
+    color: var(--navy-deep);
+    padding: 1.25rem 2.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryButton:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(121, 197, 227, 0.25);
+    filter: brightness(1.05);
+}
+
+.secondaryButton {
+    background: var(--navy-surface);
+    color: #fff;
+    padding: 1.25rem 2.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: 1px solid var(--white-10);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-premium);
+}
+
+.secondaryButton:hover {
+    background: var(--navy-accent);
+    border-color: var(--white-10);
+}
+
+.glow {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    transform: translateY(-50%);
+    width: 50vw;
+    height: 50vw;
+    background: var(--primary);
+    opacity: 0.1;
+    filter: blur(160px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-top: calc(var(--header-height) + 2rem);
+        padding-bottom: 4rem;
+        text-align: center;
+    }
+
+    .heroContent {
+        margin: 0 auto;
+    }
+
+    .subtitle {
+        margin-inline: auto;
+    }
+
+    .buttonGroup {
+        justify-content: center;
+    }
+}

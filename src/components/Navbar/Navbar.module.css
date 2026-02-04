@@ -1,0 +1,85 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid var(--white-5);
+    background: rgba(10, 12, 16, 0.8);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+}
+
+.navbarContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.navLinks {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.navItem {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--slate-400);
+}
+
+.navItem:hover {
+    color: #fff;
+}
+
+.activeNavItem {
+    color: #fff;
+}
+
+.ctaButton {
+    background: var(--primary);
+    color: var(--navy-deep);
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px rgba(121, 197, 227, 0.3);
+}
+
+.menuButton {
+    display: none;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .navLinks {
+        display: none;
+    }
+
+    .menuButton {
+        display: block;
+    }
+}

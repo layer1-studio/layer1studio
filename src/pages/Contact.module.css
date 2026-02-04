@@ -1,0 +1,219 @@
+.contactPage {
+    padding-top: calc(var(--header-height) + 4rem);
+    padding-bottom: 8rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(121, 197, 227, 0.1);
+    border: 1px solid rgba(121, 197, 227, 0.2);
+    border-radius: 100px;
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.title span {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+.description {
+    color: var(--slate-400);
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 4rem;
+}
+
+.studios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.studioName {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.studioName span {
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.address {
+    color: var(--slate-500);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.contactLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--white-5);
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.iconBox {
+    width: 3rem;
+    height: 3rem;
+    background: var(--navy-surface);
+    border: 1px solid var(--white-5);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.contactLabel {
+    color: var(--slate-500);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+}
+
+.contactValue {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.formCard {
+    background: rgba(18, 24, 32, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--white-5);
+    border-radius: var(--radius-3xl);
+    padding: 3rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.field label {
+    color: var(--slate-300);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.field input,
+.field select,
+.field textarea {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--white-10);
+    border-radius: 12px;
+    padding: 1rem;
+    color: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(121, 197, 227, 0.05);
+}
+
+.submitBtn {
+    background: var(--primary);
+    color: var(--navy-deep);
+    padding: 1.25rem;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 10px 30px rgba(121, 197, 227, 0.3);
+}
+
+.privacyNote {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--slate-500);
+    font-size: 0.75rem;
+    line-height: 1.4;
+}
+
+.privacyNote span {
+    color: var(--primary);
+    font-size: 18px;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .studios {
+        grid-template-columns: 1fr;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    .formCard {
+        padding: 2rem 1.5rem;
+    }
+}
