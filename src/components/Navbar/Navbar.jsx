@@ -14,6 +14,10 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const isAdminPath = location.pathname.startsWith('/vault/internal/gate/secure');
+
+    if (isAdminPath) return null;
+
     return (
         <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
             <div className={`${styles.navbarContent} container`}>

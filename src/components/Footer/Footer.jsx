@@ -1,8 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 const Footer = () => {
+    const location = useLocation();
+    const isAdminPath = location.pathname.startsWith('/vault/internal/gate/secure');
+
+    if (isAdminPath) return null;
+
     return (
         <footer className={styles.footer}>
             <div className="container">
