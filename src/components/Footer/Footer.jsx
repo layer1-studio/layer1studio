@@ -33,10 +33,10 @@ const Footer = () => {
                     <div>
                         <h5 className={styles.columnTitle}>Connect</h5>
                         <div className={styles.linkList}>
-                            <a href="#" className={styles.linkItem}>LinkedIn</a>
-                            <a href="#" className={styles.linkItem}>Twitter</a>
-                            <a href="#" className={styles.linkItem}>Instagram</a>
-                            <a href="#" className={styles.linkItem}>Dribbble</a>
+                            <a href="https://linkedin.com/company/layer1studio" target="_blank" rel="noopener noreferrer" className={styles.linkItem}>LinkedIn</a>
+                            <a href="https://twitter.com/layer1studio" target="_blank" rel="noopener noreferrer" className={styles.linkItem}>Twitter</a>
+                            <a href="https://instagram.com/layer1studio" target="_blank" rel="noopener noreferrer" className={styles.linkItem}>Instagram</a>
+                            <a href="https://dribbble.com/layer1studio" target="_blank" rel="noopener noreferrer" className={styles.linkItem}>Dribbble</a>
                         </div>
                     </div>
                 </div>
@@ -44,8 +44,8 @@ const Footer = () => {
                 <div className={styles.bottomBar}>
                     <p>© 2026 Layer1.Studio. All rights reserved.</p>
                     <div className={styles.legalLinks}>
-                        <a href="#" className={styles.legalLink}>Privacy Policy</a>
-                        <a href="#" className={styles.legalLink}>Terms of Service</a>
+                        <a href="/contact" className={styles.legalLink}>Privacy Policy</a>
+                        <a href="/contact" className={styles.legalLink}>Terms of Service</a>
                     </div>
                 </div>
             </div>

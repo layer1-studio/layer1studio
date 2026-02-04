@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Services.module.css';
 
 const Services = () => {
@@ -55,8 +56,8 @@ const Services = () => {
                             If you're tired of generic solutions, we should talk. We build the things that most people find too difficult.
                         </p>
                         <div className={styles.ctaButtons}>
-                            <button className={styles.primaryCta}>Say Hello</button>
-                            <button className={styles.secondaryCta}>See our work</button>
+                            <Link to="/contact" className={styles.primaryCta}>Say Hello</Link>
+                            <Link to="/portfolio" className={styles.secondaryCta}>See our work</Link>
                         </div>
                     </div>
                 </div>

@@ -53,10 +53,11 @@
     border-radius: var(--radius-xl);
     font-weight: 700;
     font-size: 1.1rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.75rem;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
 }
 
 .primaryButton:hover {
@@ -75,6 +76,8 @@
     border: 1px solid var(--white-10);
     transition: all 0.3s ease;
     box-shadow: var(--shadow-premium);
+    text-decoration: none;
+    display: inline-block;
 }
 
 .secondaryButton:hover {

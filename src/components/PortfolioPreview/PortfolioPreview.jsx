@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './PortfolioPreview.module.css';
 
 const PortfolioPreview = () => {
@@ -25,10 +26,10 @@ const PortfolioPreview = () => {
                         <h2 className={styles.title}>Hand-picked work</h2>
                         <p className={styles.subtitle}>A few things we're proud of. We don't just build apps; we build tools people actually use.</p>
                     </div>
-                    <a href="/portfolio" className={styles.exploreButton}>
+                    <Link to="/portfolio" className={styles.exploreButton}>
                         See how we did it
                         <span className="material-symbols-outlined">arrow_forward</span>
-                    </a>
+                    </Link>
                 </div>
 
                 <div className={styles.grid}>

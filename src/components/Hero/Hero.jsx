@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Hero.module.css';
 
 const Hero = () => {
@@ -14,13 +15,13 @@ const Hero = () => {
                         We're a collective of product thinkers and engineers who care more about how things work than how they're marketed. Minimalist apps, complex systems, one standard: excellence.
                     </p>
                     <div className={styles.buttonGroup}>
-                        <button className={styles.primaryButton}>
+                        <Link to="/contact" className={styles.primaryButton}>
                             Tell us a story
                             <span className="material-symbols-outlined">chat_bubble</span>
-                        </button>
-                        <button className={styles.secondaryButton}>
+                        </Link>
+                        <Link to="/portfolio" className={styles.secondaryButton}>
                             The things we've built
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

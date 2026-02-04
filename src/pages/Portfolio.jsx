@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useContent } from '../hooks/useContent';
 import styles from './Portfolio.module.css';
 
@@ -72,10 +73,10 @@ const Portfolio = () => {
                             <div className={styles.imageWrapper}>
                                 <img src={project.image} alt={project.title} className={styles.image} />
                                 <div className={styles.overlay}>
-                                    <button className={styles.viewBtn}>
-                                        View Case Study
+                                    <Link to="/contact" className={styles.viewBtn}>
+                                        Inquire Now
                                         <span className="material-symbols-outlined">arrow_forward</span>
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                             <div className={styles.cardContent}>
