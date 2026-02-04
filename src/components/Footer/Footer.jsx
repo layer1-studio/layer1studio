@@ -45,7 +45,7 @@ const Footer = () => {
                 <div className={styles.bottomBar}>
                     <p>© 2026 Layer1.Studio. All rights reserved.</p>
                     <div className={styles.legalLinks}>
-                        <Link to="/contact" className={styles.legalLink}>Privacy Policy</Link>
+                        <Link to="/privacy" className={styles.legalLink}>Privacy Policy</Link>
                         <Link to="/contact" className={styles.legalLink}>Terms of Service</Link>
                     </div>
                 </div>
