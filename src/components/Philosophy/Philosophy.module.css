@@ -60,6 +60,50 @@
 
 .visualWrapper {
     position: relative;
+    padding: 2rem;
+}
+
+.floatingBlurs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.blur1 {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    background: var(--primary-glow);
+    filter: blur(80px);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: drift 15s ease-in-out infinite alternate;
+}
+
+.blur2 {
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: rgba(121, 197, 227, 0.1);
+    filter: blur(100px);
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: drift 20s ease-in-out infinite reverse;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(10%, 10%) scale(1.1);
+    }
 }
 
 .glassVisualization {

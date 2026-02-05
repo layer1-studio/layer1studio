@@ -11,10 +11,22 @@
     max-width: 800px;
 }
 
+.badgeWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.heroLogo {
+    height: 48px;
+    width: auto;
+    filter: drop-shadow(0 0 20px var(--primary-glow));
+}
+
 .badge {
     display: inline-block;
     padding: 0.5rem 1.25rem;
-    margin-bottom: 2rem;
     background: rgba(121, 197, 227, 0.1);
     border: 1px solid rgba(121, 197, 227, 0.2);
     border-radius: 100px;
@@ -90,14 +102,28 @@
     top: 50%;
     right: -10%;
     transform: translateY(-50%);
-    width: 50vw;
-    height: 50vw;
-    background: var(--primary);
-    opacity: 0.1;
-    filter: blur(160px);
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle at 50% 50%, var(--primary-glow) 0%, transparent 70%),
+        radial-gradient(circle at 80% 20%, rgba(121, 197, 227, 0.15) 0%, transparent 50%);
+    opacity: 0.8;
+    filter: blur(80px);
     border-radius: 50%;
     pointer-events: none;
     z-index: 1;
+    animation: pulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translateY(-50%) scale(1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(-45%) scale(1.1);
+        opacity: 0.9;
+    }
 }
 
 @media (max-width: 768px) {

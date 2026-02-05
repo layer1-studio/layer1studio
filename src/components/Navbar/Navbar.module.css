@@ -39,12 +39,13 @@
 
 .navItem {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--slate-400);
+    letter-spacing: 0.02em;
 }
 
 .navItem:hover {
-    color: #fff;
+    color: var(--primary);
 }
 
 .activeNavItem {

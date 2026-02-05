@@ -7,9 +7,12 @@ const Hero = () => {
         <section className={`${styles.hero} hero-gradient`}>
             <div className="container">
                 <div className={styles.heroContent}>
-                    <span className={styles.badge}>Engineering with Heart & Logic</span>
+                    <div className={styles.badgeWrapper}>
+                        <img src="/layer1studio/assets/logo.png" alt="Layer1 Logo" className={styles.heroLogo} />
+                        <span className={styles.badge}>Engineering with Heart & Logic</span>
+                    </div>
                     <h1 className={`${styles.title} text-gradient`}>
-                        Building code that holds its own.
+                        Building code that <span className="serif-human">holds</span> its own.
                     </h1>
                     <p className={styles.subtitle}>
                         We're a collective of product thinkers and engineers who care more about how things work than how they're marketed. Minimalist apps, complex systems, one standard: excellence.

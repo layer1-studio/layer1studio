@@ -46,6 +46,10 @@ const Philosophy = () => {
                     </div>
 
                     <div className={styles.visualWrapper}>
+                        <div className={styles.floatingBlurs}>
+                            <div className={styles.blur1} />
+                            <div className={styles.blur2} />
+                        </div>
                         <div className={styles.glassVisualization}>
                             <img
                                 src="/layer1studio/assets/philosophy_visual.png"

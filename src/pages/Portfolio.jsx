@@ -46,7 +46,7 @@ const Portfolio = () => {
                 <div className="container">
                     <div className={styles.badge}>The Gallery</div>
                     <h1 className={styles.title}>
-                        Digital foundations, <span className={styles.italic}>built to last</span>.
+                        Digital foundations, <span className="serif-human">built to last</span>.
                     </h1>
                     <p className={styles.subtitle}>
                         We don't believe in vanity metrics. We believe in tools that work, systems that scale, and code that remains elegant under pressure.
