@@ -74,10 +74,15 @@ const Contact = () => {
                                 <div className={styles.field}>
                                     <label>How can we help?</label>
                                     <select>
-                                        <option>Product Development</option>
-                                        <option>Cloud Infrastructure</option>
-                                        <option>Mobile Application</option>
-                                        <option>Technical Audit</option>
+                                        <option disabled selected value="">Select a service...</option>
+                                        <option>Web Development</option>
+                                        <option>Mobile App Development</option>
+                                        <option>Analytics & Data Tools</option>
+                                        <option>Custom Dashboards</option>
+                                        <option>Branding & Identity</option>
+                                        <option>AI & Automation Integration</option>
+                                        <option>Product Strategy & Design</option>
+                                        <option>Technical Audit & UX Review</option>
                                     </select>
                                 </div>
 
