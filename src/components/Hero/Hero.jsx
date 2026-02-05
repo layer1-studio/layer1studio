@@ -7,10 +7,7 @@ const Hero = () => {
         <section className={`${styles.hero} hero-gradient`}>
             <div className="container">
                 <div className={styles.heroContent}>
-                    <div className={styles.badgeWrapper}>
-                        <img src="/layer1studio/assets/logo.png" alt="Layer1 Logo" className={styles.heroLogo} />
-                        <span className={styles.badge}>Engineering with Heart & Logic</span>
-                    </div>
+                    <span className={styles.badge}>Engineering with Heart & Logic</span>
                     <h1 className={`${styles.title} text-gradient`}>
                         Building code that <span className="serif-human">holds</span> its own.
                     </h1>
