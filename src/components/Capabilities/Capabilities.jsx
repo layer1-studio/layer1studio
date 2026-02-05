@@ -5,21 +5,21 @@ const Capabilities = () => {
     const services = [
         {
             icon: 'language',
-            title: 'Web Systems',
-            text: 'We build the kind of websites that feel like software. Fast, responsive, and impossible to ignore.',
-            list: ['Custom SaaS Dashboards', 'E-commerce Engines', 'Interactive Experiences']
+            title: 'Web & Mobile Systems',
+            text: 'We build digital products that feel like software. Fast, responsive, and designed for high-performance interactions.',
+            list: ['Custom SaaS Platforms', 'E-commerce Engines', 'Consumer & Enterprise Apps']
         },
         {
-            icon: 'stay_primary_portrait',
-            title: 'Mobile & Beyond',
-            text: 'iOS, Android, or anything with a screen. We focus on the thumb-feel and the split-second interactions.',
-            list: ['Consumer Apps', 'Enterprise Solutions', 'Offline-First Design']
+            icon: 'monitoring',
+            title: 'Analytics & Dashboards',
+            text: 'Data is only useful if it\'s readable. We build custom dashboards and internal tools that turn noise into strategy.',
+            list: ['Custom Analytics Tools', 'Real-time Dashboards', 'Data Visualization Systems']
         },
         {
             icon: 'layers',
             title: 'Backend & Infrastructure',
-            text: 'The invisible part that matters the most. Secure, distributed, and ready for whatever the internet throws at it.',
-            list: ['API Architecture', 'Database Optimization', 'DevSecOps & Security']
+            text: 'The invisible part that matters the most. Secure, distributed, and built to survive the internet\'s worst days.',
+            list: ['API Architecture', 'Database Optimization', 'DevSecOps & Cloud Infra']
         }
     ];
 
