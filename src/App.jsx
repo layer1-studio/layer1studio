@@ -8,6 +8,7 @@ import Portfolio from './pages/Portfolio'
 import Contact from './pages/Contact'
 import Careers from './pages/Careers'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfService from './pages/TermsOfService'
 import AdminDashboard from './pages/AdminDashboard'
 import ApplyNow from './pages/ApplyNow'
 import AdminLogin from './pages/AdminLogin'
@@ -57,6 +58,7 @@ function App() {
           <Route path="/apply/:jobId" element={<ApplyNow />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
 
           {/* Secured Admin Routes */}
           <Route path="/vault/internal/gate/secure/auth/login" element={<AdminLogin />} />

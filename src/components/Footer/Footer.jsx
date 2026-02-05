@@ -18,11 +18,6 @@ const Footer = () => {
                         <p className={styles.description}>
                             Building the foundations of the digital future from our studios in London and Colombo.
                         </p>
-                        <div className={styles.linkList}>
-                            <a href="mailto:hello@layer1.studio" className={styles.linkItem} style={{ color: '#fff', fontWeight: 600 }}>
-                                hello@layer1.studio
-                            </a>
-                        </div>
                     </div>
 
                     <div>
@@ -50,7 +45,7 @@ const Footer = () => {
                     <p>© 2026 Layer1.Studio. All rights reserved.</p>
                     <div className={styles.legalLinks}>
                         <Link to="/privacy" className={styles.legalLink}>Privacy Policy</Link>
-                        <Link to="/contact" className={styles.legalLink}>Terms of Service</Link>
+                        <Link to="/terms" className={styles.legalLink}>Terms of Service</Link>
                     </div>
                 </div>
             </div>
