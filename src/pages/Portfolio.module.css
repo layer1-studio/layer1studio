@@ -193,3 +193,23 @@
         grid-template-columns: 1fr;
     }
 }
+.imagePlaceholder {
+    width: 100%;
+    height: 100%;
+    background: var(--slate-800);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate-500);
+    gap: 1rem;
+}
+
+.imagePlaceholder span {
+    font-size: 3rem;
+}
+
+.imagePlaceholder p {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
