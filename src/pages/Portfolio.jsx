@@ -71,7 +71,22 @@ const Portfolio = () => {
                     {filteredProjects.map((project, index) => (
                         <div key={index} className={styles.card}>
                             <div className={styles.imageWrapper}>
-                                <img src={project.image} alt={project.title} className={styles.image} />
+                                {project.image ? (
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className={styles.image}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = 'https://via.placeholder.com/800x600?text=Project+Image';
+                                        }}
+                                    />
+                                ) : (
+                                    <div className={styles.imagePlaceholder}>
+                                        <span className="material-symbols-outlined">image</span>
+                                        <p>Image not found</p>
+                                    </div>
+                                )}
                                 <div className={styles.overlay}>
                                     <Link to="/contact" className={styles.viewBtn}>
                                         Inquire Now

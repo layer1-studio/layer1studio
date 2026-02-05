@@ -25,6 +25,45 @@ const AdminDashboard = () => {
     const [uploading, setUploading] = useState(false);
     const [uploadStatus, setUploadStatus] = useState('');
 
+    const compressImage = (file) => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1200;
+                    const MAX_HEIGHT = 1200;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Compress to JPEG with 0.7 quality
+                    const compressed = canvas.toDataURL('image/jpeg', 0.7);
+                    resolve(compressed);
+                };
+            };
+        });
+    };
+
     const handleLogout = async () => {
         await signOut(auth);
         navigate('/');
@@ -34,26 +73,25 @@ const AdminDashboard = () => {
         const file = e.target.files[0];
         if (!file) return;
 
-        if (file.size > 1024 * 1024) {
-            setUploadStatus('Image too large. Max 1MB.');
-            return;
-        }
-
         setUploading(true);
-        setUploadStatus('Processing image...');
+        setUploadStatus('Compressing & processing image...');
 
         try {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const url = reader.result;
-                if (isEdit) {
-                    setEditingProject({ ...editingProject, image: url });
-                } else {
-                    setNewProject({ ...newProject, image: url });
-                }
-                setUploadStatus('Image processed successfully!');
-            };
+            const compressedUrl = await compressImage(file);
+
+            // Check final size (Firestore 1MB limit on entire doc, so let's aim for ~800KB for the image)
+            const sizeInBytes = Math.ceil(((compressedUrl.length - 'data:image/jpeg;base64,'.length) * 3) / 4);
+            if (sizeInBytes > 1000000) {
+                setUploadStatus('Image still too large after compression. Try a smaller file.');
+                return;
+            }
+
+            if (isEdit) {
+                setEditingProject({ ...editingProject, image: compressedUrl });
+            } else {
+                setNewProject({ ...newProject, image: compressedUrl });
+            }
+            setUploadStatus('Image processed successfully!');
         } catch (error) {
             console.error("Processing failed:", error);
             setUploadStatus('Processing failed.');
