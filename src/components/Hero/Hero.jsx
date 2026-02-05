@@ -7,16 +7,16 @@ const Hero = () => {
         <section className={`${styles.hero} hero-gradient`}>
             <div className="container">
                 <div className={styles.heroContent}>
-                    <span className={styles.badge}>Engineering with Heart & Logic</span>
+                    <span className={styles.badge}>Fast Velocity. Zero Debt.</span>
                     <h1 className={`${styles.title} text-gradient`}>
-                        Building code that <span className="serif-human">holds</span> its own.
+                        Ship at scale, <span className="serif-human">without</span> the debt.
                     </h1>
                     <p className={styles.subtitle}>
-                        We're a collective of product thinkers and engineers who care more about how things work than how they're marketed. Minimalist apps, complex systems, one standard: excellence.
+                        We build production-grade foundations for founders and teams that need to move fast. No compromises on logic, no debt in your code—just engineering that scales with your ambition.
                     </p>
                     <div className={styles.buttonGroup}>
                         <Link to="/contact" className={styles.primaryButton}>
-                            Tell us a story
+                            Start Building Fast
                             <span className="material-symbols-outlined">chat_bubble</span>
                         </Link>
                         <Link to="/portfolio" className={styles.secondaryButton}>

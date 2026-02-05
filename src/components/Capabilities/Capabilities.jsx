@@ -4,22 +4,22 @@ import styles from './Capabilities.module.css';
 const Capabilities = () => {
     const services = [
         {
-            icon: 'language',
-            title: 'Web & Mobile Systems',
-            text: 'We build digital products that feel like software. Fast, responsive, and designed for high-performance interactions.',
-            list: ['Custom SaaS Platforms', 'E-commerce Engines', 'Consumer & Enterprise Apps']
+            icon: 'rocket_launch',
+            title: 'High-Velocity Launchpads',
+            text: 'Custom web and mobile applications built for immediate market impact and long-term scale. We ship foundations in 30 days.',
+            list: ['MVP to Market in 30 Days', 'High-Performance Web Apps', 'Bespoke Mobile Solutions']
         },
         {
-            icon: 'monitoring',
-            title: 'Analytics & Dashboards',
-            text: 'Data is only useful if it\'s readable. We build custom dashboards and internal tools that turn noise into strategy.',
-            list: ['Custom Analytics Tools', 'Real-time Dashboards', 'Data Visualization Systems']
+            icon: 'insights',
+            title: 'Data Engines',
+            text: 'Transforming raw complexity into actionable strategy with custom dashboards and real-time analytics tools.',
+            list: ['Real-time BI Dashboards', 'Predictive Data Engines', 'Custom Monitoring Tools']
         },
         {
             icon: 'layers',
-            title: 'Backend & Infrastructure',
-            text: 'The invisible part that matters the most. Secure, distributed, and built to survive the internet\'s worst days.',
-            list: ['API Architecture', 'Database Optimization', 'DevSecOps & Cloud Infra']
+            title: 'Bulletproof Foundations',
+            text: 'The infrastructure that powers your ambition. Secure, distributed, and built to survive the internet\'s worst days.',
+            list: ['Infinite Cloud Scaling', 'Secure API Ecosystems', 'Zero-Downtime Architecture']
         }
     ];
 

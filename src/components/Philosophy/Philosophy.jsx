@@ -7,9 +7,9 @@ const Philosophy = () => {
             <div className="container">
                 <div className={styles.grid}>
                     <div>
-                        <h2 className={styles.title}>Our Core Belief</h2>
+                        <h2 className={styles.title}>The Speed of Trust</h2>
                         <p className={styles.description}>
-                            Layer 1 is the floor where everything starts. In code, it's the logic that survives the hype cycles. We're not here for the quick ship; we're here for the systems that still make sense ten years from now.
+                            Everyone promises speed. We promise speed without the crash. We build the technical foundations that allow you to pivot, scale, and thrive—without the weight of technical debt holding you back.
                         </p>
 
                         <div className={styles.featureList}>
@@ -18,8 +18,8 @@ const Philosophy = () => {
                                     <span className="material-symbols-outlined">architecture</span>
                                 </div>
                                 <div>
-                                    <h4 className={styles.featureTitle}>Build it right, once.</h4>
-                                    <p className={styles.featureText}>We hate technical debt as much as you do. Our patterns are clean, intentional, and predictably solid.</p>
+                                    <h4 className={styles.featureTitle}>Zero-Debt Engineering</h4>
+                                    <p className={styles.featureText}>We build right the first time. Our patterns are clean, intentional, and designed for long-term velocity.</p>
                                 </div>
                             </div>
 
@@ -28,8 +28,8 @@ const Philosophy = () => {
                                     <span className="material-symbols-outlined">bolt</span>
                                 </div>
                                 <div>
-                                    <h4 className={styles.featureTitle}>Speed with context.</h4>
-                                    <p className={styles.featureText}>Shipping fast is easy. Shipping right while moving fast takes discipline. We have the scars to prove we have both.</p>
+                                    <h4 className={styles.featureTitle}>High-Velocity Logic</h4>
+                                    <p className={styles.featureText}>Shipping fast is easy. Shipping correctly while moving fast takes discipline. We provide both.</p>
                                 </div>
                             </div>
 
@@ -38,8 +38,8 @@ const Philosophy = () => {
                                     <span className="material-symbols-outlined">trending_up</span>
                                 </div>
                                 <div>
-                                    <h4 className={styles.featureTitle}>Growing pains, solved.</h4>
-                                    <p className={styles.featureText}>Whether it's your first ten fans or a million global users, your infrastructure shouldn't be the thing that keeps you up at night.</p>
+                                    <h4 className={styles.featureTitle}>Bulletproof Scaling</h4>
+                                    <p className={styles.featureText}>Whether it's your first ten fans or a million global users, your infrastructure stays invisible and reliable.</p>
                                 </div>
                             </div>
                         </div>
