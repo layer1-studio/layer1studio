@@ -7,9 +7,9 @@ const Philosophy = () => {
             <div className="container">
                 <div className={styles.grid}>
                     <div>
-                        <h2 className={styles.title}>The Speed of Trust</h2>
+                        <h2 className={styles.title}>Engineered for Growth</h2>
                         <p className={styles.description}>
-                            Everyone promises speed. We promise speed without the crash. We build the technical foundations that allow you to pivot, scale, and thrive—without the weight of technical debt holding you back.
+                            Everyone promises speed. We promise speed without the crash. We build the technical foundations that allow you to pivot, scale, and thrive - without any friction slowing you down.
                         </p>
 
                         <div className={styles.featureList}>
@@ -18,8 +18,8 @@ const Philosophy = () => {
                                     <span className="material-symbols-outlined">architecture</span>
                                 </div>
                                 <div>
-                                    <h4 className={styles.featureTitle}>Zero-Debt Engineering</h4>
-                                    <p className={styles.featureText}>We build right the first time. Our patterns are clean, intentional, and designed for long-term velocity.</p>
+                                    <h4 className={styles.featureTitle}>Precision Engineering</h4>
+                                    <p className={styles.featureText}>We build right the first time. Our patterns are clean, intentional, and designed for unhindered velocity.</p>
                                 </div>
                             </div>
 

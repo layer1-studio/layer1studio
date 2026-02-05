@@ -74,15 +74,13 @@ const Contact = () => {
                                 <div className={styles.field}>
                                     <label>How can we help?</label>
                                     <select>
-                                        <option disabled selected value="">Select a service...</option>
-                                        <option>Web Development</option>
-                                        <option>Mobile App Development</option>
-                                        <option>Analytics & Data Tools</option>
-                                        <option>Custom Dashboards</option>
-                                        <option>Branding & Identity</option>
+                                        <option disabled selected value="">How can we help?</option>
+                                        <option>General Inquiry</option>
+                                        <option>Pricing & Project Estimates</option>
+                                        <option>High-Velocity Web & Mobile Development</option>
+                                        <option>Analytics Engines & Dashboards</option>
                                         <option>AI & Automation Integration</option>
-                                        <option>Product Strategy & Design</option>
-                                        <option>Technical Audit & UX Review</option>
+                                        <option>Product Strategy & Technical Audit</option>
                                     </select>
                                 </div>
 
@@ -97,7 +95,7 @@ const Contact = () => {
 
                                 <p className={styles.privacyNote}>
                                     <span className="material-symbols-outlined">verified_user</span>
-                                    Your information is safe with us. We're engineers—we take security seriously.
+                                    Your information is safe with us. We're engineers - we take security seriously.
                                 </p>
                             </form>
                         </div>

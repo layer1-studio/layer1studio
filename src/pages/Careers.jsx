@@ -25,7 +25,7 @@ const Careers = () => {
                         Help us build the <br /><span>digital foundations.</span>
                     </h1>
                     <p className={styles.subtitle}>
-                        We are a collective of product thinkers and engineers crafting software that stands the test of time. Join a studio where quality isn't a goal—it's the baseline.
+                        We are a collective of product thinkers and engineers crafting software that stands the test of time. Join a studio where quality isn't a goal - it's the baseline.
                     </p>
                 </div>
             </header>
@@ -41,7 +41,7 @@ const Careers = () => {
                         <div className={styles.valueCard}>
                             <span className="material-symbols-outlined">auto_awesome</span>
                             <h3>Design-Led Craft</h3>
-                            <p>Every pixel matters. We believe that beautiful software is more than skin deep—it's about the experience.</p>
+                            <p>Every pixel matters. We believe that beautiful software is more than skin deep - it's about the experience.</p>
                         </div>
                         <div className={styles.valueCard}>
                             <span className="material-symbols-outlined">favorite</span>

@@ -18,7 +18,7 @@ const Capabilities = () => {
         {
             icon: 'layers',
             title: 'Bulletproof Foundations',
-            text: 'The infrastructure that powers your ambition. Secure, distributed, and built to survive the internet\'s worst days.',
+            text: 'The infrastructure that powers your ambition. Secure, distributed, and built to handle your highest-velocity days.',
             list: ['Infinite Cloud Scaling', 'Secure API Ecosystems', 'Zero-Downtime Architecture']
         }
     ];

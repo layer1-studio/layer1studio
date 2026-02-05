@@ -7,12 +7,12 @@ const Hero = () => {
         <section className={`${styles.hero} hero-gradient`}>
             <div className="container">
                 <div className={styles.heroContent}>
-                    <span className={styles.badge}>Fast Velocity. Zero Debt.</span>
+                    <span className={styles.badge}>High Velocity. Pure Engineering.</span>
                     <h1 className={`${styles.title} text-gradient`}>
-                        Ship at scale, <span className="serif-human">without</span> the debt.
+                        Ship at scale, <span className="serif-human">built</span> for momentum.
                     </h1>
                     <p className={styles.subtitle}>
-                        We build production-grade foundations for founders and teams that need to move fast. No compromises on logic, no debt in your code—just engineering that scales with your ambition.
+                        We build production-grade foundations for founders and teams that need to move fast. Clean logic, intuitive architecture - engineering that scales as fast as your ambition.
                     </p>
                     <div className={styles.buttonGroup}>
                         <Link to="/contact" className={styles.primaryButton}>
