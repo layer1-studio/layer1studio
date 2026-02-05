@@ -1,22 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../../hooks/useContent';
 import styles from './PortfolioPreview.module.css';
 
 const PortfolioPreview = () => {
-    const projects = [
-        {
-            title: 'OmniChannel CRM',
-            text: 'Enterprise-grade customer management system for a Fortune 500 retailer.',
-            tags: ['Node.js', 'Postgres'],
-            image: '/layer1studio/assets/crm_project_viz.png'
-        },
-        {
-            title: 'Vault FinTech',
-            text: 'Next-generation mobile banking experience with real-time asset tracking.',
-            tags: ['Flutter', 'Go'],
-            image: '/layer1studio/assets/fintech_project_viz.png'
-        }
-    ];
+    const { data: allProjects, loading } = useContent('projects');
+
+    // Show latest 2 projects
+    const projects = allProjects.length > 0 ? allProjects.slice(0, 2) : [];
+
+    if (loading && allProjects.length === 0) return null;
 
     return (
         <section id="projects" className={styles.portfolioPreview}>
@@ -36,20 +29,29 @@ const PortfolioPreview = () => {
                     {projects.map((project, index) => (
                         <div key={index} className={styles.projectCard}>
                             <div className={styles.imageWrapper}>
-                                <img src={project.image} alt={project.title} className={styles.projectImage} />
+                                {project.image ? (
+                                    <img src={project.image} alt={project.title} className={styles.projectImage} />
+                                ) : (
+                                    <div className={styles.placeholderIcon}>
+                                        <span className="material-symbols-outlined">image</span>
+                                    </div>
+                                )}
                                 <div className={styles.overlay} />
                             </div>
                             <div className={styles.cardContent}>
                                 <h4 className={styles.projectTitle}>{project.title}</h4>
                                 <p className={styles.projectText}>{project.text}</p>
                                 <div className={styles.tagGroup}>
-                                    {project.tags.map((tag, i) => (
+                                    {(Array.isArray(project.tags) ? project.tags : []).map((tag, i) => (
                                         <span key={i} className={styles.tag}>{tag}</span>
                                     ))}
                                 </div>
                             </div>
                         </div>
                     ))}
+                    {projects.length === 0 && (
+                        <p className={styles.emptyMsg}>Add your first projects in the Admin Portal to see them here.</p>
+                    )}
                 </div>
             </div>
         </section>

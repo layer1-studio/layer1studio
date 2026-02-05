@@ -133,3 +133,25 @@
         grid-template-columns: 1fr;
     }
 }
+.placeholderIcon {
+    width: 100%;
+    height: 100%;
+    background: var(--navy-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate-500);
+}
+
+.placeholderIcon span {
+    font-size: 3rem;
+}
+
+.emptyMsg {
+    color: var(--slate-500);
+    grid-column: span 2;
+    text-align: center;
+    padding: 2rem;
+    border: 1px dashed var(--white-10);
+    border-radius: var(--radius-xl);
+}
