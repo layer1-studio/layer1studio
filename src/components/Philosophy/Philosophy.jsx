@@ -47,10 +47,9 @@ const Philosophy = () => {
 
                     <div className={styles.visualWrapper}>
                         <div className={styles.glassVisualization}>
-                            {/* Using a placeholder for the viz from the design */}
                             <img
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDixvRaV__254DeMwb1TezHT5-q6q5ocjBBl1AiWwqFDMNzSXOzH-iTS_t3xI7nhulXQSmjBh_ZDClhFM7C6vMzawJYgKHYz8tAV3cOPF7i1j2qL89elfa95wZ-oqLjzs10XFRImxabKde3cLjaW6-d7hl0564lqoYWX_neZq-jvVHlSN-g8AFNUUA-MFY8F8I254Pof1ZVhWzsUB4d2_bh4AjcTJG6Hssbv7dUViSrhhNHh7AQ9fe-k3aznf2a_XxF4tJoXTafr-WT"
-                                alt="Philosophy Viz"
+                                src="/layer1studio/assets/philosophy_visual.png"
+                                alt="Philosophy Visualization"
                                 className={styles.vizLogo}
                             />
                         </div>
