@@ -147,10 +147,21 @@ const AdminDashboard = () => {
                 <header className={styles.header}>
                     <div className={styles.titleGroup}>
                         <h1 className={styles.title}>Studio <span>Manager</span></h1>
-                        <button onClick={handleLogout} className={styles.logoutBtn}>
-                            <span className="material-symbols-outlined">logout</span>
-                            Logout
-                        </button>
+                        <div className={styles.headerActions}>
+                            <a
+                                href="https://rachelcooray.github.io/l1s-branding-templates/"
+                                target="_blank"
+                                rel="noreferrer"
+                                className={styles.secondaryBtn}
+                            >
+                                <span className="material-symbols-outlined">description</span>
+                                Letterheads & Invoices
+                            </a>
+                            <button onClick={handleLogout} className={styles.logoutBtn}>
+                                <span className="material-symbols-outlined">logout</span>
+                                Logout
+                            </button>
+                        </div>
                     </div>
                     <div className={styles.tabs}>
                         <button

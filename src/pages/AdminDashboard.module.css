@@ -18,6 +18,33 @@
     width: 100%;
 }
 
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.secondaryBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--slate-300);
+    border: 1px solid var(--white-10);
+    padding: 0.6rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.secondaryBtn:hover {
+    background: var(--white-10);
+    color: #fff;
+    border-color: var(--white-20);
+}
+
 .logoutBtn {
     display: flex;
     align-items: center;
