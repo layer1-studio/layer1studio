@@ -52,7 +52,7 @@ const Philosophy = () => {
                         </div>
                         <div className={styles.glassVisualization}>
                             <img
-                                src="/layer1studio/assets/philosophy_visual.png"
+                                src={`${import.meta.env.BASE_URL}assets/philosophy_visual.png`}
                                 alt="Philosophy Visualization"
                                 className={styles.vizLogo}
                             />

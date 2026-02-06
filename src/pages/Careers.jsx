@@ -20,13 +20,20 @@ const Careers = () => {
         <div className={styles.careersPage}>
             <header className={styles.hero}>
                 <div className="container">
-                    <span className={styles.badge}>Join our mission</span>
-                    <h1 className={styles.title}>
-                        Help us build the <br /><span>digital foundations.</span>
-                    </h1>
-                    <p className={styles.subtitle}>
-                        We are a collective of product thinkers and engineers crafting software that stands the test of time. Join a studio where quality isn't a goal - it's the baseline.
-                    </p>
+                    <div className={styles.heroGrid}>
+                        <div className={styles.heroContent}>
+                            <span className={styles.badge}>Join our mission</span>
+                            <h1 className={`${styles.title} text-gradient`}>
+                                Help us build the digital foundations.
+                            </h1>
+                            <p className={styles.subtitle}>
+                                We are a collective of product thinkers and engineers crafting software that stands the test of time. Join a studio where quality isn't a goal - it's the baseline.
+                            </p>
+                        </div>
+                        <div className={styles.visualWrapper}>
+                            <img src={`${import.meta.env.BASE_URL}assets/careers_visual.png`} alt="Careers" className={styles.heroVisual} />
+                        </div>
+                    </div>
                 </div>
             </header>
 

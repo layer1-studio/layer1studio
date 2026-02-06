@@ -7,7 +7,7 @@ const TermsOfService = () => {
             <div className="container">
                 <div className={styles.contentWrapper}>
                     <span className={styles.badge}>Legal Framework</span>
-                    <h1 className={styles.title}>Terms of <span>Service</span></h1>
+                    <h1 className={styles.title}>Terms of <span className={styles.italic}>Service</span></h1>
                     <p className={styles.lastUpdated}>Last updated: February 2026</p>
 
                     <section className={styles.section}>
@@ -55,14 +55,6 @@ const TermsOfService = () => {
                         </p>
                     </section>
 
-                    <section className={styles.section}>
-                        <h2>6. Governing Law</h2>
-                        <p>
-                            These terms are governed by and construed in accordance with the laws of the jurisdictions in which
-                            we operate (London, UK and Colombo, Sri Lanka). Any disputes shall be subject to the exclusive
-                            jurisdiction of the courts in these locations.
-                        </p>
-                    </section>
                 </div>
             </div>
         </div>

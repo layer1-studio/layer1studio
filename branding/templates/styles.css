@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap');
+
+:root {
+    --primary: #79c5e3;
+    --text-main: #0a0c10;
+    --text-muted: #64748b;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --font-main: 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-main);
+    background: #f4f4f4;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    margin: 10mm auto;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+@media print {
+    body {
+        background: none;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+    }
+}
+
+/* Header & Logo */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-section img {
+    height: 70px;
+    margin-bottom: 12px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--primary);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0;
+}
+
+.studio-info {
+    text-align: right;
+    font-size: 10pt;
+    color: var(--text-muted);
+}
+
+.studio-info h1 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 700;
+}
+
+.serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+}
+
+/* Document Details */
+.doc-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.client-info h3,
+.doc-info h3 {
+    text-transform: uppercase;
+    font-size: 9pt;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+th {
+    text-align: left;
+    background: var(--slate-100);
+    padding: 12px;
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid var(--slate-200);
+    font-size: 11pt;
+}
+
+.total-row td {
+    border-bottom: none;
+    font-weight: 700;
+}
+
+.total-row .label {
+    text-align: right;
+}
+
+.total-row .amount {
+    background: var(--slate-100);
+    font-size: 14pt;
+}
+
+/* Footer Accent */
+.footer-accent {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 200px;
+    height: 200px;
+    background: var(--primary);
+    opacity: 0.05;
+    border-radius: 50%;
+}
+
+.footer-content {
+    position: absolute;
+    bottom: 20mm;
+    left: 20mm;
+    right: 20mm;
+    border-top: 1px solid var(--slate-200);
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9pt;
+    color: var(--text-muted);
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--primary);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 9pt;
+    margin-bottom: 10px;
+}

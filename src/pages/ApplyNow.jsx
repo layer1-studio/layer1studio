@@ -12,6 +12,7 @@ const ApplyNow = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         portfolio: '',
         resumeData: '' // Changed to data instead of URL
     });
@@ -77,7 +78,7 @@ const ApplyNow = () => {
                 <div className={styles.formCard}>
                     <header className={styles.header}>
                         <span className={styles.badge}>The next chapter</span>
-                        <h1 className={styles.title}>Applying for <span>{decodeURIComponent(jobId)}</span></h1>
+                        <h1 className={`${styles.title} text-gradient`}>Applying for <span className="serif-human" style={{ color: 'var(--primary)' }}>{decodeURIComponent(jobId)}</span></h1>
                     </header>
 
                     <form className={styles.form} onSubmit={handleSubmit}>
@@ -100,6 +101,16 @@ const ApplyNow = () => {
                                 required
                                 value={formData.email}
                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
+                            />
+                        </div>
+
+                        <div className={styles.field}>
+                            <label>Phone Number (Optional)</label>
+                            <input
+                                type="tel"
+                                placeholder="+44 7770 225546"
+                                value={formData.phone}
+                                onChange={e => setFormData({ ...formData, phone: e.target.value })}
                             />
                         </div>
 

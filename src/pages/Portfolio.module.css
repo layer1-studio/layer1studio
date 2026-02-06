@@ -22,18 +22,56 @@
 }
 
 .title {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(3rem, 8vw, 5.5rem);
     font-weight: 800;
-    line-height: 1;
+    line-height: 1.1;
     margin-bottom: 2rem;
     letter-spacing: -0.02em;
+}
+
+.italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--primary);
+    opacity: 0.9;
+}
+
+.heroGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
 }
 
 .subtitle {
     font-size: 1.5rem;
     color: var(--slate-400);
-    max-width: 800px;
     line-height: 1.4;
+}
+
+.visualWrapper {
+    aspect-ratio: 1/1;
+    background: rgba(18, 24, 32, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--white-5);
+    border-radius: var(--radius-3xl);
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-premium);
+    overflow: hidden;
+}
+
+.heroVisual {
+    width: 75%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 60px rgba(121, 197, 227, 0.3));
+    mix-blend-mode: normal;
+    opacity: 0.9;
+    transition: all 0.5s ease;
 }
 
 .filterGroup {

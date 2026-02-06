@@ -9,7 +9,7 @@ const Hero = () => {
                 <div className={styles.heroContent}>
                     <span className={styles.badge}>High Velocity. Pure Engineering.</span>
                     <h1 className={`${styles.title} text-gradient`}>
-                        Ship at scale, <span className="serif-human">built</span> for momentum.
+                        Foundations for the future.
                     </h1>
                     <p className={styles.subtitle}>
                         We build production-grade foundations for founders and teams that need to move fast. Clean logic, intuitive architecture - engineering that scales as fast as your ambition.

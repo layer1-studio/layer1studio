@@ -8,10 +8,14 @@ const Contact = () => {
                 <div className={styles.grid}>
                     <div className={styles.infoColumn}>
                         <span className={styles.badge}>Let's Talk</span>
-                        <h1 className={styles.title}>Shall we <br /><span>start?</span></h1>
+                        <h1 className={`${styles.title} text-gradient`}>Shall we start?</h1>
                         <p className={styles.description}>
                             Drop us a line. We're based in London and Colombo, but we work with partners all over the world. Whether it's a quick question or a massive project, we'd love to hear from you.
                         </p>
+
+                        <div className={styles.visualWrapper}>
+                            <img src={`${import.meta.env.BASE_URL}assets/contact_visual.png`} alt="Contact Visual" className={styles.heroVisual} />
+                        </div>
 
                         <div className={styles.studios}>
                             <div className={styles.studioItem}>
@@ -46,7 +50,8 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <p className={styles.contactLabel}>Phone Support</p>
-                                    <p className={styles.contactValue}>+44 (0) 20 1234 5678</p>
+                                    <p className={styles.contactValue}>+44 7770 225546</p>
+                                    <p className={styles.contactValue}>+94 7717 70570</p>
                                 </div>
                             </div>
                         </div>
@@ -73,8 +78,8 @@ const Contact = () => {
 
                                 <div className={styles.field}>
                                     <label>How can we help?</label>
-                                    <select>
-                                        <option disabled selected value="">How can we help?</option>
+                                    <select defaultValue="">
+                                        <option disabled value="">How can we help?</option>
                                         <option>General Inquiry</option>
                                         <option>Pricing & Project Estimates</option>
                                         <option>High-Velocity Web & Mobile Development</option>

@@ -44,13 +44,20 @@ const Portfolio = () => {
         <div className={styles.portfolioPage}>
             <header className={styles.header}>
                 <div className="container">
-                    <div className={styles.badge}>The Gallery</div>
-                    <h1 className={styles.title}>
-                        Digital foundations, <span className="serif-human">built to last</span>.
-                    </h1>
-                    <p className={styles.subtitle}>
-                        We don't believe in vanity metrics. We believe in tools that work, systems that scale, and code that remains elegant under pressure.
-                    </p>
+                    <div className={styles.heroGrid}>
+                        <div className={styles.heroContent}>
+                            <div className={styles.badge}>The Gallery</div>
+                            <h1 className={`${styles.title} text-gradient`}>
+                                Digital foundations, built to last.
+                            </h1>
+                            <p className={styles.subtitle}>
+                                We don't believe in vanity metrics. We believe in tools that work, systems that scale, and code that remains elegant under pressure.
+                            </p>
+                        </div>
+                        <div className={styles.visualWrapper}>
+                            <img src={`${import.meta.env.BASE_URL}assets/portfolio_visual.png`} alt="Portfolio" className={styles.heroVisual} />
+                        </div>
+                    </div>
                 </div>
             </header>
 

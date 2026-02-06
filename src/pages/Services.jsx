@@ -17,7 +17,7 @@ const Services = () => {
                     <div className={styles.heroContent}>
                         <span className={styles.badge}>Our craft</span>
                         <h1 className={`${styles.title} text-gradient`}>
-                            Foundations for <span>the future.</span>
+                            Foundations for the future.
                         </h1>
                         <p className={styles.subtitle}>
                             We don't do 'average'. We build complex, hard-working software for people who have big ideas and little time for bugs.
