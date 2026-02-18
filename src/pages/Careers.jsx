@@ -8,6 +8,10 @@ const Careers = () => {
     const navigate = useNavigate();
     const [expandedJob, setExpandedJob] = useState(null);
 
+    React.useEffect(() => {
+        document.title = "Careers & Internships | Layer1.Studio";
+    }, []);
+
     const defaultJobs = [
         { title: 'Senior Full-stack Developer', location: 'Remote', salary: '$140k - $180k', type: 'Full-time', hot: true, description: "We're looking for someone who can handle everything from server architecture to CSS animations. You'll be the backbone of our product team." },
         { title: 'Senior UI/UX Designer', location: 'Hybrid / London', salary: '$110k - $150k', type: 'Full-time', hot: false, description: "Design isn't just about looks. We need a thinker who understands how users move through complex systems and can make that movement feel effortless." }
@@ -24,10 +28,10 @@ const Careers = () => {
                         <div className={styles.heroContent}>
                             <span className={styles.badge}>Join our mission</span>
                             <h1 className={`${styles.title} text-gradient`}>
-                                Help us build the digital foundations.
+                                Software Engineering Careers at Layer1.Studio
                             </h1>
                             <p className={styles.subtitle}>
-                                We are a collective of product thinkers and engineers crafting software that stands the test of time. Join a studio where quality isn't a goal - it's the baseline.
+                                We are a high-velocity collective of product thinkers and full-stack engineers crafting custom software, web apps, and mobile solutions (iOS & Android) that stand the test of time. Join a London & Colombo based studio where quality isn't a goal - it's the baseline. Explore our software engineering careers and paid internships.
                             </p>
                         </div>
                         <div className={styles.visualWrapper}>
@@ -99,6 +103,24 @@ const Careers = () => {
                                 )}
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+            <section className={styles.internships}>
+                <div className="container">
+                    <div className={styles.internshipCard}>
+                        <div className={styles.internshipContent}>
+                            <h2 className={styles.sectionTitle}>Engineering Internships</h2>
+                            <p className={styles.sectionSubtitle}>
+                                For computer science students and junior developers who want to learn by building real production software. Our internships are intensive, paid, and focused on high-velocity web and app development across the full stack (Frontend, Backend, and Mobile).
+                            </p>
+                            <button
+                                className={styles.applyBtn}
+                                onClick={() => navigate('/apply/Engineering Internship')}
+                            >
+                                Inquire About Internships
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>

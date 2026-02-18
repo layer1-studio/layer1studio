@@ -6,6 +6,10 @@ import styles from './Portfolio.module.css';
 const Portfolio = () => {
     const [activeFilter, setActiveFilter] = useState('All');
 
+    React.useEffect(() => {
+        document.title = "Software & App Development Portfolio | Layer1.Studio";
+    }, []);
+
     const categories = ['All', 'Web Development', 'Mobile Apps', 'Analytics Tools', 'Dashboards', 'Branding'];
 
     const { data: dbProjects, loading } = useContent('projects');

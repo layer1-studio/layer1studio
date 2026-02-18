@@ -2,6 +2,10 @@ import React from 'react';
 import styles from './Contact.module.css';
 
 const Contact = () => {
+    React.useEffect(() => {
+        document.title = "Contact for Software & Web Development Projects | Layer1.Studio";
+    }, []);
+
     return (
         <div className={styles.contactPage}>
             <div className="container">

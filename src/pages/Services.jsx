@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import styles from './Services.module.css';
 
 const Services = () => {
+    React.useEffect(() => {
+        document.title = "Software, Web & App Development Services | Layer1.Studio";
+    }, []);
+
     const processSteps = [
         { number: '01', title: 'Sense-making', text: 'We start by asking a lot of questions. We strip away the noise to find the core of what you\'re building.' },
         { number: '02', title: 'The Forge', text: 'Where logic meets craft. We write code that is clean enough to read and fast enough to fly.' },
@@ -17,10 +21,10 @@ const Services = () => {
                     <div className={styles.heroContent}>
                         <span className={styles.badge}>Our craft</span>
                         <h1 className={`${styles.title} text-gradient`}>
-                            Foundations for the future.
+                            Web, App & Software Development Services
                         </h1>
                         <p className={styles.subtitle}>
-                            We don't do 'average'. We build complex, hard-working software for people who have big ideas and little time for bugs.
+                            We build complex, high-performance software for founders and enterprises. From MVP development and product strategy to enterprise-scale applications and digital transformation, we deliver engineering excellence.
                         </p>
                     </div>
                 </div>

@@ -12,7 +12,7 @@ const Hero = () => {
                         Foundations for the future.
                     </h1>
                     <p className={styles.subtitle}>
-                        We build production-grade foundations for founders and teams that need to move fast. Clean logic, intuitive architecture - engineering that scales as fast as your ambition.
+                        We build production-grade foundations for founders and scale-ups. Custom software, web, and mobile app development (React, Node.js, Next.js) by a remote engineering team based in London and Colombo.
                     </p>
                     <div className={styles.buttonGroup}>
                         <Link to="/contact" className={styles.primaryButton}>

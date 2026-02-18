@@ -5,19 +5,19 @@ const Capabilities = () => {
     const services = [
         {
             icon: 'rocket_launch',
-            title: 'High-Velocity Launchpads',
+            title: 'Web & App Development',
             text: 'Custom web and mobile applications built for immediate market impact and long-term scale. We ship foundations in 30 days.',
-            list: ['MVP to Market in 30 Days', 'High-Performance Web Apps', 'Bespoke Mobile Solutions']
+            list: ['MVP to Market in 30 Days', 'High-Performance Web Apps', 'Bespoke iOS & Android Solutions']
         },
         {
             icon: 'insights',
-            title: 'Data Engines',
+            title: 'Data & Analytics Software',
             text: 'Transforming raw complexity into actionable strategy with custom dashboards and real-time analytics tools.',
             list: ['Real-time BI Dashboards', 'Predictive Data Engines', 'Custom Monitoring Tools']
         },
         {
             icon: 'layers',
-            title: 'Bulletproof Foundations',
+            title: 'Software Engineering Architecture',
             text: 'The infrastructure that powers your ambition. Secure, distributed, and built to handle your highest-velocity days.',
             list: ['Infinite Cloud Scaling', 'Secure API Ecosystems', 'Zero-Downtime Architecture']
         }
