@@ -16,23 +16,23 @@ const Services = () => {
 
     return (
         <div className={styles.servicesPage}>
-            <section className={styles.heroSection}>
+            {/* Full-bleed text banner */}
+            <header className={styles.heroBanner}>
                 <div className="container">
-                    <div className={styles.heroContent}>
-                        <span className={styles.badge}>Our craft</span>
-                        <h1 className={`${styles.title} text-gradient`}>
-                            Web, App & Software Development Services
-                        </h1>
-                        <p className={styles.subtitle}>
-                            We build complex, high-performance software for founders and enterprises. From MVP development and product strategy to enterprise-scale applications and digital transformation, we deliver engineering excellence.
-                        </p>
-                    </div>
+                    <p className={styles.eyebrow}>Our craft</p>
+                    <h1 className={styles.title}>
+                        Web, App &amp; Software<br />Development Services
+                    </h1>
+                    <p className={styles.subtitle}>
+                        We build complex, high-performance software for founders and enterprises.
+                    </p>
                 </div>
-            </section>
+            </header>
 
             <section className={styles.methodology}>
                 <div className="container">
                     <div className={styles.sectionHeader}>
+                        <p className={styles.eyebrow}>Our process</p>
                         <h2 className={styles.sectionTitle}>How we work</h2>
                         <p className={styles.sectionSubtitle}>No magic, just a very disciplined process that gets things done.</p>
                     </div>
@@ -40,10 +40,7 @@ const Services = () => {
                     <div className={styles.processGrid}>
                         {processSteps.map((step, index) => (
                             <div key={index} className={styles.processStep}>
-                                <div className={styles.stepHeader}>
-                                    <div className={styles.numberCircle}>{step.number}</div>
-                                    {index < processSteps.length - 1 && <div className={styles.dashedLine} />}
-                                </div>
+                                <div className={styles.stepNumber}>{step.number}</div>
                                 <h3 className={styles.stepTitle}>{step.title}</h3>
                                 <p className={styles.stepText}>{step.text}</p>
                             </div>

@@ -10,11 +10,11 @@
     width: 100%;
     max-width: 400px;
     padding: 3rem;
-    background: rgba(18, 24, 32, 0.4);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--white-5);
+    background: #fff;
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-3xl);
     text-align: center;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
 }
 
 .header {
@@ -26,6 +26,7 @@
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: 0.5rem;
+    color: var(--text-primary);
 }
 
 .logo span {
@@ -34,7 +35,7 @@
 
 .tagline {
     font-size: 0.75rem;
-    color: var(--slate-500);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 700;
@@ -62,19 +63,21 @@
 }
 
 .field input {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--white-10);
+    background: var(--navy-surface);
+    border: 1px solid var(--border-light);
     padding: 1rem;
     border-radius: 12px;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 1rem;
     transition: all 0.3s ease;
+    width: 100%;
 }
 
 .field input:focus {
     border-color: var(--primary);
     outline: none;
-    background: rgba(255, 255, 255, 0.05);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
 }
 
 .error {
@@ -87,17 +90,20 @@
     margin-top: 1rem;
     padding: 1.25rem;
     background: var(--primary);
-    color: var(--navy-deep);
+    color: #fff;
     border-radius: 12px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2);
 }
 
 .loginBtn:hover:not(:disabled) {
-    box-shadow: 0 10px 30px rgba(121, 197, 227, 0.3);
+    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.35);
     transform: translateY(-2px);
+    filter: brightness(1.05);
 }
 
 .loginBtn:disabled {

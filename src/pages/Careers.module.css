@@ -1,246 +1,263 @@
-.careersPage {
-    padding-top: calc(var(--header-height) + 4rem);
+/* Full-bleed banner — Valentina pattern */
+.heroBanner {
+    position: relative;
+    width: 100%;
+    height: 38vh;
+    min-height: 280px;
+    max-height: 360px;
+    margin-top: var(--header-height);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
 }
 
-.hero {
-    padding-bottom: 6rem;
+.bannerImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
 }
 
-.badge {
-    display: inline-block;
-    padding: 0.4rem 1rem;
-    background: rgba(121, 197, 227, 0.1);
-    border: 1px solid rgba(121, 197, 227, 0.2);
-    border-radius: 100px;
-    color: var(--primary);
-    font-size: 0.7rem;
+.bannerOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(15, 23, 42, 0.15) 0%,
+            rgba(15, 23, 42, 0.65) 100%);
+    z-index: 1;
+}
+
+.bannerContent {
+    position: relative;
+    z-index: 2;
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.eyebrow {
+    font-family: var(--font-main);
+    font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 2rem;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.75rem;
+    display: block;
 }
 
 .title {
-    font-size: clamp(3rem, 8vw, 5.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 2rem;
-    letter-spacing: -0.02em;
-}
-
-.italic {
-    font-family: var(--font-serif);
-    font-style: italic;
+    font-family: var(--font-display);
     font-weight: 400;
-    color: var(--primary);
-}
-
-.heroGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 0.75rem;
 }
 
 .subtitle {
-    font-size: 1.25rem;
-    color: var(--slate-400);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 520px;
     line-height: 1.6;
 }
 
-.visualWrapper {
-    aspect-ratio: 1/1;
-    background: rgba(18, 24, 32, 0.4);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--white-5);
-    border-radius: var(--radius-3xl);
-    padding: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-premium);
-    overflow: hidden;
-}
-
-.heroVisual {
-    width: 75%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 0 60px rgba(121, 197, 227, 0.3));
-    mix-blend-mode: normal;
-    opacity: 0.9;
-    transition: all 0.5s ease;
-}
-
-.visualWrapper:hover .heroVisual {
-    opacity: 1;
-    mix-blend-mode: normal;
-    transform: scale(1.02);
-}
-
+/* Values */
 .values {
-    padding: 4rem 0;
-    background: var(--navy-surface);
-    border-top: 1px solid var(--white-5);
-    border-bottom: 1px solid var(--white-5);
+    padding: 5rem 0;
+    background: #fff;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4rem;
+    gap: 0;
+}
+
+.valueCard {
+    padding: 2.5rem;
+    border-right: 1px solid var(--border-subtle);
+}
+
+.valueCard:last-child {
+    border-right: none;
+}
+
+.valueCard span.material-symbols-outlined {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: block;
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
 }
 
 .valueCard h3 {
-    font-size: 1.5rem;
-    margin: 1.5rem 0 1rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
 }
 
 .valueCard p {
-    color: var(--slate-400);
-    line-height: 1.6;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
 }
 
-.valueCard span {
-    color: var(--primary);
-    font-size: 40px !important;
-}
-
+/* Open Roles */
 .openRoles {
-    padding: 8rem 0;
+    padding: 5rem 0;
+    background: var(--navy-deep);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .sectionTitle {
-    font-size: 2.5rem;
-    margin-bottom: 4rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: var(--text-primary);
+    margin-bottom: 2.5rem;
 }
 
 .jobList {
     display: flex;
     flex-direction: column;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .jobCard {
-    padding: 2.5rem;
-    border-bottom: 1px solid var(--white-5);
-    display: flex;
-    flex-direction: column;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-bottom: 1px solid var(--border-subtle);
     cursor: pointer;
+    transition: background 0.15s ease;
 }
 
 .jobCard:hover {
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: var(--radius-xl);
-}
-
-.expanded {
-    background: rgba(121, 197, 227, 0.03) !important;
-    border-radius: var(--radius-xl) !important;
-    border-color: rgba(121, 197, 227, 0.2);
+    background: var(--navy-surface);
 }
 
 .jobMain {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1.75rem 0;
+    gap: 1rem;
 }
 
 .jobTitleRow {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.4rem;
 }
 
 .jobTitleRow h3 {
-    font-size: 1.75rem;
-}
-
-.expandIcon {
-    color: var(--slate-500);
-    transition: transform 0.3s ease;
-}
-
-.expanded .expandIcon {
-    color: var(--primary);
-}
-
-.jobDetails {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--white-5);
-    animation: fadeIn 0.4s ease forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.description {
-    color: var(--slate-300);
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
-    font-size: 1.1rem;
-    white-space: pre-line;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--text-primary);
 }
 
 .hotTag {
-    padding: 0.1rem 0.6rem;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    color: #10b981;
-    border-radius: 4px;
-    font-size: 0.6rem;
-    font-weight: 800;
+    font-family: var(--font-main);
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
 }
 
 .jobMeta {
-    color: var(--slate-500);
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.expandIcon {
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.jobDetails {
+    padding: 0 0 2rem;
+}
+
+.description p {
+    color: var(--text-body);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
 }
 
 .applyBtn {
-    padding: 1rem 2.5rem;
     background: var(--primary);
-    color: var(--navy-deep);
-    border-radius: 12px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.3s ease;
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius-xl);
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .applyBtn:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 10px 20px rgba(121, 197, 227, 0.2);
+    background: #0369a1;
+    transform: translateY(-1px);
 }
 
-@media (max-width: 1024px) {
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
+/* Internships */
+.internships {
+    padding: 5rem 0;
+    background: var(--navy-surface);
+}
+
+.internshipCard {
+    background: #fff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: 3.5rem;
+}
+
+.internshipContent .sectionTitle {
+    margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 2rem;
 }
 
 @media (max-width: 768px) {
-    .jobCard {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2rem;
+    .grid {
+        grid-template-columns: 1fr;
     }
 
-    .applyBtn {
-        width: 100%;
+    .valueCard {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .valueCard:last-child {
+        border-bottom: none;
+    }
+
+    .heroBanner {
+        height: 45vh;
+        align-items: flex-end;
+    }
+
+    .internshipCard {
+        padding: 2rem;
     }
 }

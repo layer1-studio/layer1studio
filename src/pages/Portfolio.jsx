@@ -39,85 +39,71 @@ const Portfolio = () => {
     ];
 
     const projects = dbProjects.length > 0 ? dbProjects : defaultProjects;
-
-    const filteredProjects = activeFilter === 'All'
-        ? projects
-        : projects.filter(p => p.category === activeFilter);
+    const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
 
     return (
         <div className={styles.portfolioPage}>
-            <header className={styles.header}>
+            <header className={styles.heroBanner}>
                 <div className="container">
-                    <div className={styles.heroGrid}>
-                        <div className={styles.heroContent}>
-                            <div className={styles.badge}>The Gallery</div>
-                            <h1 className={`${styles.title} text-gradient`}>
-                                Digital foundations, built to last.
-                            </h1>
-                            <p className={styles.subtitle}>
-                                We don't believe in vanity metrics. We believe in tools that work, systems that scale, and code that remains elegant under pressure.
-                            </p>
-                        </div>
-                        <div className={styles.visualWrapper}>
-                            <img src={`${import.meta.env.BASE_URL}assets/portfolio_visual.png`} alt="Portfolio" className={styles.heroVisual} />
-                        </div>
-                    </div>
+                    <p className={styles.eyebrow}>The Gallery</p>
+                    <h1 className={styles.pageTitle}>
+                        Digital foundations,<br />built to last.
+                    </h1>
+                    <p className={styles.pageSubtitle}>
+                        We don't believe in vanity metrics. We believe in tools that work, systems that scale, and code that remains elegant under pressure.
+                    </p>
                 </div>
             </header>
 
-            <div className="container">
-                <div className={styles.filterGroup}>
-                    {categories.map(cat => (
-                        <button
-                            key={cat}
-                            className={`${styles.filterBtn} ${activeFilter === cat ? styles.activeFilter : ''}`}
-                            onClick={() => setActiveFilter(cat)}
-                        >
-                            {cat}
-                        </button>
-                    ))}
-                </div>
-
-                <div className={styles.grid}>
-                    {filteredProjects.map((project, index) => (
-                        <div key={index} className={styles.card}>
-                            <div className={styles.imageWrapper}>
-                                {project.image ? (
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className={styles.image}
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src = 'https://via.placeholder.com/800x600?text=Project+Image';
-                                        }}
-                                    />
-                                ) : (
-                                    <div className={styles.imagePlaceholder}>
-                                        <span className="material-symbols-outlined">image</span>
-                                        <p>Image not found</p>
-                                    </div>
-                                )}
-                                <div className={styles.overlay}>
-                                    <Link to="/contact" className={styles.viewBtn}>
-                                        Inquire Now
-                                        <span className="material-symbols-outlined">arrow_forward</span>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className={styles.cardContent}>
-                                <h3 className={styles.cardTitle}>{project.title}</h3>
-                                <p className={styles.cardText}>{project.text}</p>
-                                <div className={styles.tagGroup}>
-                                    {project.tags.map(tag => (
-                                        <span key={tag} className={styles.tag}>{tag}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+            <div className={styles.filterBar}>
+                <div className="container">
+                    <div className={styles.filters}>
+                        {categories.map(cat => (
+                            <button
+                                key={cat}
+                                className={`${styles.filterBtn} ${activeFilter === cat ? styles.active : ''}`}
+                                onClick={() => setActiveFilter(cat)}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
+
+            <section className={styles.projectsSection}>
+                <div className="container">
+                    <div className={styles.projectsGrid}>
+                        {filteredProjects.map((project, index) => (
+                            <div key={index} className={styles.projectCard}>
+                                <div className={styles.imageWrapper}>
+                                    {project.image ? (
+                                        <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className={styles.projectImage}
+                                            onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/800x600?text=Project'; }}
+                                        />
+                                    ) : (
+                                        <div style={{ width: '100%', height: '240px', background: 'var(--navy-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <span className="material-symbols-outlined" style={{ color: 'var(--text-muted)', fontSize: '2rem' }}>image</span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className={styles.cardContent}>
+                                    <div className={styles.projectTags}>
+                                        {project.tags && project.tags.map(tag => (
+                                            <span key={tag} className={styles.tag}>{tag}</span>
+                                        ))}
+                                    </div>
+                                    <h3 className={styles.projectTitle}>{project.title}</h3>
+                                    <p className={styles.projectDescription}>{project.text}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };

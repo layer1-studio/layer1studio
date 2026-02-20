@@ -6,11 +6,11 @@
 .formCard {
     max-width: 600px;
     margin: 0 auto;
-    background: rgba(18, 24, 32, 0.4);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--white-5);
+    background: #fff;
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-3xl);
     padding: 4rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
 .header {
@@ -21,8 +21,8 @@
 .badge {
     display: inline-block;
     padding: 0.4rem 1rem;
-    background: rgba(121, 197, 227, 0.1);
-    border: 1px solid rgba(121, 197, 227, 0.2);
+    background: rgba(2, 132, 199, 0.08);
+    border: 1px solid rgba(2, 132, 199, 0.2);
     border-radius: 100px;
     color: var(--primary);
     font-size: 0.7rem;
@@ -58,20 +58,29 @@
 }
 
 .field input {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--white-10);
+    background: var(--navy-surface);
+    border: 1px solid var(--border-light);
     border-radius: 12px;
     padding: 1rem;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
 }
 
 .fileUpload {
-    border: 1px dashed var(--white-20);
+    border: 1px dashed var(--border-light);
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--navy-surface);
 }
 
 .fileUpload input {
@@ -88,17 +97,20 @@
 
 .submitBtn {
     background: var(--primary);
-    color: var(--navy-deep);
+    color: #fff;
     padding: 1.25rem;
     border-radius: 12px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2);
 }
 
 .submitBtn:hover:not(:disabled) {
-    box-shadow: 0 10px 30px rgba(121, 197, 227, 0.3);
+    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.35);
+    transform: translateY(-2px);
+    filter: brightness(1.05);
 }
 
 .submitBtn:disabled {

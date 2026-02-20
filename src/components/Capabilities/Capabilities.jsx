@@ -17,7 +17,7 @@ const Capabilities = () => {
         },
         {
             icon: 'layers',
-            title: 'Software Engineering Architecture',
+            title: 'Software Architecture',
             text: 'The infrastructure that powers your ambition. Secure, distributed, and built to handle your highest-velocity days.',
             list: ['Infinite Cloud Scaling', 'Secure API Ecosystems', 'Zero-Downtime Architecture']
         }
@@ -26,23 +26,22 @@ const Capabilities = () => {
     return (
         <section id="services" className={styles.capabilities}>
             <div className="container">
-                <div className={styles.header}>
-                    <h2 className={styles.title}>What we do best</h2>
-                    <p className={styles.subtitle}>Specialized engineering for the things that usually fail.</p>
+                <div className={styles.sectionHeader}>
+                    <p className={styles.eyebrow}>What we do</p>
+                    <h2 className={styles.sectionTitle}>Engineered for growth</h2>
+                    <p className={styles.sectionSubtitle}>Specialized engineering for the things that usually fail.</p>
                 </div>
 
                 <div className={styles.grid}>
                     {services.map((service, index) => (
                         <div key={index} className={styles.card}>
-                            <div className={styles.iconWrapper}>
-                                <span className="material-symbols-outlined">{service.icon}</span>
-                            </div>
+                            <span className={`material-symbols-outlined ${styles.cardIcon}`}>{service.icon}</span>
                             <h3 className={styles.cardTitle}>{service.title}</h3>
                             <p className={styles.cardText}>{service.text}</p>
-                            <ul className={styles.list}>
+                            <ul className={styles.features}>
                                 {service.list.map((item, i) => (
-                                    <li key={i} className={styles.listItem}>
-                                        <span className={`material-symbols-outlined ${styles.checkIcon}`}>check_circle</span>
+                                    <li key={i} className={styles.featureItem}>
+                                        <span className="material-symbols-outlined">check</span>
                                         {item}
                                     </li>
                                 ))}

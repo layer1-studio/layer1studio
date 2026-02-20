@@ -4,11 +4,11 @@ import styles from './Hero.module.css';
 
 const Hero = () => {
     return (
-        <section className={`${styles.hero} hero-gradient`}>
+        <section className={styles.hero}>
             <div className="container">
                 <div className={styles.heroContent}>
-                    <span className={styles.badge}>High Velocity. Pure Engineering.</span>
-                    <h1 className={`${styles.title} text-gradient`}>
+                    <p className={styles.eyebrow}>High Velocity. Pure Engineering.</p>
+                    <h1 className={styles.title}>
                         Foundations for the future.
                     </h1>
                     <p className={styles.subtitle}>
@@ -25,7 +25,6 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
-            <div className={styles.glow} />
         </section>
     );
 };

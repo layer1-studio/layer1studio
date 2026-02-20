@@ -7,10 +7,11 @@
     display: flex;
     align-items: center;
     z-index: 1000;
-    border-bottom: 1px solid var(--white-5);
-    background: rgba(10, 12, 16, 0.8);
-    backdrop-filter: blur(12px);
-    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(2, 132, 199, 0.15);
+    background: rgba(240, 249, 255, 0.95);
+    /* Light sky-blue tint */
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s ease;
 }
 
 .navbarContent {
@@ -22,9 +23,10 @@
 
 .logo {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 .logo span {
@@ -38,41 +40,53 @@
 }
 
 .navItem {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--slate-400);
-    letter-spacing: 0.02em;
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .navItem:hover {
-    color: var(--primary);
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
 }
 
 .activeNavItem {
-    color: #fff;
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
 }
 
+/* "Book a Call" becomes a plain link with subtle underline */
 .ctaButton {
-    background: var(--primary);
-    color: var(--navy-deep);
-    padding: 0.75rem 1.5rem;
-    border-radius: 100px;
+    font-family: var(--font-main);
+    font-size: 0.8rem;
     font-weight: 700;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
+    color: var(--primary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--primary);
+    transition: opacity 0.2s ease;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding-inline: 0;
 }
 
 .ctaButton:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 20px rgba(121, 197, 227, 0.3);
+    opacity: 0.7;
+    filter: none;
+    box-shadow: none;
 }
 
 .menuButton {
     display: none;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 @media (max-width: 768px) {

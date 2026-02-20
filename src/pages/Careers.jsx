@@ -17,27 +17,26 @@ const Careers = () => {
         { title: 'Senior UI/UX Designer', location: 'Hybrid / London', salary: '$110k - $150k', type: 'Full-time', hot: false, description: "Design isn't just about looks. We need a thinker who understands how users move through complex systems and can make that movement feel effortless." }
     ];
 
-    // Show db jobs if they exist, otherwise show defaults (but only after loading is done)
     const jobs = (dbJobs.length > 0) ? dbJobs : (loading ? [] : defaultJobs);
 
     return (
         <div className={styles.careersPage}>
-            <header className={styles.hero}>
-                <div className="container">
-                    <div className={styles.heroGrid}>
-                        <div className={styles.heroContent}>
-                            <span className={styles.badge}>Join our mission</span>
-                            <h1 className={`${styles.title} text-gradient`}>
-                                Software Engineering Careers at Layer1.Studio
-                            </h1>
-                            <p className={styles.subtitle}>
-                                We are a high-velocity collective of product thinkers and full-stack engineers crafting custom software, web apps, and mobile solutions (iOS & Android) that stand the test of time. Join a London & Colombo based studio where quality isn't a goal - it's the baseline. Explore our software engineering careers and paid internships.
-                            </p>
-                        </div>
-                        <div className={styles.visualWrapper}>
-                            <img src={`${import.meta.env.BASE_URL}assets/careers_visual.png`} alt="Careers" className={styles.heroVisual} />
-                        </div>
-                    </div>
+            {/* Full-bleed banner — Valentina pattern */}
+            <header className={styles.heroBanner}>
+                <div className={styles.bannerOverlay} />
+                <img
+                    src={`${import.meta.env.BASE_URL}assets/careers_visual.png`}
+                    alt=""
+                    className={styles.bannerImage}
+                />
+                <div className={styles.bannerContent}>
+                    <p className={styles.eyebrow}>Join our mission</p>
+                    <h1 className={styles.title}>
+                        Software Engineering<br />Careers at Layer1.Studio
+                    </h1>
+                    <p className={styles.subtitle}>
+                        A London &amp; Colombo based studio where quality isn't a goal — it's the baseline.
+                    </p>
                 </div>
             </header>
 
@@ -106,13 +105,15 @@ const Careers = () => {
                     </div>
                 </div>
             </section>
+
             <section className={styles.internships}>
                 <div className="container">
                     <div className={styles.internshipCard}>
                         <div className={styles.internshipContent}>
+                            <p className={styles.eyebrow}>For students & juniors</p>
                             <h2 className={styles.sectionTitle}>Engineering Internships</h2>
                             <p className={styles.sectionSubtitle}>
-                                For computer science students and junior developers who want to learn by building real production software. Our internships are intensive, paid, and focused on high-velocity web and app development across the full stack (Frontend, Backend, and Mobile).
+                                Intensive, paid internships in full-stack web and app development. Learn by building real production software.
                             </p>
                             <button
                                 className={styles.applyBtn}

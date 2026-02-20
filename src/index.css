@@ -1,19 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
+  --font-display: 'DM Serif Display', Georgia, serif;
   --font-main: 'Outfit', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-serif: 'DM Serif Display', Georgia, serif;
 
-  /* Primary Palette */
-  --primary: #79c5e3;
-  --primary-glow: rgba(121, 197, 227, 0.4);
+  /* Primary */
+  --primary: #1a56db;
+  /* richer indigo-blue */
+  --primary-glow: rgba(26, 86, 219, 0.2);
+  --deep-blue: #1e3a8a;
+  /* deep navy accent */
+  --navy-ink: #0f2d5e;
+  /* very deep ink blue */
 
-  /* Deep Navy Tones */
-  --navy-deep: #0a0c10;
-  --navy-surface: #121820;
-  --navy-accent: #1a222c;
+  /* Backgrounds */
+  --navy-deep: #f0f7ff;
+  /* soft sky-blue page background */
+  --navy-surface: #e8f4fd;
+  /* slightly deeper sky-blue for card/section alternates */
+  --navy-accent: #d1e9f9;
+  /* sky-blue accent for hover/borders */
 
-  /* Slate Tones */
+  /* Additional tints */
+  --sky-50: #f0f9ff;
+  --sky-100: #e0f2fe;
+  --sky-200: #bae6fd;
+  --warm-white: #ffffff;
+  --section-alt: #edf6fd;
+  /* alternate section tint */
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+
+  /* Slate scale */
   --slate-50: #f8fafc;
   --slate-100: #f1f5f9;
   --slate-200: #e2e8f0;
@@ -25,33 +47,32 @@
   --slate-800: #1e293b;
   --slate-900: #0f172a;
 
-  /* Transparencies */
-  --white-5: rgba(255, 255, 255, 0.05);
-  --white-10: rgba(255, 255, 255, 0.1);
-  --white-20: rgba(255, 255, 255, 0.2);
+  /* Borders */
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-light: rgba(0, 0, 0, 0.1);
+  --white-5: rgba(0, 0, 0, 0.05);
+  --white-10: rgba(0, 0, 0, 0.08);
+  --white-20: rgba(0, 0, 0, 0.12);
 
   /* Layout */
-  --header-height: 80px;
+  --header-height: 72px;
   --container-width: 1200px;
 
   /* Radii */
-  --radius-xl: 12px;
-  --radius-2xl: 20px;
-  --radius-3xl: 32px;
+  --radius-xl: 10px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
 
   /* Shadows */
-  --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.3);
-  --shadow-premium-hover: 0 30px 60px rgba(0, 0, 0, 0.5);
+  --shadow-premium: 0 2px 16px rgba(0, 0, 0, 0.06);
+  --shadow-premium-hover: 0 8px 32px rgba(0, 0, 0, 0.1);
 
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: dark;
-  color: #fff;
+  color-scheme: light;
+  color: var(--text-body);
   background-color: var(--navy-deep);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -63,56 +84,29 @@
 body {
   font-family: var(--font-main);
   background-color: var(--navy-deep);
+  color: var(--text-body);
   overflow-x: hidden;
-  position: relative;
 }
 
-/* Global Texture Overlay */
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: url('https://grainy-gradients.vercel.app/noise.svg');
-  opacity: 0.25;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: overlay;
-}
-
-.container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 2rem;
+  display: none;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  line-height: 1.1;
-  font-weight: 700;
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #fff 0%, var(--slate-400) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.serif-human {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-display);
   font-weight: 400;
-  opacity: 0.9;
+  /* Serif display fonts look best at regular weight */
+  line-height: 1.1;
+  color: var(--text-primary);
 }
 
 a {
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 button {
