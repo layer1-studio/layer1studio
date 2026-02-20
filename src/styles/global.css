@@ -100,3 +100,90 @@ button {
         padding: 0 1.25rem;
     }
 }
+
+/* ─── Premium Feel ─────────────────────────────────────────── */
+
+/* Branded selection */
+::selection {
+    background: rgba(26, 86, 219, 0.18);
+    color: #0f2d5e;
+}
+
+/* Thin blue scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f7ff;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(26, 86, 219, 0.28);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 86, 219, 0.5);
+}
+
+/* Scroll fade-in-up */
+.fade-in {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delays for child lists */
+.fade-in:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.fade-in:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.fade-in:nth-child(4) {
+    transition-delay: 0.3s;
+}
+
+/* Subtle card hover lift */
+.hover-lift {
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.28s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(26, 86, 219, 0.1);
+}
+
+/* Section eyebrow with rule leader (use on any .eyebrow element) */
+.eyebrow-rule {
+    font-family: var(--font-main);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.eyebrow-rule::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+}

@@ -16,27 +16,28 @@ const Portfolio = () => {
 
     const defaultProjects = [
         {
-            title: 'Marketing Agency Website',
+            title: 'Ananta Collective',
             category: 'Web Development',
-            text: 'Premium landing page and lead generation system for a cutting-edge creative agency.',
-            tags: ['React', 'Framer Motion'],
-            image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCY5_DOj58Gd86kyFqTh-UMlYh-Ucb65wd-sD-b96Inv833_ls5oCdaUJMbAxpqb60X8Px2eJXNKFr7i6BsyCXfWb5A3IWK9wWz7wYU0BWFTaP_fjSV9cnfcCM3nlxsqoJtpPGz8JP5UCnjJH5sGy_nYFeiO87DUpizoshaQ7T8TStniKD-jRQvU0XFSB5kyYUfzn_vflPT72nupuVZLVceUlAQtAzcVfTFlYT4DOpY97kbBO4dooSt0ln5qlY8dNQ3Vlvf4b3zdmeI'
+            text: 'Premium website and lead generation system for a London-based creative marketing agency.',
+            tags: ['React', 'Framer Motion', 'Node.js'],
+            image: `${import.meta.env.BASE_URL}assets/ananta_project.png`,
         },
         {
-            title: 'E-commerce Website',
+            title: 'Ambrosia — Cinnamon E-commerce',
             category: 'Web Development',
-            text: 'Modern shopping experience with integrated payment gateways and real-time inventory.',
-            tags: ['Next.js', 'Stripe'],
-            image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCgbZxfNBLuDsa2QV28yTaF9_B3Ya2cUh6RbaCJyuolqZhgP2bI28S8SnmxLbea9fJcpdkW57gTSrGcfaziwyLuYUIOeFfY4thy9nV6dOkhWjI9IzXqjtO6lw9Y8HMrvYAc9MoFgOlOwI5v0UKORF6p8m40k7rdG4d_88AsWNWvdZEScmM_1J5QoD7nqOMd4CB4qzgsc4mrtjm-y6N4i6mCEbnmTVpheZ-FDvNGQ67LZX6LypqPAVqjRyVi6b9rVIN8PgAxLD29QHiG'
+            text: 'End-to-end e-commerce store for a premium Ceylon cinnamon brand, with Stripe payments and real-time inventory.',
+            tags: ['Next.js', 'Stripe', 'Tailwind'],
+            image: `${import.meta.env.BASE_URL}assets/ambrosia_shop.png`,
         },
         {
-            title: 'Admin Panel & Dashboard',
+            title: 'Ambrosia — Admin Panel',
             category: 'Dashboards',
-            text: 'Powerful internal tool for managing complex business operations and data analytics.',
-            tags: ['React', 'Node.js'],
-            image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCflepDypeli6J7rrskPHYWCaPnyVhzc-slMHXqrt2QM5mTB9V21AV9E7KaTTZHPncHYXIhtu5vBIDGuqSXIjEWFmig6hUUGli9TVVwpF8WQpHWBDer-OxWWsAEKdympaombGF_Q3HgencfCxqccCNgDmBEXS7GcpIXLDA4a-dseIJ8rGPgYYevXJQjxs-wADJ3lv8f5i7z0Aj4baEiCqdW7RDUcAV3MMybsKXnhY33ilp4ciLeD6Uequ_8XuNZLxYYiwrWOy3UxzXS'
-        }
+            text: 'Internal operations dashboard for managing Ambrosia orders, products, customers, and revenue analytics.',
+            tags: ['React', 'Node.js', 'Firebase'],
+            image: `${import.meta.env.BASE_URL}assets/ambrosia_admin.png`,
+        },
     ];
+
 
     const projects = dbProjects.length > 0 ? dbProjects : defaultProjects;
     const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
