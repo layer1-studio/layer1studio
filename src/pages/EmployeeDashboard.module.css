@@ -1,7 +1,8 @@
 .dashboard {
     min-height: 100vh;
     background: #f8fafc;
-    padding: 2rem 0;
+    padding-top: calc(var(--header-height, 100px) + 2rem);
+    padding-bottom: 2rem;
     font-family: 'Outfit', sans-serif;
 }
 

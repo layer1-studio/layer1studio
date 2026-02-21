@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: calc(var(--header-height, 100px) + 2rem) 2rem 2rem 2rem;
     font-family: 'Outfit', sans-serif;
 }
 
