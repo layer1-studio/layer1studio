@@ -6,7 +6,17 @@ import styles from './PortfolioPreview.module.css';
 const PortfolioPreview = () => {
     const { data: allProjects, loading } = useContent('projects');
 
-    const projects = allProjects.length > 0 ? allProjects.slice(0, 3) : [];
+    const getFallbackImage = (title) => {
+        const t = (title || '').toLowerCase();
+        if (t.includes('admin')) return `${import.meta.env.BASE_URL}assets/ambrosia_admin.png`;
+        if (t.includes('ambrosia')) return `${import.meta.env.BASE_URL}assets/ambrosia_shop.png`;
+        if (t.includes('ananta')) return `${import.meta.env.BASE_URL}assets/ananta_project.png`;
+        return null;
+    };
+
+    const projects = allProjects.length > 0
+        ? allProjects.slice(0, 3).map(p => ({ ...p, image: p.image || getFallbackImage(p.title) }))
+        : [];
 
     if (loading && allProjects.length === 0) return null;
 

@@ -38,8 +38,26 @@ const Portfolio = () => {
         },
     ];
 
+    // Fallback images for DB projects that don't have images set
+    const fallbackImages = {
+        ananta: `${import.meta.env.BASE_URL}assets/ananta_project.png`,
+        ambrosia: `${import.meta.env.BASE_URL}assets/ambrosia_shop.png`,
+        admin: `${import.meta.env.BASE_URL}assets/ambrosia_admin.png`,
+    };
 
-    const projects = dbProjects.length > 0 ? dbProjects : defaultProjects;
+    const getFallbackImage = (title) => {
+        const t = (title || '').toLowerCase();
+        if (t.includes('admin')) return fallbackImages.admin;
+        if (t.includes('ambrosia')) return fallbackImages.ambrosia;
+        if (t.includes('ananta')) return fallbackImages.ananta;
+        return null;
+    };
+
+    const rawProjects = dbProjects.length > 0 ? dbProjects : defaultProjects;
+    const projects = rawProjects.map(p => ({
+        ...p,
+        image: p.image || getFallbackImage(p.title),
+    }));
     const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
 
     return (
