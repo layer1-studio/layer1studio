@@ -68,6 +68,11 @@ const FinanceDashboard = () => {
         netPay: ''
     });
 
+    // History Filters
+    const [historyFilterMonth, setHistoryFilterMonth] = useState('all');
+    const [historyFilterYear, setHistoryFilterYear] = useState(getCurrentPayPeriod().year.toString());
+    const [historyFilterEmployee, setHistoryFilterEmployee] = useState('all');
+
     const handleLogout = async () => {
         sessionStorage.removeItem('financeAuthorized');
         await signOut(auth);
@@ -109,7 +114,7 @@ const FinanceDashboard = () => {
             const amount = parseFloat(manualForm.netPay);
 
             // 1. Add to employee's payslips sub-collection
-            await addDoc(collection(db, 'employees', manualForm.empDocId, 'payslips'), {
+            const payslipRef = await addDoc(collection(db, 'employees', manualForm.empDocId, 'payslips'), {
                 periodKey,
                 month: parseInt(manualForm.month),
                 year: parseInt(manualForm.year),
@@ -122,12 +127,8 @@ const FinanceDashboard = () => {
                 payslipId: 'MAN-' + Date.now().toString().slice(-4)
             });
 
-            // 2. Add/Update to global payroll history for visibility
-            // We check if a record for this period already exists
-            const recordId = `${periodKey}_MANUAL`;
-            // Note: We use a simplified record for manual entries in history if needed, 
-            // or we could just update the existing one. 
-            // For now, let's create a "manual_adjustment" entry or similar.
+            // 2. Add/Update to global payroll history with UNIQUE ID
+            const recordId = `${periodKey}_MANUAL_${selectedEmployee.employeeId}_${payslipRef.id.slice(-4)}`;
 
             await setDoc(doc(db, 'payroll', recordId), {
                 periodKey,
@@ -137,7 +138,14 @@ const FinanceDashboard = () => {
                 status: 'sent',
                 type: 'manual_entry',
                 employeeName: selectedEmployee.name,
-                employees: [{ name: selectedEmployee.name, netPay: amount }],
+                employeeId: selectedEmployee.id,
+                employees: [{
+                    name: selectedEmployee.name,
+                    employeeId: selectedEmployee.id,
+                    empCode: selectedEmployee.employeeId,
+                    netPay: amount,
+                    status: 'sent'
+                }],
                 authorizedAt: serverTimestamp(),
                 payDay: settings.payDay
             });
@@ -281,12 +289,47 @@ const FinanceDashboard = () => {
     };
 
     // ─── History ─────────────────────────────────────────────────
-    const sortedHistory = useMemo(() => {
-        return [...payrollRecords].sort((a, b) => {
-            if (a.year !== b.year) return b.year - a.year;
-            return b.month - a.month;
+    const filteredHistory = useMemo(() => {
+        // Flatten records into individual payment lines if needed, or filter as is
+        let items = [];
+
+        payrollRecords.forEach(record => {
+            // Use forEach to build individual lines for each employee in a run
+            if (record.employees && record.employees.length > 0) {
+                record.employees.forEach(empPay => {
+                    items.push({
+                        ...record,
+                        // Override individual info
+                        displayId: `${record.id}_${empPay.employeeId || empPay.empCode}`,
+                        employeeName: empPay.name,
+                        employeeId: empPay.employeeId || empPay.empCode,
+                        netPay: empPay.netPay,
+                        status: empPay.status || record.status,
+                        isBulkPart: record.type !== 'manual_entry'
+                    });
+                });
+            } else if (record.type === 'manual_entry') {
+                items.push({
+                    ...record,
+                    displayId: record.id,
+                });
+            }
         });
-    }, [payrollRecords]);
+
+        // Apply filters
+        return items.filter(item => {
+            const matchMonth = historyFilterMonth === 'all' || item.month.toString() === historyFilterMonth;
+            const matchYear = historyFilterYear === 'all' || item.year.toString() === historyFilterYear;
+            const matchEmployee = historyFilterEmployee === 'all' || item.employeeId === historyFilterEmployee;
+            return matchMonth && matchYear && matchEmployee;
+        }).sort((a, b) => {
+            if (a.year !== b.year) return b.year - a.year;
+            if (a.month !== b.month) return b.month - a.month;
+            return b.authorizedAt?.seconds - a.authorizedAt?.seconds;
+        });
+    }, [payrollRecords, historyFilterMonth, historyFilterYear, historyFilterEmployee]);
+
+    const sortedHistory = filteredHistory; // For backward compatibility in logic if needed
 
     const formatCurrency = (val) => {
         return new Intl.NumberFormat('en-LK', { style: 'currency', currency: 'LKR', currencyDisplay: 'symbol' }).format(val || 0).replace('LKR', 'Rs.');
@@ -709,6 +752,75 @@ const FinanceDashboard = () => {
                                 </button>
                             </div>
 
+                            <div className={styles.filtersBar} style={{
+                                display: 'flex',
+                                gap: '1rem',
+                                marginBottom: '2rem',
+                                background: '#f8fafc',
+                                padding: '1.25rem',
+                                borderRadius: '12px',
+                                border: '1px solid #e2e8f0',
+                                flexWrap: 'wrap'
+                            }}>
+                                <div className={styles.filterField} style={{ flex: '1', minWidth: '150px' }}>
+                                    <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#64748b', display: 'block', marginBottom: '0.5rem' }}>FILTER EMPLOYEE</label>
+                                    <select
+                                        className={styles.monthSelect}
+                                        value={historyFilterEmployee}
+                                        onChange={e => setHistoryFilterEmployee(e.target.value)}
+                                        style={{ width: '100%' }}
+                                    >
+                                        <option value="all">All Employees</option>
+                                        {employees.map(emp => (
+                                            <option key={emp.id} value={emp.id}>{emp.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className={styles.filterField} style={{ flex: '0.5', minWidth: '120px' }}>
+                                    <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#64748b', display: 'block', marginBottom: '0.5rem' }}>MONTH</label>
+                                    <select
+                                        className={styles.monthSelect}
+                                        value={historyFilterMonth}
+                                        onChange={e => setHistoryFilterMonth(e.target.value)}
+                                        style={{ width: '100%' }}
+                                    >
+                                        <option value="all">All Months</option>
+                                        {[...Array(12)].map((_, i) => (
+                                            <option key={i} value={i}>{getMonthName(i)}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className={styles.filterField} style={{ flex: '0.5', minWidth: '100px' }}>
+                                    <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#64748b', display: 'block', marginBottom: '0.5rem' }}>YEAR</label>
+                                    <select
+                                        className={styles.yearSelect}
+                                        value={historyFilterYear}
+                                        onChange={e => setHistoryFilterYear(e.target.value)}
+                                        style={{ width: '100%' }}
+                                    >
+                                        <option value="all">All Years</option>
+                                        {[2024, 2025, 2026].map(y => (
+                                            <option key={y} value={y.toString()}>{y}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <button
+                                    onClick={() => { setHistoryFilterEmployee('all'); setHistoryFilterMonth('all'); setHistoryFilterYear('all'); }}
+                                    style={{
+                                        alignSelf: 'flex-end',
+                                        padding: '0.6rem 1rem',
+                                        fontSize: '0.85rem',
+                                        background: '#fff',
+                                        border: '1px solid #cbd5e1',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        color: '#64748b'
+                                    }}
+                                >
+                                    Reset
+                                </button>
+                            </div>
+
                             {showManualForm && (
                                 <form className={styles.form} onSubmit={handleSaveManualEntry}>
                                     <h3 style={{ color: '#f59e0b' }}>New Historical Entry</h3>
@@ -775,18 +887,29 @@ const FinanceDashboard = () => {
                             )}
 
                             {sortedHistory.length === 0 ? (
-                                <p className={styles.emptyMsg}>No payroll records yet.</p>
+                                <p className={styles.emptyMsg}>No payroll records found for the selected filters.</p>
                             ) : (
                                 <div className={styles.historyList}>
                                     {sortedHistory.map(record => (
-                                        <div key={record.id} className={styles.historyCard}>
+                                        <div key={record.displayId} className={styles.historyCard}>
                                             <div className={styles.historyInfo}>
-                                                <h4>{getMonthName(record.month)} {record.year}</h4>
-                                                <p>{record.employees?.length || 0} employees • Pay day: {record.payDay}th</p>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                                    <span className="material-symbols-outlined" style={{ color: record.type === 'manual_entry' ? '#f59e0b' : '#10b981' }}>
+                                                        {record.type === 'manual_entry' ? 'history_edu' : 'receipt_long'}
+                                                    </span>
+                                                    <div>
+                                                        <h4 style={{ margin: 0 }}>{record.employeeName}</h4>
+                                                        <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+                                                            {getMonthName(record.month)} {record.year} • {record.type === 'manual_entry' ? 'Manual Entry' : 'Payroll Run'}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className={styles.historyRight}>
-                                                <span className={styles.historyTotal}>{formatCurrency(record.totalPayroll)}</span>
-                                                <span className={`${styles.statusBadge} ${styles[record.status]} `}>
+                                            <div className={styles.historyRight} style={{ textAlign: 'right' }}>
+                                                <span className={styles.historyTotal} style={{ display: 'block', fontWeight: '700', fontSize: '1.1rem' }}>
+                                                    {formatCurrency(record.netPay)}
+                                                </span>
+                                                <span className={`${styles.statusBadge} ${styles[record.status]} `} style={{ fontSize: '0.7rem' }}>
                                                     {record.status}
                                                 </span>
                                             </div>
