@@ -294,7 +294,7 @@ const FinanceDashboard = () => {
                                             <input value={employeeForm.employeeId} onChange={e => setEmployeeForm({ ...employeeForm, employeeId: e.target.value })} placeholder="L1-EMP-001" required />
                                         </div>
                                         <div className={styles.field}>
-                                            <label>Base Monthly Salary (£)</label>
+                                            <label>Base Monthly Salary (Rs.)</label>
                                             <input type="number" step="0.01" value={employeeForm.baseSalary} onChange={e => setEmployeeForm({ ...employeeForm, baseSalary: e.target.value })} required />
                                         </div>
                                         <div className={styles.field}>
