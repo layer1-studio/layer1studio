@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - NDA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page text-doc">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Non-Disclosure Agreement</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+            </div>
+        </header>
+
+        <section class="nda-intro" style="margin-bottom: 30px;">
+            <p><strong>This Non-Disclosure Agreement (the "Agreement") is entered into on {{date}} by and
+                    between:</strong></p>
+            <div style="margin: 20px 0;">
+                <p><strong>Disclosing Party:</strong> {{disclosing_party}}</p>
+                <p><strong>Receiving Party:</strong> {{receiving_party}}</p>
+            </div>
+        </section>
+
+        <section class="nda-content" style="font-size: 10pt; line-height: 1.5; color: var(--text-main);">
+            <p style="margin-bottom: 15px;"><strong>1. Purpose:</strong> The parties wish to explore a business
+                opportunity related to: <em>{{purpose}}</em>.</p>
+            <p style="margin-bottom: 15px;"><strong>2. Confidential Information:</strong> Includes all data, designs,
+                and business strategies disclosed by {{disclosing_party}}.</p>
+            <p style="margin-bottom: 15px;"><strong>3. Term:</strong> This agreement shall remain in effect for a period
+                of <strong>{{term}}</strong> from the Effective Date.</p>
+            <p style="margin-bottom: 15px;"><strong>4. Governing Law:</strong> This agreement shall be governed by the
+                laws of {{state_law}}.</p>
+        </section>
+
+        <section class="signatures" style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div>
+                <p style="border-bottom: 1px solid #000; height: 40px;"></p>
+                <p style="margin-top: 10px;">For {{disclosing_party}}</p>
+            </div>
+            <div>
+                <p style="border-bottom: 1px solid #000; height: 40px;"></p>
+                <p style="margin-top: 10px;">For {{receiving_party}}</p>
+            </div>
+        </section>
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>NDA Agreement</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>

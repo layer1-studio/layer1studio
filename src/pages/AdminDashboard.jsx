@@ -149,7 +149,7 @@ const AdminDashboard = () => {
                         <h1 className={styles.title}>Studio <span>Manager</span></h1>
                         <div className={styles.headerActions}>
                             <a
-                                href="https://layer1-studio.github.io/l1s-branding-templates/"
+                                href="/branding/"
                                 target="_blank"
                                 rel="noreferrer"
                                 className={styles.secondaryBtn}

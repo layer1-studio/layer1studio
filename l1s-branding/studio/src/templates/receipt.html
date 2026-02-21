@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - Receipt</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page text-doc">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Payment Receipt</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+                <p>Receipt #{{receipt_number}}</p>
+            </div>
+        </header>
+
+        <section class="receipt-body"
+            style="margin-top: 40px; padding: 30px; background: var(--slate-100); border-radius: 12px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">Received From</h3>
+                    <p style="font-size: 14pt; font-weight: 700;">{{paid_by}}</p>
+                </div>
+                <div style="text-align: right;">
+                    <h3 style="font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">Amount Paid</h3>
+                    <p style="font-size: 18pt; font-weight: 800; color: #10b981;">{{amount_paid}}</p>
+                </div>
+            </div>
+
+            <div
+                style="margin-top: 30px; border-top: 1px dashed var(--slate-200); padding-top: 20px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">For Payment of</h3>
+                    <p>{{description}}</p>
+                </div>
+                <div style="text-align: right;">
+                    <h3 style="font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">Payment Method</h3>
+                    <p>{{payment_method}}</p>
+                    <p style="font-size: 8pt; color: var(--text-muted); margin-top: 5px;">Ref: {{transaction_id}}</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 40px; text-align: center;">
+            <p style="font-size: 9pt; color: var(--text-muted);">Date: {{date}}</p>
+        </section>
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>Payment Confirmation</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>

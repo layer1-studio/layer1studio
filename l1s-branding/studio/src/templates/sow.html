@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - SOW - {{project_name}}</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page text-doc">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Statement of Work</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+                <p>Ref: {{sow_reference}}</p>
+            </div>
+        </header>
+
+        <section class="sow-intro">
+            <h2 style="font-size: 16pt; margin-bottom: 20px;">Project Scope: {{project_name}}</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px;">
+                <div>
+                    <h3 style="font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">Client</h3>
+                    <p><strong>{{client.name}}</strong></p>
+                </div>
+                <div>
+                    <h3 style="font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">Date</h3>
+                    <p>{{date}}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="sow-section">
+            <h3
+                style="text-transform: uppercase; font-size: 10pt; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 15px;">
+                1. Project Overview</h3>
+            <p style="white-space: pre-line;">{{overview}}</p>
+        </section>
+
+        <section class="sow-section" style="margin-top: 30px;">
+            <h3
+                style="text-transform: uppercase; font-size: 10pt; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 15px;">
+                2. Deliverables & Timeline</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 70%">Deliverable</th>
+                        <th style="width: 30%; text-align: right;">Deadline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each deliverables}}
+                    <tr>
+                        <td>{{item}}</td>
+                        <td style="text-align: right;">{{deadline}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="sow-section" style="margin-top: 30px;">
+            <h3
+                style="text-transform: uppercase; font-size: 10pt; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 15px;">
+                3. Payment Milestones</h3>
+            <p style="white-space: pre-line;">{{milestones}}</p>
+        </section>
+
+        <section class="sow-section" style="margin-top: 30px;">
+            <h3
+                style="text-transform: uppercase; font-size: 10pt; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 15px;">
+                4. Out of Scope</h3>
+            <p style="white-space: pre-line;">{{out_of_scope}}</p>
+        </section>
+
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>SOW Agreement</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>

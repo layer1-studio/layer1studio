@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - Invoice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Invoice</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+                <p>Invoice #{{invoice_number}}</p>
+            </div>
+        </header>
+
+        <section class="doc-meta">
+            <div class="client-info">
+                <h3>Bill To</h3>
+                <p><strong>{{client.name}}</strong></p>
+                <p style="white-space: pre-line;">{{client.address}}</p>
+                <p>{{client.email}}</p>
+            </div>
+            <div class="doc-info" style="text-align: right;">
+                <h3>Date Issued</h3>
+                <p>{{date}}</p>
+                <h3 style="margin-top: 15px;">Due Date</h3>
+                <p style="color: #e63946; font-weight: 700;">{{due_date}}</p>
+            </div>
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 70%">Description</th>
+                    <th style="width: 30%; text-align: right;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each items}}
+                <tr>
+                    <td><strong>{{description}}</strong></td>
+                    <td style="text-align: right;">{{amount}}</td>
+                </tr>
+                {{/each}}
+                <tr class="total-row">
+                    <td class="label">Subtotal</td>
+                    <td style="text-align: right;">{{subtotal}}</td>
+                </tr>
+                <tr class="total-row">
+                    <td class="label">Tax (VAT {{tax}}%)</td>
+                    <td style="text-align: right;">{{tax_amount}}</td>
+                </tr>
+                <tr class="total-row">
+                    <td class="label" style="font-size: 14pt;">Total Amount Due</td>
+                    <td class="amount" style="text-align: right;">{{total}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <section class="payment-methods" style="margin-top: 40px;">
+            <h3 style="font-size: 10pt; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;">
+                Payment Instructions</h3>
+            <div style="background: var(--slate-100); padding: 20px; border-radius: 8px; font-size: 10pt;">
+                <p><strong>Bank:</strong> {{bank.name}}</p>
+                <p><strong>Account Name:</strong> {{bank.account_name}}</p>
+                <p><strong>Sort Code:</strong> {{bank.sort_code}} | <strong>Account:</strong> {{bank.account_number}}
+                </p>
+                <p><strong>IBAN:</strong> {{bank.iban}} | <strong>SWIFT:</strong> {{bank.swift}}</p>
+                <p style="margin-top: 10px; color: var(--text-muted);">{{payment_terms}}</p>
+            </div>
+        </section>
+
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>Invoice: {{invoice_number}}</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>

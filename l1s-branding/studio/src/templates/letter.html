@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - {{subject}}</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page text-doc">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Formal Letter</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+            </div>
+        </header>
+
+        <section class="letter-meta"
+            style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <p><strong>{{recipient_name}}</strong></p>
+                <p>{{recipient_title}}</p>
+                <p style="white-space: pre-line;">{{recipient_address}}</p>
+            </div>
+            <div style="text-align: right; font-size: 9pt; color: var(--text-muted);">
+                <p>{{date}}</p>
+                <p style="margin-top: 10px;">Our Ref: {{our_ref}}</p>
+                <p>Your Ref: {{your_ref}}</p>
+            </div>
+        </section>
+
+        <section class="letter-content">
+            <p style="margin-bottom: 25px;"><strong>Subject: {{subject}}</strong></p>
+            <p style="margin-bottom: 20px;">{{salutation}},</p>
+            <div style="white-space: pre-line; line-height: 1.6;">
+                {{body}}
+            </div>
+        </section>
+
+        <section class="letter-closing" style="margin-top: 50px;">
+            <p>{{closing}},</p>
+            <div style="margin-top: 40px; width: 220px;">
+                <div
+                    style="height: 40px; display: flex; align-items: flex-end; border-bottom: 2px solid var(--slate-100);">
+                    <span
+                        style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 14pt; color: var(--primary);">{{signatory.name}}</span>
+                </div>
+                <p style="margin-top: 10px; font-size: 10pt;"><strong>{{signatory.name}}</strong></p>
+                <p style="font-size: 9pt; color: var(--text-muted);">{{signatory.title}}</p>
+            </div>
+        </section>
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>Confidential</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>

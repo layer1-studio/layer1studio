@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - Service Letter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page text-doc">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Service Certificate</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+            </div>
+        </header>
+
+        <section class="cert-body" style="margin-top: 50px; text-align: center;">
+            <p style="font-size: 14pt; font-family: var(--font-serif); font-style: italic; margin-bottom: 30px;">To Whom
+                It May Concern</p>
+
+            <div style="line-height: 2; font-size: 11pt; text-align: justify; margin: 0 40px;">
+                This is to certify that <strong>{{employee_name}}</strong> has been employed by layer1.studio in the
+                capacity of <strong>{{designation}}</strong> from <strong>{{start_date}}</strong> to
+                <strong>{{end_date}}</strong>.
+                <br><br>
+                During {{pronoun}} tenure, {{employee_name}} was responsible for {{contributions}}. {{pronoun}}
+                performance was rated as <strong>{{performance}}</strong>.
+                <br><br>
+                We found {{employee_name}} to be a dedicated, hardworking, and innovative professional. We wish
+                {{pronoun}} the very best in {{pronoun}} future endeavors.
+            </div>
+        </section>
+
+        <section class="cert-signature" style="margin-top: 80px; text-align: center;">
+            <div
+                style="height: 60px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 5px;">
+                <span
+                    style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 20pt; color: var(--primary);">{{signatory.name}}</span>
+            </div>
+            <p style="border-bottom: 2px solid var(--slate-200); width: 220px; margin: 0 auto;"></p>
+            <p style="margin-top: 10px;"><strong>{{signatory.name}}</strong></p>
+            <p style="font-size: 10pt; color: var(--text-muted);">{{signatory.title}}, layer1.studio</p>
+            <p style="font-size: 9pt; color: var(--text-muted); margin-top: 15px;">Issued on: {{current_date}}</p>
+        </section>
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>Employment Verification</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>

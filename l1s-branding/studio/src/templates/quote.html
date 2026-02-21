@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - {{project.name}} Quote</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Project Quote</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+                <p>Quote #{{quote_number}}</p>
+            </div>
+        </header>
+
+        <section class="doc-meta">
+            <div class="client-info">
+                <h3>Prepared For</h3>
+                <p><strong>{{client.name}}</strong></p>
+                <p>Project: {{project.name}}</p>
+                <p>Estimated Timeline: {{project.timeline}}</p>
+            </div>
+            <div class="doc-info" style="text-align: right;">
+                <h3>Date</h3>
+                <p>{{date}}</p>
+                <h3 style="margin-top: 15px;">Valid Until</h3>
+                <p>{{valid_until}}</p>
+            </div>
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 70%">Service / Deliverable</th>
+                    <th style="width: 30%; text-align: right;">Estimate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each items}}
+                <tr>
+                    <td><strong>{{description}}</strong></td>
+                    <td style="text-align: right;">{{amount}}</td>
+                </tr>
+                {{/each}}
+                <tr class="total-row">
+                    <td class="label" style="font-size: 14pt;">Total Estimated Investment</td>
+                    <td class="amount" style="text-align: right;">{{total}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <section class="notes-section" style="margin-top: 40px;">
+            <h3 style="font-size: 10pt; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;">
+                Notes & Conditions</h3>
+            <div style="background: var(--slate-100); padding: 20px; border-radius: 8px; font-size: 10pt;">
+                <p style="white-space: pre-line;">{{notes}}</p>
+            </div>
+        </section>
+
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>Valid for 30 days</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>

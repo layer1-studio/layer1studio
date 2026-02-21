@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layer1.studio - Employment Offer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page text-doc">
+        <header class="header">
+            <div class="logo-section">
+                <img src="../l1s-logo.png" alt="layer1 studio logo">
+                <div class="badge">Appointment Letter</div>
+            </div>
+            <div class="studio-info">
+                <h1>layer1.studio</h1>
+                <p>London • Colombo</p>
+                <p>studio.layer1@gmail.com</p>
+                <p>Ref: {{reference}}</p>
+            </div>
+        </header>
+
+        <section class="offer-intro" style="margin-bottom: 30px;">
+            <p>{{date}}</p>
+            <div style="margin-top: 20px;">
+                <p><strong>{{candidate.name}}</strong></p>
+                <p style="white-space: pre-line;">{{candidate.address}}</p>
+                <p>{{candidate.email}}</p>
+            </div>
+        </section>
+
+        <section class="offer-subject" style="margin-bottom: 30px;">
+            <p
+                style="font-size: 14pt; font-family: var(--font-serif); font-weight: 700; border-bottom: 1px solid var(--slate-200); padding-bottom: 10px;">
+                Subject: Offer of Employment - {{position}}
+            </p>
+        </section>
+
+        <section class="offer-content" style="font-size: 10.5pt; line-height: 1.6;">
+            <p style="margin-bottom: 15px;">We are delighted to offer you the position of <strong>{{position}}</strong>
+                with layer1.studio. We believe your skills and experience will be a great asset to our team.</p>
+
+            <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: var(--slate-100); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <div>
+                    <p style="font-weight: 700; font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">
+                        Start Date</p>
+                    <p>{{start_date}}</p>
+                </div>
+                <div>
+                    <p style="font-weight: 700; font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">
+                        Remuneration</p>
+                    <p>{{remuneration}}</p>
+                </div>
+                <div>
+                    <p style="font-weight: 700; font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">
+                        Probation Period</p>
+                    <p>{{probation_period}}</p>
+                </div>
+                <div>
+                    <p style="font-weight: 700; font-size: 9pt; text-transform: uppercase; color: var(--text-muted);">
+                        Location</p>
+                    <p>{{location}}</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 20px;"><strong>Key Responsibilities:</strong></p>
+            <p style="white-space: pre-line; margin-bottom: 20px;">{{responsibilities}}</p>
+
+            <p><strong>Benefits:</strong></p>
+            <p style="white-space: pre-line; margin-bottom: 20px;">{{benefits}}</p>
+        </section>
+
+        <section class="offer-closing" style="margin-top: 40px;">
+            <p>Please confirm your acceptance by signing below.</p>
+            <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <p style="border-bottom: 1px solid #000; height: 40px;"></p>
+                    <p style="margin-top: 10px; font-size: 9pt;"><strong>{{candidate.name}}</strong><br>Candidate</p>
+                </div>
+                <div>
+                    <div style="height: 40px; display: flex; align-items: flex-end; border-bottom: 1px solid #000;">
+                        <span
+                            style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 16pt; color: var(--primary); margin-bottom: 5px;">{{signatory.name}}</span>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 9pt;">
+                        <strong>{{signatory.name}}</strong><br>{{signatory.title}}</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-accent"></div>
+        <footer class="footer-content">
+            <p>layer1.studio</p>
+            <p>Offer Letter</p>
+            <p>© 2026 layer1.studio</p>
+        </footer>
+    </div>
+</body>
+
+</html>
