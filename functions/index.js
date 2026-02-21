@@ -297,3 +297,4 @@ exports.payrollApprovalReminder = functions.region("europe-west2").runWith({
         }
         return null;
     });
+

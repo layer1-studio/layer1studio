@@ -3,7 +3,7 @@ import { useContent } from '../hooks/useContent';
 import { auth, db } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp, getDoc, collection, addDoc } from 'firebase/firestore';
 import styles from './FinanceDashboard.module.css';
 
 const getCurrentPayPeriod = () => {
@@ -24,6 +24,7 @@ const FinanceDashboard = () => {
     // Finance Config Settings
     const [settings, setSettings] = React.useState({ payDay: 22 });
     const payDay = settings.payDay;
+    const [loading, setLoading] = useState(true);
 
     React.useEffect(() => {
         const fetchSettings = async () => {
@@ -31,6 +32,7 @@ const FinanceDashboard = () => {
             if (configDoc.exists()) {
                 setSettings(configDoc.data());
             }
+            setLoading(false);
         };
         fetchSettings();
     }, []);
@@ -57,6 +59,15 @@ const FinanceDashboard = () => {
     // Confirm delete
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
+    // Manual Historical Entry state
+    const [showManualForm, setShowManualForm] = useState(false);
+    const [manualForm, setManualForm] = useState({
+        empDocId: '',
+        month: getCurrentPayPeriod().month,
+        year: getCurrentPayPeriod().year,
+        netPay: ''
+    });
+
     const handleLogout = async () => {
         sessionStorage.removeItem('financeAuthorized');
         await signOut(auth);
@@ -82,6 +93,69 @@ const FinanceDashboard = () => {
             await addEmployee(data);
         }
         resetEmployeeForm();
+    };
+
+    const handleSaveManualEntry = async (e) => {
+        e.preventDefault();
+        if (!manualForm.empDocId || !manualForm.netPay) {
+            alert('Please select an employee and enter an amount.');
+            return;
+        }
+
+        setIsProcessing(true);
+        try {
+            const selectedEmployee = employees.find(emp => emp.id === manualForm.empDocId);
+            const periodKey = `${manualForm.year}-${String(parseInt(manualForm.month) + 1).padStart(2, '0')}`;
+            const amount = parseFloat(manualForm.netPay);
+
+            // 1. Add to employee's payslips sub-collection
+            await addDoc(collection(db, 'employees', manualForm.empDocId, 'payslips'), {
+                periodKey,
+                month: parseInt(manualForm.month),
+                year: parseInt(manualForm.year),
+                netPay: amount,
+                totalEarnings: amount,
+                totalDeductions: 0,
+                sentAt: serverTimestamp(),
+                status: 'sent',
+                manualEntry: true,
+                payslipId: 'MAN-' + Date.now().toString().slice(-4)
+            });
+
+            // 2. Add/Update to global payroll history for visibility
+            // We check if a record for this period already exists
+            const recordId = `${periodKey}_MANUAL`;
+            // Note: We use a simplified record for manual entries in history if needed, 
+            // or we could just update the existing one. 
+            // For now, let's create a "manual_adjustment" entry or similar.
+
+            await setDoc(doc(db, 'payroll', recordId), {
+                periodKey,
+                month: parseInt(manualForm.month),
+                year: parseInt(manualForm.year),
+                totalPayroll: amount,
+                status: 'sent',
+                type: 'manual_entry',
+                employeeName: selectedEmployee.name,
+                employees: [{ name: selectedEmployee.name, netPay: amount }],
+                authorizedAt: serverTimestamp(),
+                payDay: settings.payDay
+            });
+
+            alert('✅ Historical record added successfully!');
+            setShowManualForm(false);
+            setManualForm({
+                empDocId: '',
+                month: getCurrentPayPeriod().month,
+                year: getCurrentPayPeriod().year,
+                netPay: ''
+            });
+        } catch (err) {
+            console.error(err);
+            alert('❌ Error adding record: ' + err.message);
+        } finally {
+            setIsProcessing(false);
+        }
     };
 
     const startEditEmployee = (emp) => {
@@ -129,11 +203,11 @@ const FinanceDashboard = () => {
     }, [employees, existingPayroll]);
 
     const getEditedValue = (empId, field) => {
-        return payrollEdits[`${empId}_${field}`];
+        return payrollEdits[`${empId}_${field} `];
     };
 
     const setEditedValue = (empId, field, value) => {
-        setPayrollEdits(prev => ({ ...prev, [`${empId}_${field}`]: value }));
+        setPayrollEdits(prev => ({ ...prev, [`${empId}_${field} `]: value }));
     };
 
     const getVal = (emp, field) => {
@@ -218,6 +292,7 @@ const FinanceDashboard = () => {
         return new Intl.NumberFormat('en-LK', { style: 'currency', currency: 'LKR', currencyDisplay: 'symbol' }).format(val || 0).replace('LKR', 'Rs.');
     };
 
+    if (loading) return <div className={styles.loading}>Loading Dashboard...</div>;
     return (
         <div className={styles.dashboard}>
             <div className="container">
@@ -232,23 +307,23 @@ const FinanceDashboard = () => {
                         </div>
                     </div>
                     <div className={styles.tabs}>
-                        <button className={`${styles.tabBtn} ${activeTab === 'employees' ? styles.active : ''}`}
+                        <button className={`${styles.tabBtn} ${activeTab === 'employees' ? styles.active : ''} `}
                             onClick={() => setActiveTab('employees')}>
                             <span className="material-symbols-outlined">group</span>
                             Employees
                         </button>
-                        <button className={`${styles.tabBtn} ${activeTab === 'payroll' ? styles.active : ''}`}
+                        <button className={`${styles.tabBtn} ${activeTab === 'payroll' ? styles.active : ''} `}
                             onClick={() => setActiveTab('payroll')}>
                             <span className="material-symbols-outlined">payments</span>
                             Payroll
                         </button>
-                        <button className={`${styles.tabBtn} ${activeTab === 'history' ? styles.active : ''}`}
+                        <button className={`${styles.tabBtn} ${activeTab === 'history' ? styles.active : ''} `}
                             onClick={() => setActiveTab('history')}>
                             <span className="material-symbols-outlined">history</span>
                             History
                         </button>
                     </div>
-                </header>
+                </header >
 
                 <main className={styles.content}>
                     {/* ─── EMPLOYEES TAB ───────────────────────────── */}
@@ -448,7 +523,7 @@ const FinanceDashboard = () => {
                                                                 <div key={p.id} className={styles.modalHistoryItem}>
                                                                     <div className={styles.histPeriod}>
                                                                         <strong>{getMonthName(p.month)} {p.year}</strong>
-                                                                        <span className={`${styles.statusBadge} ${styles[p.status]}`}>{p.status}</span>
+                                                                        <span className={`${styles.statusBadge} ${styles[p.status]} `}>{p.status}</span>
                                                                     </div>
                                                                     <div className={styles.histPay}>
                                                                         <span>Net Pay</span>
@@ -502,7 +577,7 @@ const FinanceDashboard = () => {
                                         Pay Day: {payDay}th
                                     </span>
                                     {existingPayroll && (
-                                        <span className={`${styles.statusBadge} ${styles[existingPayroll.status]}`}>
+                                        <span className={`${styles.statusBadge} ${styles[existingPayroll.status]} `}>
                                             {existingPayroll.status === 'approved' ? '✓ Approved' :
                                                 existingPayroll.status === 'authorized' ? '🚀 Authorized' :
                                                     existingPayroll.status === 'sent' ? '📧 Sent' : 'Draft'}
@@ -595,10 +670,10 @@ const FinanceDashboard = () => {
                                                 onClick={handleAuthorize}
                                                 className={styles.authorizeBtn}
                                                 disabled={!isPayDayOrAfter() || isProcessing}
-                                                title={!isPayDayOrAfter() ? `Available on the ${PAY_DAY}th` : 'Send payslips'}
+                                                title={!isPayDayOrAfter() ? `Available on the ${PAY_DAY} th` : 'Send payslips'}
                                             >
                                                 <span className="material-symbols-outlined">send</span>
-                                                {isProcessing ? 'Processing...' : (isPayDayOrAfter() ? 'Authorize & Send Payslips' : `Available on ${payDay}th`)}
+                                                {isProcessing ? 'Processing...' : (isPayDayOrAfter() ? 'Authorize & Send Payslips' : `Available on ${payDay} th`)}
                                             </button>
                                         )}
                                         {existingPayroll?.status === 'authorized' && (
@@ -622,7 +697,83 @@ const FinanceDashboard = () => {
                     {/* ─── HISTORY TAB ──────────────────────────────── */}
                     {activeTab === 'history' && (
                         <div className={styles.section}>
-                            <h3 className={styles.sectionTitle}>Payroll History</h3>
+                            <div className={styles.sectionHeader}>
+                                <h3 className={styles.sectionTitle}>Payroll History</h3>
+                                <button
+                                    className={styles.addBtn}
+                                    style={{ background: '#f59e0b', boxShadow: '0 4px 14px rgba(245, 158, 11, 0.25)' }}
+                                    onClick={() => setShowManualForm(!showManualForm)}
+                                >
+                                    <span className="material-symbols-outlined">{showManualForm ? 'close' : 'history_edu'}</span>
+                                    {showManualForm ? 'Cancel' : 'Add Historical Record'}
+                                </button>
+                            </div>
+
+                            {showManualForm && (
+                                <form className={styles.form} onSubmit={handleSaveManualEntry}>
+                                    <h3 style={{ color: '#f59e0b' }}>New Historical Entry</h3>
+                                    <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '1.5rem' }}>
+                                        Manually record a past transaction for an employee. This will appear in their personal portal.
+                                    </p>
+                                    <div className={styles.formGrid}>
+                                        <div className={styles.field}>
+                                            <label>Select Employee</label>
+                                            <select
+                                                className={styles.monthSelect}
+                                                value={manualForm.empDocId}
+                                                onChange={e => setManualForm({ ...manualForm, empDocId: e.target.value })}
+                                                required
+                                            >
+                                                <option value="">-- Select Employee --</option>
+                                                {employees.map(emp => (
+                                                    <option key={emp.id} value={emp.id}>{emp.name} ({emp.employeeId})</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className={styles.field}>
+                                            <label>Month</label>
+                                            <select
+                                                className={styles.monthSelect}
+                                                value={manualForm.month}
+                                                onChange={e => setManualForm({ ...manualForm, month: e.target.value })}
+                                            >
+                                                {[...Array(12)].map((_, i) => (
+                                                    <option key={i} value={i}>{getMonthName(i)}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className={styles.field}>
+                                            <label>Year</label>
+                                            <select
+                                                className={styles.yearSelect}
+                                                value={manualForm.year}
+                                                onChange={e => setManualForm({ ...manualForm, year: e.target.value })}
+                                            >
+                                                {[2024, 2025, 2026].map(y => (
+                                                    <option key={y} value={y}>{y}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className={styles.field}>
+                                            <label>Net Pay Amount (Rs.)</label>
+                                            <input
+                                                type="number"
+                                                value={manualForm.netPay}
+                                                onChange={e => setManualForm({ ...manualForm, netPay: e.target.value })}
+                                                placeholder="e.g. 88000"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className={styles.buttonGroup}>
+                                        <button type="submit" className={styles.saveBtn} style={{ background: '#f59e0b' }} disabled={isProcessing}>
+                                            {isProcessing ? 'Processing...' : 'Save Record'}
+                                        </button>
+                                        <button type="button" className={styles.cancelBtn} onClick={() => setShowManualForm(false)}>Cancel</button>
+                                    </div>
+                                </form>
+                            )}
+
                             {sortedHistory.length === 0 ? (
                                 <p className={styles.emptyMsg}>No payroll records yet.</p>
                             ) : (
@@ -635,7 +786,7 @@ const FinanceDashboard = () => {
                                             </div>
                                             <div className={styles.historyRight}>
                                                 <span className={styles.historyTotal}>{formatCurrency(record.totalPayroll)}</span>
-                                                <span className={`${styles.statusBadge} ${styles[record.status]}`}>
+                                                <span className={`${styles.statusBadge} ${styles[record.status]} `}>
                                                     {record.status}
                                                 </span>
                                             </div>
@@ -646,8 +797,8 @@ const FinanceDashboard = () => {
                         </div>
                     )}
                 </main>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
