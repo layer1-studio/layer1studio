@@ -306,8 +306,8 @@ const FinanceDashboard = () => {
                                             <input value={employeeForm.contactNumber} onChange={e => setEmployeeForm({ ...employeeForm, contactNumber: e.target.value })} placeholder="+94 ..." />
                                         </div>
                                         <div className={styles.field}>
-                                            <label>CV Link (URL)</label>
-                                            <input value={employeeForm.cvLink} onChange={e => setEmployeeForm({ ...employeeForm, cvLink: e.target.value })} placeholder="https://..." />
+                                            <label>CV Link (Drive Link)</label>
+                                            <input value={employeeForm.cvLink} onChange={e => setEmployeeForm({ ...employeeForm, cvLink: e.target.value })} placeholder="Add drive link" />
                                         </div>
                                     </div>
                                     <h4 className={styles.subHeading}>Bank Details</h4>
@@ -416,7 +416,7 @@ const FinanceDashboard = () => {
                                                     <p>{viewingEmployee.taxCode || 'N/A'}</p>
                                                 </div>
                                                 <div className={styles.infoGroup}>
-                                                    <label>CV / Resume</label>
+                                                    <label>CV / Drive Link</label>
                                                     {viewingEmployee.cvLink ? (
                                                         <a href={viewingEmployee.cvLink} target="_blank" rel="noopener noreferrer" className={styles.cvLink}>
                                                             <span className="material-symbols-outlined">description</span>

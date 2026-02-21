@@ -119,7 +119,7 @@ const EmployeeDashboard = () => {
                                 {employee.cvLink && (
                                     <a href={employee.cvLink} target="_blank" rel="noopener noreferrer" className={styles.cvLink}>
                                         <span className="material-symbols-outlined">description</span>
-                                        View CV / Resume
+                                        View CV / Drive Link
                                     </a>
                                 )}
                             </div>
