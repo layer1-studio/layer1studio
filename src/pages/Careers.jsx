@@ -128,10 +128,18 @@ const Careers = () => {
 
                                 {expandedJob === index && (
                                     <div className={styles.jobDetails}>
-                                        {/* About */}
+                                        {/* About Us */}
+                                        {job.aboutUs && (
+                                            <div className={styles.jobSection}>
+                                                <h4 className={styles.jobSectionTitle}>About Us</h4>
+                                                <p className={styles.jobOverview}>{job.aboutUs}</p>
+                                            </div>
+                                        )}
+
+                                        {/* Role Overview */}
                                         {(job.about || job.description) && (
                                             <div className={styles.jobSection}>
-                                                <h4 className={styles.jobSectionTitle}>About the Role</h4>
+                                                <h4 className={styles.jobSectionTitle}>Role Overview</h4>
                                                 <p className={styles.jobOverview}>{job.about || job.description}</p>
                                             </div>
                                         )}

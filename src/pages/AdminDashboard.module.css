@@ -2,6 +2,23 @@
     padding-top: calc(var(--header-height) + 4rem);
     padding-bottom: 8rem;
     min-height: 100vh;
+    background: #0b1120;
+    color: #e2e8f0;
+
+    /* Dark-mode overrides scoped to admin */
+    --navy-deep: #0b1120;
+    --navy-surface: #131c2e;
+    --navy-accent: #1a2744;
+    --text-primary: #f1f5f9;
+    --text-body: #cbd5e1;
+    --text-muted: #94a3b8;
+    --white-5: rgba(255, 255, 255, 0.05);
+    --white-10: rgba(255, 255, 255, 0.08);
+    --white-20: rgba(255, 255, 255, 0.14);
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
 }
 
 .header {
@@ -99,8 +116,8 @@
 }
 
 .form {
-    background: rgba(18, 24, 32, 0.4);
-    border: 1px solid var(--white-10);
+    background: #131c2e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-2xl);
     padding: 3rem;
     margin-bottom: 4rem;
@@ -156,12 +173,18 @@
 
 .form input,
 .form textarea {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--white-10);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 1rem;
-    color: #fff;
+    color: #f1f5f9;
     width: 100%;
+    font-size: 0.9rem;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: #64748b;
 }
 
 .form textarea {
@@ -216,6 +239,15 @@
 
 .itemInfo {
     flex: 1;
+}
+
+.itemId {
+    display: block;
+    font-size: 0.7rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #64748b;
+    margin-top: 0.35rem;
+    opacity: 0.7;
 }
 
 .editBtn {
