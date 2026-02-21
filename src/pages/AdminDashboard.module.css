@@ -1,11 +1,11 @@
-/* ─── Admin Dashboard — Dark Theme ─────────────────────── */
+/* ─── Admin Dashboard — Light Blue Theme ─────────────────────── */
 
 .dashboard {
     padding-top: calc(var(--header-height) + 4rem);
     padding-bottom: 8rem;
     min-height: 100vh;
-    background: #0b1120;
-    color: #e2e8f0;
+    background: #edf4fb;
+    color: #1e293b;
 }
 
 /* Header */
@@ -33,9 +33,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    color: #cbd5e1;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #fff;
+    color: #475569;
+    border: 1px solid #cbd5e1;
     padding: 0.6rem 1.25rem;
     border-radius: 100px;
     font-size: 0.8rem;
@@ -45,16 +45,16 @@
 }
 
 .secondaryBtn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.2);
+    background: #f1f5f9;
+    color: #1e293b;
+    border-color: #94a3b8;
 }
 
 .logoutBtn {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(239, 68, 68, 0.1);
+    background: rgba(239, 68, 68, 0.08);
     color: #ef4444;
     border: 1px solid rgba(239, 68, 68, 0.2);
     padding: 0.6rem 1.25rem;
@@ -71,7 +71,7 @@
 
 .title {
     font-size: 2.5rem;
-    color: #f1f5f9;
+    color: #0f172a;
 }
 
 .title span {
@@ -84,10 +84,10 @@
 .tabs {
     display: flex;
     gap: 1rem;
-    background: #131c2e;
+    background: #dce8f5;
     padding: 0.5rem;
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid #c5d5e8;
 }
 
 .tabBtn {
@@ -95,7 +95,7 @@
     border-radius: 100px;
     border: none;
     background: transparent;
-    color: #94a3b8;
+    color: #64748b;
     font-weight: 700;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -103,22 +103,24 @@
 
 .active {
     background: #fff;
-    color: #0b1120;
+    color: var(--primary);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 /* Forms */
 .form {
-    background: #131c2e;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #fff;
+    border: 1px solid #d1dbe8;
     border-radius: 16px;
     padding: 3rem;
     margin-bottom: 4rem;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
 }
 
 .form h3 {
     margin-bottom: 2rem;
     font-size: 1.5rem;
-    color: #f1f5f9;
+    color: #0f172a;
 }
 
 .formGrid {
@@ -139,19 +141,19 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px dashed rgba(255, 255, 255, 0.15);
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
     border-radius: 12px;
     padding: 1rem;
-    color: #94a3b8;
+    color: #64748b;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .fileLabel:hover {
     border-color: var(--primary);
-    background: rgba(26, 86, 219, 0.05);
-    color: #fff;
+    background: rgba(26, 86, 219, 0.04);
+    color: #1e293b;
 }
 
 .fileLabel input {
@@ -166,11 +168,11 @@
 
 .form input,
 .form textarea {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border: 1px solid #d1dbe8;
     border-radius: 12px;
     padding: 1rem;
-    color: #f1f5f9;
+    color: #1e293b;
     width: 100%;
     font-size: 0.9rem;
     font-family: var(--font-main);
@@ -178,7 +180,14 @@
 
 .form input::placeholder,
 .form textarea::placeholder {
-    color: #64748b;
+    color: #94a3b8;
+}
+
+.form input:focus,
+.form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.08);
 }
 
 .form textarea {
@@ -217,12 +226,12 @@
 /* List items */
 .list h3 {
     margin-bottom: 2rem;
-    color: #94a3b8;
+    color: #64748b;
 }
 
 .item {
-    background: #131c2e;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #fff;
+    border: 1px solid #d1dbe8;
     border-radius: 16px;
     padding: 1.5rem 2rem;
     display: flex;
@@ -230,17 +239,18 @@
     align-items: center;
     margin-bottom: 1rem;
     cursor: pointer;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .item:hover {
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: #94a3b8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .item h4 {
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
-    color: #f1f5f9;
+    color: #0f172a;
 }
 
 .item p {
@@ -256,7 +266,7 @@
     display: block;
     font-size: 0.7rem;
     font-family: 'SF Mono', 'Fira Code', monospace;
-    color: #475569;
+    color: #94a3b8;
     margin-top: 0.35rem;
 }
 
@@ -299,7 +309,7 @@
     align-items: center;
     gap: 1rem;
     padding: 0.5rem 1rem;
-    background: rgba(239, 68, 68, 0.08);
+    background: rgba(239, 68, 68, 0.06);
     border-radius: 12px;
     border: 1px solid rgba(239, 68, 68, 0.15);
 }
@@ -322,29 +332,29 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #fff;
+    border: 1px solid #cbd5e1;
     border-radius: 100px;
     padding: 0.5rem 1.25rem;
     width: 300px;
 }
 
 .searchWrapper span {
-    color: #64748b;
+    color: #94a3b8;
     font-size: 1.2rem;
 }
 
 .searchInput {
     background: transparent !important;
     border: none !important;
-    color: #fff;
+    color: #1e293b;
     width: 100%;
     font-size: 0.9rem;
     outline: none;
 }
 
 .statusFilterGroup {
-    background: rgba(26, 86, 219, 0.08);
+    background: rgba(26, 86, 219, 0.06);
     border: 1px solid rgba(26, 86, 219, 0.2);
     border-radius: 100px;
     padding: 0.5rem 1rem;
@@ -361,8 +371,8 @@
 }
 
 .statusFilterSelect option {
-    background: #0b1120;
-    color: #fff;
+    background: #fff;
+    color: #1e293b;
 }
 
 /* Job preview (careers tab) */
@@ -371,8 +381,8 @@
 }
 
 .jobPreview {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #f8fafc;
+    border: 1px solid #d1dbe8;
     border-top: none;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
@@ -407,7 +417,7 @@
 }
 
 .previewText {
-    color: #94a3b8;
+    color: #475569;
     line-height: 1.6;
     margin-bottom: 0.5rem;
     white-space: pre-wrap;
@@ -420,15 +430,15 @@
 }
 
 .viewBtn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #f1f5f9;
+    border: 1px solid #d1dbe8;
     width: 36px;
     height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #94a3b8;
+    color: #64748b;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -459,21 +469,21 @@
 }
 
 .cancelBtn {
-    background: rgba(255, 255, 255, 0.05);
-    color: #94a3b8;
+    background: #fff;
+    color: #64748b;
     padding: 0.75rem 2rem;
     border-radius: 100px;
     font-weight: 800;
     font-size: 0.8rem;
     text-transform: uppercase;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #cbd5e1;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .cancelBtn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    background: #f1f5f9;
+    color: #1e293b;
 }
 
 .sectionHeader {
@@ -485,8 +495,8 @@
 
 /* Application cards */
 .appCard {
-    background: #131c2e;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #fff;
+    border: 1px solid #d1dbe8;
     border-radius: 20px;
     padding: 2rem;
     margin-bottom: 1.5rem;
@@ -498,9 +508,8 @@
 }
 
 .appCard:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .appCard.new {
@@ -534,7 +543,7 @@
 }
 
 .appMainInfo h4 {
-    color: #f1f5f9;
+    color: #0f172a;
 }
 
 .roleTag {
@@ -544,8 +553,8 @@
 }
 
 .statusBadge {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
     border-radius: 8px;
     padding: 0.25rem 0.5rem;
 }
@@ -553,7 +562,7 @@
 .statusSelect {
     background: transparent;
     border: none;
-    color: #fff;
+    color: #1e293b;
     font-size: 0.75rem;
     font-weight: 700;
     cursor: pointer;
@@ -562,12 +571,12 @@
 }
 
 .statusSelect option {
-    background: #0b1120;
-    color: #fff;
+    background: #fff;
+    color: #1e293b;
 }
 
 .appEmail {
-    color: #94a3b8;
+    color: #64748b;
     margin: 0;
     font-size: 0.95rem;
 }
@@ -576,7 +585,7 @@
     display: flex;
     gap: 1.5rem;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: #f8fafc;
     border-radius: 12px;
 }
 
@@ -584,7 +593,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #cbd5e1;
+    color: #475569;
     font-size: 0.85rem;
     font-weight: 600;
     transition: color 0.3s ease;
@@ -601,7 +610,7 @@
 }
 
 .emptyMsg {
-    color: #64748b;
+    color: #94a3b8;
     font-style: italic;
 }
 
