@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
-export const generatePayslipPDFBase64 = async (empData, periodKey, payDayStr) => {
+const createPayslipPDF = async (empData, periodKey, payDayStr) => {
     // 1. Create a hidden container for the template
     const container = document.createElement('div');
     container.style.position = 'absolute';
@@ -115,11 +115,17 @@ export const generatePayslipPDFBase64 = async (empData, periodKey, payDayStr) =>
     // A4 dimensions are 210 x 297 mm
     pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
 
-    // 5. Convert PDF to Base64 (btoa on raw array buffer or string)
-    // pdf.output('datauristring') returns "data:application/pdf;base64,JVBERi..."
-    // EmailJS requires just the base64 part, not the standard datauri prefix
+    return pdf;
+};
+
+export const generatePayslipPDFBase64 = async (empData, periodKey, payDayStr) => {
+    const pdf = await createPayslipPDF(empData, periodKey, payDayStr);
     const dataUri = pdf.output('datauristring');
     const base64String = dataUri.split(',')[1];
-
     return base64String;
+};
+
+export const generatePayslipPDF = async (empData, periodKey, payDayStr) => {
+    const pdf = await createPayslipPDF(empData, periodKey, payDayStr);
+    pdf.save(`Payslip_${periodKey}_${empData.name.replace(/\s+/g, '_')}.pdf`);
 };
