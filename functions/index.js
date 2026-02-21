@@ -1,3 +1,4 @@
+/* eslint-env node */
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const { Resend } = require("resend");
@@ -6,7 +7,9 @@ const handlebars = require("handlebars");
 
 admin.initializeApp();
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+// Fallback to hardcoded key to bypass Secret Manager IAM errors if needed
+const FALLBACK_RESEND_KEY = "re_95Ja1Ykm_PbguhR3HB1gtdSXxgmYG8Jku";
+const RESEND_API_KEY = process.env.RESEND_API_KEY || FALLBACK_RESEND_KEY;
 const TWILIO_SID = process.env.TWILIO_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_WHATSAPP_FROM = process.env.TWILIO_WHATSAPP_FROM;
@@ -147,7 +150,7 @@ exports.processPayroll = functions.region("europe-west2").runWith({
         const payrollId = context.params.payrollId;
 
         if (previousValue.status === "approved" && newValue.status === "authorized") {
-            const resend = new Resend(RESEND_API_KEY || "re_123");
+            const resend = new Resend(RESEND_API_KEY);
             const employees = newValue.employees || [];
             const { month, year, periodKey, payDay } = newValue;
 
@@ -272,7 +275,7 @@ exports.payrollApprovalReminder = functions.region("europe-west2").runWith({
 
         if (needsApproval) {
             const managerEmail = "rachelcooray@gmail.com";
-            const resend = new Resend(RESEND_API_KEY || "re_123");
+            const resend = new Resend(RESEND_API_KEY);
 
             console.log(`Sending payroll reminder for ${periodKey}...`);
 

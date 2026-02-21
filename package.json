@@ -12,7 +12,10 @@
     "deploy": "gh-pages -r https://github.com/layer1-studio/layer1studio.git -d dist"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "firebase": "^12.8.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0"
