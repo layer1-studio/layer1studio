@@ -40,8 +40,12 @@ const FinanceDashboard = () => {
     const [editingEmployee, setEditingEmployee] = useState(null);
     const [employeeForm, setEmployeeForm] = useState({
         name: '', email: '', designation: '', employeeId: '', baseSalary: '',
-        bankName: '', accountNumber: '', sortCode: '', taxCode: ''
+        bankName: '', accountNumber: '', sortCode: '', taxCode: '',
+        contactNumber: '', cvLink: ''
     });
+
+    // Detail view state
+    const [viewingEmployee, setViewingEmployee] = useState(null);
 
     // Payroll state
     const [payrollMonth, setPayrollMonth] = useState(getCurrentPayPeriod().month);
@@ -61,7 +65,7 @@ const FinanceDashboard = () => {
 
     // ─── Employee CRUD ───────────────────────────────────────────
     const resetEmployeeForm = () => {
-        setEmployeeForm({ name: '', email: '', designation: '', employeeId: '', baseSalary: '', bankName: '', accountNumber: '', sortCode: '', taxCode: '' });
+        setEmployeeForm({ name: '', email: '', designation: '', employeeId: '', baseSalary: '', bankName: '', accountNumber: '', sortCode: '', taxCode: '', contactNumber: '', cvLink: '' });
         setShowEmployeeForm(false);
         setEditingEmployee(null);
     };
@@ -92,6 +96,8 @@ const FinanceDashboard = () => {
             accountNumber: emp.accountNumber || '',
             sortCode: emp.sortCode || '',
             taxCode: emp.taxCode || '',
+            contactNumber: emp.contactNumber || '',
+            cvLink: emp.cvLink || '',
         });
         setShowEmployeeForm(true);
     };
@@ -295,6 +301,14 @@ const FinanceDashboard = () => {
                                             <label>Tax Code</label>
                                             <input value={employeeForm.taxCode} onChange={e => setEmployeeForm({ ...employeeForm, taxCode: e.target.value })} placeholder="1257L" />
                                         </div>
+                                        <div className={styles.field}>
+                                            <label>Contact Number</label>
+                                            <input value={employeeForm.contactNumber} onChange={e => setEmployeeForm({ ...employeeForm, contactNumber: e.target.value })} placeholder="+94 ..." />
+                                        </div>
+                                        <div className={styles.field}>
+                                            <label>CV Link (URL)</label>
+                                            <input value={employeeForm.cvLink} onChange={e => setEmployeeForm({ ...employeeForm, cvLink: e.target.value })} placeholder="https://..." />
+                                        </div>
                                     </div>
                                     <h4 className={styles.subHeading}>Bank Details</h4>
                                     <div className={styles.formGrid}>
@@ -335,8 +349,8 @@ const FinanceDashboard = () => {
                                         .map(emp => (
                                             <div key={emp.id} className={styles.employeeCard}>
                                                 <div className={styles.empInfo}>
-                                                    <div className={styles.empAvatar}>{emp.name?.charAt(0)?.toUpperCase() || '?'}</div>
-                                                    <div>
+                                                    <div className={styles.empAvatar} onClick={() => setViewingEmployee(emp)}>{emp.name?.charAt(0)?.toUpperCase() || '?'}</div>
+                                                    <div onClick={() => setViewingEmployee(emp)} style={{ cursor: 'pointer' }}>
                                                         <h4>{emp.name}</h4>
                                                         <p className={styles.empDesignation}>{emp.designation}</p>
                                                         <p className={styles.empMeta}>{emp.email} • {emp.employeeId}</p>
@@ -352,6 +366,9 @@ const FinanceDashboard = () => {
                                                         </div>
                                                     ) : (
                                                         <>
+                                                            <button onClick={() => setViewingEmployee(emp)} className={styles.viewBtn} title="View Details">
+                                                                <span className="material-symbols-outlined">visibility</span>
+                                                            </button>
                                                             <button onClick={() => startEditEmployee(emp)} className={styles.editBtn}>
                                                                 <span className="material-symbols-outlined">edit</span>
                                                             </button>
@@ -365,6 +382,90 @@ const FinanceDashboard = () => {
                                         ))
                                 )}
                             </div>
+
+                            {/* ─── EMPLOYEE DETAIL MODAL ────────────────── */}
+                            {viewingEmployee && (
+                                <div className={styles.modalOverlay} onClick={() => setViewingEmployee(null)}>
+                                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+                                        <header className={styles.modalHeader}>
+                                            <div className={styles.modalUser}>
+                                                <div className={styles.modalAvatar}>{viewingEmployee.name?.charAt(0)?.toUpperCase()}</div>
+                                                <div>
+                                                    <h3>{viewingEmployee.name}</h3>
+                                                    <p>{viewingEmployee.designation}</p>
+                                                    <span className={styles.empIdBadge}>{viewingEmployee.employeeId}</span>
+                                                </div>
+                                            </div>
+                                            <button className={styles.closeBtn} onClick={() => setViewingEmployee(null)}>
+                                                <span className="material-symbols-outlined">close</span>
+                                            </button>
+                                        </header>
+
+                                        <div className={styles.modalBody}>
+                                            <div className={styles.infoGrid}>
+                                                <div className={styles.infoGroup}>
+                                                    <label>Email Address</label>
+                                                    <p>{viewingEmployee.email}</p>
+                                                </div>
+                                                <div className={styles.infoGroup}>
+                                                    <label>Contact Number</label>
+                                                    <p>{viewingEmployee.contactNumber || 'Not specified'}</p>
+                                                </div>
+                                                <div className={styles.infoGroup}>
+                                                    <label>Tax Code</label>
+                                                    <p>{viewingEmployee.taxCode || 'N/A'}</p>
+                                                </div>
+                                                <div className={styles.infoGroup}>
+                                                    <label>CV / Resume</label>
+                                                    {viewingEmployee.cvLink ? (
+                                                        <a href={viewingEmployee.cvLink} target="_blank" rel="noopener noreferrer" className={styles.cvLink}>
+                                                            <span className="material-symbols-outlined">description</span>
+                                                            View Document
+                                                        </a>
+                                                    ) : <p>None attached</p>}
+                                                </div>
+                                            </div>
+
+                                            <div className={styles.bankSection}>
+                                                <h4>Bank Details (Confidential)</h4>
+                                                <div className={styles.bankGrid}>
+                                                    <div><label>Bank</label><p>{viewingEmployee.bankName || '-'}</p></div>
+                                                    <div><label>Account</label><p>{viewingEmployee.accountNumber || '-'}</p></div>
+                                                    <div><label>Sort Code</label><p>{viewingEmployee.sortCode || '-'}</p></div>
+                                                </div>
+                                            </div>
+
+                                            <div className={styles.historySection}>
+                                                <h4>Payment History</h4>
+                                                <div className={styles.modalHistoryList}>
+                                                    {payrollRecords
+                                                        .filter(p => p.employees?.some(e => e.employeeId === viewingEmployee.id))
+                                                        .sort((a, b) => b.year - a.year || b.month - a.month)
+                                                        .slice(0, 6)
+                                                        .map(p => {
+                                                            const record = p.employees.find(e => e.employeeId === viewingEmployee.id);
+                                                            return (
+                                                                <div key={p.id} className={styles.modalHistoryItem}>
+                                                                    <div className={styles.histPeriod}>
+                                                                        <strong>{getMonthName(p.month)} {p.year}</strong>
+                                                                        <span className={`${styles.statusBadge} ${styles[p.status]}`}>{p.status}</span>
+                                                                    </div>
+                                                                    <div className={styles.histPay}>
+                                                                        <span>Net Pay</span>
+                                                                        <strong>{formatCurrency(record.netPay)}</strong>
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    {payrollRecords.filter(p => p.employees?.some(e => e.employeeId === viewingEmployee.id)).length === 0 && (
+                                                        <p className={styles.emptyMsg}>No payment history found yet.</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
 
