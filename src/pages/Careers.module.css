@@ -185,57 +185,82 @@
 }
 
 .jobDetails {
-    padding: 0 0 2rem;
+    padding: 0 0 2.5rem;
 }
 
-.description p {
+.jobSection {
+    margin-bottom: 2rem;
+}
+
+.jobSectionTitle {
+    font-family: var(--font-main);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+}
+
+.jobOverview {
     color: var(--text-body);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
+    line-height: 1.75;
     font-size: 0.95rem;
+}
+
+.jobBullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.jobBullets li {
+    position: relative;
+    padding-left: 1.25rem;
+    color: var(--text-body);
+    font-size: 0.93rem;
+    line-height: 1.65;
+    margin-bottom: 0.5rem;
+}
+
+.jobBullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--primary);
+}
+
+.dot {
+    margin: 0 0.4rem;
+    color: var(--text-muted);
+}
+
+.rotated {
+    transform: rotate(90deg);
+    transition: transform 0.2s ease;
 }
 
 .applyBtn {
     background: var(--primary);
     color: #fff;
     padding: 0.85rem 2rem;
-    border-radius: var(--radius-xl);
+    border-radius: 8px;
     font-family: var(--font-main);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
     border: none;
     transition: background 0.2s ease, transform 0.15s ease;
+    margin-top: 0.5rem;
 }
 
 .applyBtn:hover {
-    background: #0369a1;
+    background: #1445b5;
     transform: translateY(-1px);
-}
-
-/* Internships */
-.internships {
-    padding: 5rem 0;
-    background: var(--navy-surface);
-}
-
-.internshipCard {
-    background: #fff;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-xl);
-    padding: 3.5rem;
-}
-
-.internshipContent .sectionTitle {
-    margin-bottom: 1rem;
-}
-
-.sectionSubtitle {
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-    max-width: 560px;
-    margin-bottom: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -255,9 +280,5 @@
     .heroBanner {
         height: 45vh;
         align-items: flex-end;
-    }
-
-    .internshipCard {
-        padding: 2rem;
     }
 }

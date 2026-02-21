@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useContent } from '../hooks/useContent';
 import styles from './Careers.module.css';
 
+/* Helper: split a newline-delimited string into array of bullet items */
+const toList = (str) =>
+    str ? str.split('\n').map(s => s.trim()).filter(Boolean) : [];
+
 const Careers = () => {
     const { data: dbJobs, loading } = useContent('careers');
     const navigate = useNavigate();
@@ -19,19 +23,10 @@ const Careers = () => {
             salary: '$140k – $180k',
             type: 'Full-time',
             hot: true,
-            overview: "We're looking for an experienced full-stack engineer who can take ownership end-to-end — from system architecture to polished UI. You'll work closely with our core team on production client projects.",
-            responsibilities: [
-                'Architect and build scalable web and mobile applications (React, Node.js, Next.js)',
-                'Lead code reviews and define engineering standards',
-                'Collaborate directly with clients and the design team',
-                'Ship production-ready features with clean, maintainable code',
-            ],
-            requirements: [
-                '5+ years of full-stack development experience',
-                'Strong proficiency in React, TypeScript, and Node.js',
-                'Experience with databases (SQL and NoSQL)',
-                'Excellent communication and ownership mindset',
-            ],
+            about: "We're looking for an experienced full-stack engineer who can take ownership end-to-end — from system architecture to polished UI.",
+            responsibilities: "Architect and build scalable web and mobile applications\nLead code reviews and define engineering standards\nCollaborate directly with clients and the design team\nShip production-ready features with clean, maintainable code",
+            requirements: "5+ years of full-stack development experience\nStrong proficiency in React, TypeScript, and Node.js\nExperience with databases (SQL and NoSQL)\nExcellent communication and ownership mindset",
+            whatYoullGain: "Direct impact on high-profile client projects\nOwnership of technical decisions and architecture\nFlexible remote working culture",
         },
         {
             title: 'Senior UI/UX Designer',
@@ -39,23 +34,14 @@ const Careers = () => {
             salary: '$110k – $150k',
             type: 'Full-time',
             hot: false,
-            overview: "Design isn't just about looks here. We need a strategic thinker who can map complex user journeys, design elegant interfaces, and partner closely with our engineering team to ship them.",
-            responsibilities: [
-                'Own the end-to-end design process — discovery, wireframes, prototypes, final assets',
-                'Build and maintain design systems in Figma',
-                'Conduct user research and translate findings into actionable design decisions',
-                'Partner with engineers to ensure high-fidelity implementation',
-            ],
-            requirements: [
-                '4+ years of product design experience',
-                'Expert-level Figma and design systems knowledge',
-                'Strong portfolio demonstrating complex web and mobile interfaces',
-                'Ability to communicate design rationale clearly to technical and non-technical stakeholders',
-            ],
+            about: "Design isn't just about looks here. We need a strategic thinker who can map complex user journeys, design elegant interfaces, and partner closely with engineering.",
+            responsibilities: "Own the end-to-end design process — discovery, wireframes, prototypes, final assets\nBuild and maintain design systems in Figma\nConduct user research and translate findings into actionable decisions\nPartner with engineers for high-fidelity implementation",
+            requirements: "4+ years of product design experience\nExpert-level Figma and design systems knowledge\nStrong portfolio showing complex web and mobile interfaces\nAbility to articulate design rationale clearly",
+            whatYoullGain: "Creative autonomy on world-class projects\nCollaboration with a tight engineering team\nExposure to diverse industries and problem spaces",
         },
     ];
 
-    const jobs = (dbJobs.length > 0) ? dbJobs : (loading ? [] : defaultJobs);
+    const jobs = dbJobs.length > 0 ? dbJobs : (loading ? [] : defaultJobs);
 
     const toggleJob = (index) => {
         setExpandedJob(expandedJob === index ? null : index);
@@ -77,7 +63,7 @@ const Careers = () => {
                         Software Engineering<br />Careers at Layer1.Studio
                     </h1>
                     <p className={styles.subtitle}>
-                        A London & Colombo based studio where quality isn't a goal — it's the baseline.
+                        A London &amp; Colombo based studio where quality isn't a goal — it's the baseline.
                     </p>
                 </div>
             </header>
@@ -127,8 +113,12 @@ const Careers = () => {
                                             <span>{job.location}</span>
                                             <span className={styles.dot}>·</span>
                                             <span>{job.type}</span>
-                                            <span className={styles.dot}>·</span>
-                                            <span>{job.salary}</span>
+                                            {job.salary && (
+                                                <>
+                                                    <span className={styles.dot}>·</span>
+                                                    <span>{job.salary}</span>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                     <span className={`material-symbols-outlined ${styles.expandIcon} ${expandedJob === index ? styles.rotated : ''}`}>
@@ -138,17 +128,20 @@ const Careers = () => {
 
                                 {expandedJob === index && (
                                     <div className={styles.jobDetails}>
-                                        {/* Overview */}
-                                        <p className={styles.jobOverview}>
-                                            {job.overview || job.description || 'Inquire for details.'}
-                                        </p>
+                                        {/* About */}
+                                        {(job.about || job.description) && (
+                                            <div className={styles.jobSection}>
+                                                <h4 className={styles.jobSectionTitle}>About the Role</h4>
+                                                <p className={styles.jobOverview}>{job.about || job.description}</p>
+                                            </div>
+                                        )}
 
                                         {/* Responsibilities */}
-                                        {job.responsibilities?.length > 0 && (
+                                        {job.responsibilities && toList(job.responsibilities).length > 0 && (
                                             <div className={styles.jobSection}>
-                                                <h4 className={styles.jobSectionTitle}>What you'll do</h4>
-                                                <ul className={styles.jobList2}>
-                                                    {job.responsibilities.map((item, i) => (
+                                                <h4 className={styles.jobSectionTitle}>Key Responsibilities</h4>
+                                                <ul className={styles.jobBullets}>
+                                                    {toList(job.responsibilities).map((item, i) => (
                                                         <li key={i}>{item}</li>
                                                     ))}
                                                 </ul>
@@ -156,11 +149,23 @@ const Careers = () => {
                                         )}
 
                                         {/* Requirements */}
-                                        {job.requirements?.length > 0 && (
+                                        {job.requirements && toList(job.requirements).length > 0 && (
                                             <div className={styles.jobSection}>
-                                                <h4 className={styles.jobSectionTitle}>What we're looking for</h4>
-                                                <ul className={styles.jobList2}>
-                                                    {job.requirements.map((item, i) => (
+                                                <h4 className={styles.jobSectionTitle}>Requirements</h4>
+                                                <ul className={styles.jobBullets}>
+                                                    {toList(job.requirements).map((item, i) => (
+                                                        <li key={i}>{item}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {/* What you'll gain */}
+                                        {job.whatYoullGain && toList(job.whatYoullGain).length > 0 && (
+                                            <div className={styles.jobSection}>
+                                                <h4 className={styles.jobSectionTitle}>What You'll Gain</h4>
+                                                <ul className={styles.jobBullets}>
+                                                    {toList(job.whatYoullGain).map((item, i) => (
                                                         <li key={i}>{item}</li>
                                                     ))}
                                                 </ul>

@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     const [editingCareer, setEditingCareer] = useState(null);
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
     const [newProject, setNewProject] = useState({ title: '', category: '', text: '', tags: '', image: '' });
-    const [newCareer, setNewCareer] = useState({ title: '', location: '', salary: '', type: '', description: '' });
+    const [newCareer, setNewCareer] = useState({ title: '', location: '', salary: '', type: '', about: '', responsibilities: '', requirements: '', whatYoullGain: '' });
     const [uploading, setUploading] = useState(false);
     const [uploadStatus, setUploadStatus] = useState('');
 
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
     const handleAddCareer = (e) => {
         e.preventDefault();
         addCareer(newCareer);
-        setNewCareer({ title: '', location: '', salary: '', type: '', description: '' });
+        setNewCareer({ title: '', location: '', salary: '', type: '', about: '', responsibilities: '', requirements: '', whatYoullGain: '' });
     };
 
     const handleUpdateCareer = (e) => {
@@ -267,7 +267,14 @@ const AdminDashboard = () => {
                                         <input placeholder="Salary Range" value={editingCareer.salary} onChange={e => setEditingCareer({ ...editingCareer, salary: e.target.value })} />
                                         <input placeholder="Type (Full-time/Contract)" value={editingCareer.type} onChange={e => setEditingCareer({ ...editingCareer, type: e.target.value })} required />
                                     </div>
-                                    <textarea placeholder="Job Description" value={editingCareer.description} onChange={e => setEditingCareer({ ...editingCareer, description: e.target.value })} required />
+                                    <label className={styles.fieldLabel}>About the Role</label>
+                                    <textarea placeholder="Brief overview of the role and your company context..." value={editingCareer.about || ''} onChange={e => setEditingCareer({ ...editingCareer, about: e.target.value })} />
+                                    <label className={styles.fieldLabel}>Responsibilities (one per line)</label>
+                                    <textarea placeholder="Identify potential clients\nConduct market research\nSupport outreach efforts..." value={editingCareer.responsibilities || ''} onChange={e => setEditingCareer({ ...editingCareer, responsibilities: e.target.value })} />
+                                    <label className={styles.fieldLabel}>Requirements (one per line)</label>
+                                    <textarea placeholder="Degree in Business or Marketing\nStrong communication skills..." value={editingCareer.requirements || ''} onChange={e => setEditingCareer({ ...editingCareer, requirements: e.target.value })} />
+                                    <label className={styles.fieldLabel}>What You'll Gain (one per line)</label>
+                                    <textarea placeholder="Hands-on experience in client acquisition\nExposure to business development strategy..." value={editingCareer.whatYoullGain || ''} onChange={e => setEditingCareer({ ...editingCareer, whatYoullGain: e.target.value })} />
                                     <div className={styles.buttonGroup}>
                                         <button type="submit" className={styles.saveBtn}>Save Changes</button>
                                         <button type="button" onClick={() => setEditingCareer(null)} className={styles.cancelBtn}>Cancel</button>
@@ -282,7 +289,14 @@ const AdminDashboard = () => {
                                         <input placeholder="Salary Range" value={newCareer.salary} onChange={e => setNewCareer({ ...newCareer, salary: e.target.value })} />
                                         <input placeholder="Type (Full-time/Contract)" value={newCareer.type} onChange={e => setNewCareer({ ...newCareer, type: e.target.value })} required />
                                     </div>
-                                    <textarea placeholder="Job Description" value={newCareer.description} onChange={e => setNewCareer({ ...newCareer, description: e.target.value })} required />
+                                    <label className={styles.fieldLabel}>About the Role</label>
+                                    <textarea placeholder="Brief overview of the role and your company context..." value={newCareer.about} onChange={e => setNewCareer({ ...newCareer, about: e.target.value })} />
+                                    <label className={styles.fieldLabel}>Responsibilities (one per line)</label>
+                                    <textarea placeholder="Identify potential clients&#10;Conduct market research&#10;Support outreach efforts..." value={newCareer.responsibilities} onChange={e => setNewCareer({ ...newCareer, responsibilities: e.target.value })} />
+                                    <label className={styles.fieldLabel}>Requirements (one per line)</label>
+                                    <textarea placeholder="Degree in Business or Marketing&#10;Strong communication skills..." value={newCareer.requirements} onChange={e => setNewCareer({ ...newCareer, requirements: e.target.value })} />
+                                    <label className={styles.fieldLabel}>What You'll Gain (one per line)</label>
+                                    <textarea placeholder="Hands-on experience in client acquisition&#10;Exposure to business development strategy..." value={newCareer.whatYoullGain} onChange={e => setNewCareer({ ...newCareer, whatYoullGain: e.target.value })} />
                                     <button type="submit">Post Job</button>
                                 </form>
                             )}
@@ -318,8 +332,11 @@ const AdminDashboard = () => {
                                         </div>
                                         {expandedJobId === c.id && (
                                             <div className={styles.jobPreview}>
-                                                <h5>Role Description</h5>
-                                                <p className={styles.previewText}>{c.description}</p>
+                                                {c.about && <><h5>About</h5><p className={styles.previewText}>{c.about}</p></>}
+                                                {c.responsibilities && <><h5>Responsibilities</h5><p className={styles.previewText}>{c.responsibilities}</p></>}
+                                                {c.requirements && <><h5>Requirements</h5><p className={styles.previewText}>{c.requirements}</p></>}
+                                                {c.whatYoullGain && <><h5>What You'll Gain</h5><p className={styles.previewText}>{c.whatYoullGain}</p></>}
+                                                {!c.about && c.description && <><h5>Description</h5><p className={styles.previewText}>{c.description}</p></>}
                                                 {c.salary && <p className={styles.previewMeta}><strong>Salary:</strong> {c.salary}</p>}
                                             </div>
                                         )}
