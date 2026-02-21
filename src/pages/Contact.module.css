@@ -198,6 +198,31 @@ a.contactValue:hover {
     font-size: 1rem;
 }
 
+.status {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-default);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.info {
+    background: var(--sky-50);
+    color: var(--primary);
+    border: 1px solid var(--sky-100);
+}
+
 @media (max-width: 900px) {
     .grid {
         grid-template-columns: 1fr;
