@@ -26,7 +26,7 @@ This repository contains the internal management platform for **layer1.studio**,
 > This section outlines the immediate next steps to make the platform fully production-ready.
 
 **1. Create the EmailJS Account & Template**
-*   [ ] Open an account at [EmailJS](https://www.emailjs.com/) and connect an email service. Use l
+*   [ ] Open an account at [EmailJS](https://www.emailjs.com/) and connect an email service. Use Layer1 Gmail.
 *   [ ] Create a new Email Template.
 *   [ ] Set the **To Email** field to `{{to_email}}`.
 *   [ ] Attach your dynamic Base64 PDF by placing `{{attachment}}` in the template attachment settings.
