@@ -215,7 +215,7 @@ const FinanceDashboard = () => {
     }, [payrollRecords]);
 
     const formatCurrency = (val) => {
-        return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(val || 0);
+        return new Intl.NumberFormat('en-LK', { style: 'currency', currency: 'LKR', currencyDisplay: 'symbol' }).format(val || 0).replace('LKR', 'Rs.');
     };
 
     return (

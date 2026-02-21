@@ -14,6 +14,8 @@ import ApplyNow from './pages/ApplyNow'
 import AdminLogin from './pages/AdminLogin'
 import FinanceLogin from './pages/FinanceLogin'
 import FinanceDashboard from './pages/FinanceDashboard'
+import EmployeeLogin from './pages/EmployeeLogin'
+import EmployeeDashboard from './pages/EmployeeDashboard'
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { Navigate } from 'react-router-dom'
@@ -33,6 +35,27 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) return null; // Or a spinner
   if (!user) return <Navigate to="/vault/internal/gate/secure/auth/login" replace />;
+
+  return children;
+}
+
+// Employee Protected Route Wrapper (requires auth + employee session)
+const EmployeeProtectedRoute = ({ children }) => {
+  const [user, setUser] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) return null;
+  if (!user || !sessionStorage.getItem('employeeAuthorized')) {
+    return <Navigate to="/portal/employee/login" replace />;
+  }
 
   return children;
 }
@@ -93,6 +116,17 @@ function App() {
               <FinanceProtectedRoute>
                 <FinanceDashboard />
               </FinanceProtectedRoute>
+            }
+          />
+
+          {/* Secured Employee Routes */}
+          <Route path="/portal/employee/login" element={<EmployeeLogin />} />
+          <Route
+            path="/portal/employee/dashboard"
+            element={
+              <EmployeeProtectedRoute>
+                <EmployeeDashboard />
+              </EmployeeProtectedRoute>
             }
           />
 

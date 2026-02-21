@@ -99,7 +99,7 @@ const PAYSLIP_TEMPLATE = `
                 <h3 style="font-size: 10pt; text-transform: uppercase; border-bottom: 2px solid var(--slate-200); margin-bottom: 10px;">Earnings</h3>
                 <table>
                     {{#each earnings}}
-                    <tr><td>{{description}}</td><td style="text-align: right;">£{{amount}}</td></tr>
+                    <tr><td>{{description}}</td><td style="text-align: right;">Rs.{{amount}}</td></tr>
                     {{/each}}
                 </table>
             </div>
@@ -107,16 +107,16 @@ const PAYSLIP_TEMPLATE = `
                 <h3 style="font-size: 10pt; text-transform: uppercase; border-bottom: 2px solid var(--slate-200); margin-bottom: 10px;">Deductions</h3>
                 <table>
                     {{#each deductions}}
-                    <tr><td>{{description}}</td><td style="text-align: right;">£{{amount}}</td></tr>
+                    <tr><td>{{description}}</td><td style="text-align: right;">Rs.{{amount}}</td></tr>
                     {{/each}}
                 </table>
             </div>
         </div>
         <div style="margin-top: 20px; border-top: 2px solid var(--slate-200); padding-top: 10px;">
             <table style="width: 50%; margin-left: auto;">
-                <tr class="total-row"><td class="label">Total Earnings</td><td style="text-align: right;">£{{total_earnings}}</td></tr>
-                <tr class="total-row"><td class="label">Total Deductions</td><td style="text-align: right;">£{{total_deductions}}</td></tr>
-                <tr class="total-row"><td class="label" style="font-size: 14pt;">Net Pay</td><td class="amount" style="text-align: right;">£{{net_pay}}</td></tr>
+                <tr class="total-row"><td class="label">Total Earnings</td><td style="text-align: right;">Rs.{{total_earnings}}</td></tr>
+                <tr class="total-row"><td class="label">Total Deductions</td><td style="text-align: right;">Rs.{{total_deductions}}</td></tr>
+                <tr class="total-row"><td class="label" style="font-size: 14pt;">Net Pay</td><td class="amount" style="text-align: right;">Rs.{{net_pay}}</td></tr>
             </table>
         </div>
         <section style="margin-top: 40px; background: var(--slate-100); padding: 20px; border-radius: 8px;">
@@ -143,10 +143,13 @@ exports.processPayroll = functions.region("europe-west2").runWith({
     .onUpdate(async (change, context) => {
         const newValue = change.after.data();
         const previousValue = change.before.data();
+        const db = admin.firestore();
+        const payrollId = context.params.payrollId;
 
         if (previousValue.status === "approved" && newValue.status === "authorized") {
             const resend = new Resend(RESEND_API_KEY || "re_123");
             const employees = newValue.employees || [];
+            const { month, year, periodKey, payDay } = newValue;
 
             for (const emp of employees) {
                 try {
@@ -154,13 +157,13 @@ exports.processPayroll = functions.region("europe-west2").runWith({
 
                     // 1. Prepare data for Handlebars
                     const templateData = {
-                        pay_period: `${newValue.month + 1}/${newValue.year}`,
-                        pay_date: newValue.payDay + "th",
+                        pay_period: `${month + 1}/${year}`,
+                        pay_date: payDay + "th",
                         tax_code: emp.taxCode || "1257L",
                         employee: {
                             name: emp.name,
                             designation: emp.designation,
-                            id: emp.empCode
+                            id: emp.employeeId
                         },
                         earnings: [
                             { description: "Basic Salary", amount: emp.baseSalary },
@@ -186,28 +189,45 @@ exports.processPayroll = functions.region("europe-west2").runWith({
                     const compiledHtml = handlebars.compile(PAYSLIP_TEMPLATE)(templateData);
                     const pdfBuffer = await generatePDF(compiledHtml);
 
-                    // 2. Send via Resend
+                    // 2. Send Email via Resend
+                    const htmlContent = `<p>Hi ${emp.name},</p><p>Please find attached your payslip for the month of ${templateData.pay_period}.</p><p>Regards,<br/>Finance Team</p>`;
+
                     await resend.emails.send({
                         from: "Layer1 Studio <payroll@layer1studio.org>",
                         to: emp.email,
-                        subject: `Payslip for ${templateData.pay_period}`,
-                        html: `<p>Hi ${emp.name},</p><p>Please find attached your payslip for the month of ${templateData.pay_period}.</p><p>Regards,<br/>Finance Team</p>`,
+                        subject: `Payslip for ${periodKey}`,
+                        html: htmlContent,
                         attachments: [
                             {
-                                filename: `Payslip_${emp.name.replace(/\s+/g, "_")}.pdf`,
+                                filename: `Payslip_${emp.name.replace(/\s+/g, "_")}_${periodKey}.pdf`,
                                 content: pdfBuffer,
                             },
                         ],
                     });
 
-                    console.log(`Successfully sent payslip to ${emp.email}`);
+                    // 3. Save a record for the Employee Portal (Individual Access)
+                    // Note: We use the employee's Firestore document ID if available, or fallback to empCode
+                    const employeeRef = db.collection("employees").doc(emp.id || emp.employeeId);
+                    await employeeRef.collection("payslips").add({
+                        periodKey,
+                        month,
+                        year,
+                        netPay: emp.netPay,
+                        totalEarnings: emp.totalEarnings,
+                        totalDeductions: emp.totalDeductions,
+                        sentAt: admin.firestore.FieldValue.serverTimestamp(),
+                        status: "sent",
+                        payrollId: payrollId
+                    });
+
+                    console.log(`Successfully sent and recorded payslip for ${emp.name}`);
                 } catch (err) {
                     console.error(`Failed to process ${emp.name}:`, err);
                 }
             }
 
-            // Update status to 'sent'
-            return change.after.ref.update({
+            // 4. Update main payroll record to 'sent'
+            await db.collection("payroll").doc(payrollId).update({
                 status: "sent",
                 sentAt: admin.firestore.FieldValue.serverTimestamp()
             });
