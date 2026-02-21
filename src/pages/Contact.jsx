@@ -1,10 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Contact.module.css';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-    React.useEffect(() => {
+    useEffect(() => {
         document.title = "Contact for Software & Web Development Projects | Layer1.Studio";
     }, []);
+
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        user_email: '',
+        topic: '',
+        message: ''
+    });
+
+    const [status, setStatus] = useState({ type: '', message: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setStatus({ type: 'info', message: 'Sending your inquiry...' });
+
+        try {
+            // 1. Save to Firebase
+            await addDoc(collection(db, 'inquiries'), {
+                ...formData,
+                timestamp: new Date().toISOString()
+            });
+
+            // 2. Send Email via EmailJS
+            // This sends to the studio AND triggers the auto-reply template if configured
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+            if (serviceId && templateId && publicKey) {
+                await emailjs.send(
+                    serviceId,
+                    templateId,
+                    {
+                        from_name: `${formData.firstName} ${formData.lastName}`,
+                        to_name: "Layer1.Studio Team",
+                        message: formData.message,
+                        reply_to: formData.user_email,
+                        topic: formData.topic,
+                        user_email: formData.user_email // Used for auto-reply template
+                    },
+                    publicKey
+                );
+            }
+
+            setStatus({ 
+                type: 'success', 
+                message: 'Thank you! Your message has been sent. We will get back to you shortly.' 
+            });
+            setFormData({
+                firstName: '',
+                lastName: '',
+                user_email: '',
+                topic: '',
+                message: ''
+            });
+
+        } catch (error) {
+            console.error("Submission error:", error);
+            setStatus({ 
+                type: 'error', 
+                message: 'Something went wrong. Please try again or email us directly.' 
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className={styles.contactPage}>
@@ -55,26 +131,52 @@ const Contact = () => {
 
                         <div className={styles.formColumn}>
                             <div className={styles.formCard}>
-                                <form className={styles.form}>
+                                <form className={styles.form} onSubmit={handleSubmit}>
                                     <div className={styles.row}>
                                         <div className={styles.field}>
                                             <label>First Name</label>
-                                            <input type="text" placeholder="E.g. Alexander" />
+                                            <input 
+                                                type="text" 
+                                                name="firstName"
+                                                value={formData.firstName}
+                                                onChange={handleChange}
+                                                placeholder="E.g. Alexander" 
+                                                required
+                                            />
                                         </div>
                                         <div className={styles.field}>
                                             <label>Last Name</label>
-                                            <input type="text" placeholder="E.g. Wright" />
+                                            <input 
+                                                type="text" 
+                                                name="lastName"
+                                                value={formData.lastName}
+                                                onChange={handleChange}
+                                                placeholder="E.g. Wright" 
+                                                required
+                                            />
                                         </div>
                                     </div>
 
                                     <div className={styles.field}>
                                         <label>Email</label>
-                                        <input type="email" placeholder="alex@studio.com" />
+                                        <input 
+                                            type="email" 
+                                            name="user_email"
+                                            value={formData.user_email}
+                                            onChange={handleChange}
+                                            placeholder="alex@studio.com" 
+                                            required
+                                        />
                                     </div>
 
                                     <div className={styles.field}>
                                         <label>How can we help?</label>
-                                        <select defaultValue="">
+                                        <select 
+                                            name="topic"
+                                            value={formData.topic}
+                                            onChange={handleChange}
+                                            required
+                                        >
                                             <option disabled value="">Select a topic</option>
                                             <option>General Inquiry</option>
                                             <option>Pricing & Project Estimates</option>
@@ -87,11 +189,28 @@ const Contact = () => {
 
                                     <div className={styles.field}>
                                         <label>What's on your mind?</label>
-                                        <textarea rows="5" placeholder="Tell us about what you're building..." />
+                                        <textarea 
+                                            name="message"
+                                            value={formData.message}
+                                            onChange={handleChange}
+                                            rows="5" 
+                                            placeholder="Tell us about what you're building..." 
+                                            required
+                                        />
                                     </div>
 
-                                    <button type="submit" className={styles.submitBtn}>
-                                        Send message
+                                    {status.message && (
+                                        <p className={`${styles.status} ${styles[status.type]}`}>
+                                            {status.message}
+                                        </p>
+                                    )}
+
+                                    <button 
+                                        type="submit" 
+                                        className={styles.submitBtn}
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? 'Sending...' : 'Send message'}
                                     </button>
 
                                     <p className={styles.privacyNote}>
@@ -109,3 +228,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
