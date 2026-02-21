@@ -4,7 +4,7 @@ try {
     console.log('Setting Resend API Key...');
 
     // Correct Firebase CLI command is functions:secrets:set
-    execSync('echo "re_95Ja1Ykm_PbguhR3HB1gtdSXxgmYG8Jku" | npx firebase-tools functions:secrets:set RESEND_API_KEY --project layer1studio-750f4', {
+    execSync('echo "REMOVED_FOR_SECURITY_REASONS" | npx firebase-tools functions:secrets:set RESEND_API_KEY --project layer1studio-750f4', {
         stdio: 'inherit'
     });
 

@@ -8,7 +8,7 @@ const handlebars = require("handlebars");
 admin.initializeApp();
 
 // Fallback to hardcoded key to bypass Secret Manager IAM errors if needed
-const FALLBACK_RESEND_KEY = "re_95Ja1Ykm_PbguhR3HB1gtdSXxgmYG8Jku";
+const FALLBACK_RESEND_KEY = "REMOVED_FOR_SECURITY_REASONS";
 const RESEND_API_KEY = process.env.RESEND_API_KEY || FALLBACK_RESEND_KEY;
 const TWILIO_SID = process.env.TWILIO_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
