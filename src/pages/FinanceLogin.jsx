@@ -21,24 +21,30 @@ const FinanceLogin = () => {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            // Check if user has finance role
+
+            // Check if user has finance role in Firestore
             const configDoc = await getDoc(doc(db, 'financeConfig', 'settings'));
             if (!configDoc.exists()) {
-                setError('Finance module not configured. Contact admin.');
+                setError('Finance configuration missing in Firestore.');
                 setLoading(false);
                 return;
             }
+
             const config = configDoc.data();
             const allowedEmails = config.allowedEmails || [];
             if (!allowedEmails.includes(email.toLowerCase())) {
-                setError('Access denied. Not authorized for finance.');
+                setError('Your account is not on the authorized finance list.');
                 setLoading(false);
                 return;
             }
             setStep(2);
         } catch (err) {
             console.error(err);
-            setError('Invalid credentials. Access denied.');
+            if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+                setError('Incorrect email or password. Please try again.');
+            } else {
+                setError('Login failed: ' + (err.message || 'Unknown error'));
+            }
         } finally {
             setLoading(false);
         }
