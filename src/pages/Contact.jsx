@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Contact.module.css';
-import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
@@ -31,13 +29,7 @@ const Contact = () => {
         setStatus({ type: 'info', message: 'Sending your inquiry...' });
 
         try {
-            // 1. Save to Firebase
-            await addDoc(collection(db, 'inquiries'), {
-                ...formData,
-                timestamp: new Date().toISOString()
-            });
-
-            // 2. Send Email via EmailJS
+            // Send Email via EmailJS
             // This sends to the studio AND triggers the auto-reply template if configured
             const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
             const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -59,9 +51,9 @@ const Contact = () => {
                 );
             }
 
-            setStatus({ 
-                type: 'success', 
-                message: 'Thank you! Your message has been sent. We will get back to you shortly.' 
+            setStatus({
+                type: 'success',
+                message: 'Thank you! Your message has been sent. We will get back to you shortly.'
             });
             setFormData({
                 firstName: '',
@@ -73,9 +65,9 @@ const Contact = () => {
 
         } catch (error) {
             console.error("Submission error:", error);
-            setStatus({ 
-                type: 'error', 
-                message: 'Something went wrong. Please try again or email us directly.' 
+            setStatus({
+                type: 'error',
+                message: 'Something went wrong. Please try again or email us directly.'
             });
         } finally {
             setIsSubmitting(false);
@@ -135,23 +127,23 @@ const Contact = () => {
                                     <div className={styles.row}>
                                         <div className={styles.field}>
                                             <label>First Name</label>
-                                            <input 
-                                                type="text" 
+                                            <input
+                                                type="text"
                                                 name="firstName"
                                                 value={formData.firstName}
                                                 onChange={handleChange}
-                                                placeholder="E.g. Alexander" 
+                                                placeholder="E.g. Alexander"
                                                 required
                                             />
                                         </div>
                                         <div className={styles.field}>
                                             <label>Last Name</label>
-                                            <input 
-                                                type="text" 
+                                            <input
+                                                type="text"
                                                 name="lastName"
                                                 value={formData.lastName}
                                                 onChange={handleChange}
-                                                placeholder="E.g. Wright" 
+                                                placeholder="E.g. Wright"
                                                 required
                                             />
                                         </div>
@@ -159,19 +151,19 @@ const Contact = () => {
 
                                     <div className={styles.field}>
                                         <label>Email</label>
-                                        <input 
-                                            type="email" 
+                                        <input
+                                            type="email"
                                             name="user_email"
                                             value={formData.user_email}
                                             onChange={handleChange}
-                                            placeholder="alex@studio.com" 
+                                            placeholder="alex@studio.com"
                                             required
                                         />
                                     </div>
 
                                     <div className={styles.field}>
                                         <label>How can we help?</label>
-                                        <select 
+                                        <select
                                             name="topic"
                                             value={formData.topic}
                                             onChange={handleChange}
@@ -189,12 +181,12 @@ const Contact = () => {
 
                                     <div className={styles.field}>
                                         <label>What's on your mind?</label>
-                                        <textarea 
+                                        <textarea
                                             name="message"
                                             value={formData.message}
                                             onChange={handleChange}
-                                            rows="5" 
-                                            placeholder="Tell us about what you're building..." 
+                                            rows="5"
+                                            placeholder="Tell us about what you're building..."
                                             required
                                         />
                                     </div>
@@ -205,8 +197,8 @@ const Contact = () => {
                                         </p>
                                     )}
 
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         className={styles.submitBtn}
                                         disabled={isSubmitting}
                                     >
