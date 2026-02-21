@@ -2,9 +2,9 @@
 
 :root {
   /* Core Palette */
-  --bg-deep: #02040a;
-  --bg-card: rgba(13, 17, 23, 0.7);
-  --bg-sidebar: rgba(1, 4, 9, 0.9);
+  --bg-deep: #0f1420;
+  --bg-card: rgba(22, 27, 40, 0.7);
+  --bg-sidebar: rgba(14, 18, 30, 0.9);
 
   /* Dynamic Accent (Controlled by JS) */
   --accent-primary: #6366f1;
