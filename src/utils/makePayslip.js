@@ -21,7 +21,7 @@ const createPayslipPDF = async (empData, periodKey, payDayStr) => {
     container.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
             <div style="display: flex; flex-direction: column; align-items: center;">
-                <img src="https://layer1-studio.github.io/layer1studio/assets/logo.png" alt="logo" style="height: 60px; margin-bottom: 8px;">
+                <img src="${window.location.origin}/assets/logo.png" alt="logo" style="height: 60px; margin-bottom: 8px;" crossorigin="anonymous">
                 <div style="padding: 4px 12px; background: #79c5e3; color: white; border-radius: 4px; font-weight: 600; font-size: 9pt; text-transform: uppercase; margin-bottom: 10px;">Payslip</div>
             </div>
             <div style="text-align: right; font-size: 9.5pt; color: #64748b;">
