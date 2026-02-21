@@ -345,9 +345,15 @@ const FinanceDashboard = () => {
 
     const isPayDayOrAfter = () => {
         const now = new Date();
-        return now.getDate() >= payDay &&
-            now.getMonth() === payrollMonth &&
-            now.getFullYear() === payrollYear;
+        const payDate = new Date(payrollYear, payrollMonth, payDay);
+        // Authorization opens 3 days before pay day
+        const authStartDate = new Date(payDate);
+        authStartDate.setDate(payDate.getDate() - 3);
+
+        now.setHours(0, 0, 0, 0);
+        authStartDate.setHours(0, 0, 0, 0);
+
+        return now >= authStartDate;
     };
 
     // ─── History ─────────────────────────────────────────────────
@@ -775,10 +781,10 @@ const FinanceDashboard = () => {
                                                 onClick={handleAuthorize}
                                                 className={styles.authorizeBtn}
                                                 disabled={!isPayDayOrAfter() || isProcessing}
-                                                title={!isPayDayOrAfter() ? `Available on the ${payDay} th` : 'Send payslips'}
+                                                title={!isPayDayOrAfter() ? `Available from the ${Math.max(1, payDay - 3)}th` : 'Send payslips'}
                                             >
                                                 <span className="material-symbols-outlined">send</span>
-                                                {isProcessing ? 'Processing...' : (isPayDayOrAfter() ? 'Authorize & Send Payslips' : `Available on ${payDay} th`)}
+                                                {isProcessing ? 'Processing...' : (isPayDayOrAfter() ? 'Authorize & Send Payslips' : `Available from ${Math.max(1, payDay - 3)}th`)}
                                             </button>
                                         )}
                                         {existingPayroll?.status === 'authorized' && (
