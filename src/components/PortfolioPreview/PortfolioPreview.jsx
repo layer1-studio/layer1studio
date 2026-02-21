@@ -15,7 +15,7 @@ const PortfolioPreview = () => {
     };
 
     const projects = allProjects.length > 0
-        ? allProjects.slice(0, 3).map(p => ({ ...p, image: p.image || getFallbackImage(p.title) }))
+        ? allProjects.slice(0, 3).map(p => ({ ...p, image: getFallbackImage(p.title) || p.image }))
         : [];
 
     if (loading && allProjects.length === 0) return null;

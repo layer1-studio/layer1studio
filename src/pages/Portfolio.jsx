@@ -56,7 +56,7 @@ const Portfolio = () => {
     const rawProjects = dbProjects.length > 0 ? dbProjects : defaultProjects;
     const projects = rawProjects.map(p => ({
         ...p,
-        image: p.image || getFallbackImage(p.title),
+        image: getFallbackImage(p.title) || p.image,
     }));
     const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
 
