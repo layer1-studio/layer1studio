@@ -775,7 +775,7 @@ const FinanceDashboard = () => {
                                                 onClick={handleAuthorize}
                                                 className={styles.authorizeBtn}
                                                 disabled={!isPayDayOrAfter() || isProcessing}
-                                                title={!isPayDayOrAfter() ? `Available on the ${PAY_DAY} th` : 'Send payslips'}
+                                                title={!isPayDayOrAfter() ? `Available on the ${payDay} th` : 'Send payslips'}
                                             >
                                                 <span className="material-symbols-outlined">send</span>
                                                 {isProcessing ? 'Processing...' : (isPayDayOrAfter() ? 'Authorize & Send Payslips' : `Available on ${payDay} th`)}
