@@ -12,6 +12,8 @@ import TermsOfService from './pages/TermsOfService'
 import AdminDashboard from './pages/AdminDashboard'
 import ApplyNow from './pages/ApplyNow'
 import AdminLogin from './pages/AdminLogin'
+import FinanceLogin from './pages/FinanceLogin'
+import FinanceDashboard from './pages/FinanceDashboard'
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { Navigate } from 'react-router-dom'
@@ -31,6 +33,27 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) return null; // Or a spinner
   if (!user) return <Navigate to="/vault/internal/gate/secure/auth/login" replace />;
+
+  return children;
+}
+
+// Finance Protected Route Wrapper (requires auth + passcode session)
+const FinanceProtectedRoute = ({ children }) => {
+  const [user, setUser] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) return null;
+  if (!user || !sessionStorage.getItem('financeAuthorized')) {
+    return <Navigate to="/vault/internal/gate/secure/finance/login" replace />;
+  }
 
   return children;
 }
@@ -62,6 +85,17 @@ function App() {
 
           {/* Secured Admin Routes */}
           <Route path="/vault/internal/gate/secure/auth/login" element={<AdminLogin />} />
+          {/* Secured Finance Routes */}
+          <Route path="/vault/internal/gate/secure/finance/login" element={<FinanceLogin />} />
+          <Route
+            path="/vault/internal/gate/secure/finance/payroll"
+            element={
+              <FinanceProtectedRoute>
+                <FinanceDashboard />
+              </FinanceProtectedRoute>
+            }
+          />
+
           <Route
             path="/vault/internal/gate/secure/admin/dashboard"
             element={

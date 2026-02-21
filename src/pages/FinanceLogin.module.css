@@ -1,0 +1,186 @@
+.loginPage {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy-deep);
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 420px;
+    padding: 3rem;
+    background: #fff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-3xl);
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.icon span {
+    color: #fff;
+    font-size: 26px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.tagline {
+    font-size: 0.75rem;
+    color: #10b981;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.field {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.field label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--slate-400);
+    letter-spacing: 0.05em;
+}
+
+.field input {
+    background: var(--navy-surface);
+    border: 1px solid var(--border-light);
+    padding: 1rem;
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.field input:focus {
+    border-color: #10b981;
+    outline: none;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.stepInfo {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.passcodeWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.passcodeInput {
+    width: 100%;
+    background: var(--navy-surface);
+    border: 2px solid var(--border-light);
+    padding: 1.25rem;
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.75em;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.passcodeInput:focus {
+    border-color: #10b981;
+    outline: none;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.passcodeInput::placeholder {
+    color: #cbd5e1;
+    letter-spacing: 0.5em;
+    font-size: 1.5rem;
+}
+
+.error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.loginBtn {
+    margin-top: 0.5rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    font-size: 0.85rem;
+}
+
+.loginBtn:hover:not(:disabled) {
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.loginBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.backBtn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0.5rem;
+}
+
+.backBtn:hover {
+    color: #1e293b;
+}

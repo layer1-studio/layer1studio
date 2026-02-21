@@ -149,6 +149,13 @@ const AdminDashboard = () => {
                         <h1 className={styles.title}>Studio <span>Manager</span></h1>
                         <div className={styles.headerActions}>
                             <a
+                                href="/vault/internal/gate/secure/finance/login"
+                                className={styles.secondaryBtn}
+                            >
+                                <span className="material-symbols-outlined">account_balance</span>
+                                Finance Portal
+                            </a>
+                            <a
                                 href="/branding/"
                                 target="_blank"
                                 rel="noreferrer"
