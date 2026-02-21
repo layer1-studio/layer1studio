@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc, collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { generatePayslipPDF } from '../utils/makePayslip';
 import styles from './EmployeeDashboard.module.css';
 
 const EmployeeDashboard = () => {
@@ -62,6 +63,25 @@ const EmployeeDashboard = () => {
 
     const getMonthName = (month) => {
         return new Date(2026, month).toLocaleString('default', { month: 'long' });
+    };
+
+    const handleDownloadPayslip = async (slip) => {
+        if (!employee) return;
+        try {
+            // Reconstruct the employee object needed by generatePayslipPDF
+            // Note: slip contains netPay, totalEarnings, totalDeductions, etc.
+            const empForPDF = {
+                ...employee,
+                netPay: slip.netPay,
+                totalEarnings: slip.totalEarnings,
+                totalDeductions: slip.totalDeductions
+            };
+            const payDayStr = 'Selected Period'; // Or derive specific pay day if tracked
+            await generatePayslipPDF(empForPDF, slip.periodKey, payDayStr);
+        } catch (err) {
+            console.error('Failed to generate PDF:', err);
+            alert('Failed to generate payslip PDF. Please try again.');
+        }
     };
 
     if (loading) {
@@ -175,9 +195,9 @@ const EmployeeDashboard = () => {
                                                 <span className={styles.amount}>{formatCurrency(slip.netPay)}</span>
                                             </div>
                                             <div className={styles.slipActions}>
-                                                <button className={styles.downloadBtn} title="Check Email for PDF">
-                                                    <span className="material-symbols-outlined">mail</span>
-                                                    Email Archive
+                                                <button onClick={() => handleDownloadPayslip(slip)} className={styles.downloadBtn} title="Download PDF">
+                                                    <span className="material-symbols-outlined">download</span>
+                                                    Download PDF
                                                 </button>
                                             </div>
                                         </div>
