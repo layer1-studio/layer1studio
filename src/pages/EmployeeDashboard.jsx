@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc, collection, query, orderBy, getDocs } from 'firebase/firestore';
@@ -159,6 +159,20 @@ const EmployeeDashboard = () => {
                                 <div className={styles.infoItem}>
                                     <label>Sort Code</label>
                                     <p>{employee.sortCode || '-'}</p>
+                                </div>
+                            </div>
+
+                            <div className={styles.card}>
+                                <h3>Company Portals</h3>
+                                <div className={styles.infoList}>
+                                    <Link to="/vault/internal/gate/secure/finance/login" className={styles.cvLink}>
+                                        <span className="material-symbols-outlined">account_balance</span>
+                                        Finance Portal
+                                    </Link>
+                                    <Link to="/vault/internal/gate/secure/auth/login" className={styles.cvLink}>
+                                        <span className="material-symbols-outlined">admin_panel_settings</span>
+                                        Studio Manager
+                                    </Link>
                                 </div>
                             </div>
                         </div>

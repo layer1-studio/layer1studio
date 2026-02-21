@@ -300,7 +300,7 @@ const FinanceDashboard = () => {
                     emp.status = 'sent';
 
                     // Add record directly to employee portal
-                    const empId = emp.employeeId || emp.empCode;
+                    const empId = emp.id || emp.employeeId || emp.empCode;
                     if (empId) {
                         await addDoc(collection(db, 'employees', empId, 'payslips'), {
                             periodKey: existingPayroll.periodKey,
