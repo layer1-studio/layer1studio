@@ -29,14 +29,22 @@ const EmployeeDashboard = () => {
                 }
 
                 // 2. Fetch Payslips
+                // We fetch all payslips and sort them client-side to avoid composite index requirements
                 const payslipsQuery = query(
-                    collection(db, 'employees', empProfileId, 'payslips'),
-                    orderBy('year', 'desc'),
-                    orderBy('month', 'desc')
+                    collection(db, 'employees', empProfileId, 'payslips')
                 );
                 const querySnapshot = await getDocs(payslipsQuery);
-                const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setPayslips(docs);
+                let docsArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Sort descending: highest year first, then highest month
+                docsArray.sort((a, b) => {
+                    if (b.year !== a.year) {
+                        return b.year - a.year; // Descending year
+                    }
+                    return b.month - a.month; // Descending month
+                });
+
+                setPayslips(docsArray);
             } catch (err) {
                 console.error('Error fetching employee data:', err);
             } finally {
