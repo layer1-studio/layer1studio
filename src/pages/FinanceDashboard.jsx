@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 import styles from './FinanceDashboard.module.css';
 
-const PAY_DAY = 22;
-
 const getCurrentPayPeriod = () => {
     const now = new Date();
     return { month: now.getMonth(), year: now.getFullYear() };
@@ -23,6 +21,20 @@ const FinanceDashboard = () => {
     const { data: payrollRecords, addItem: addPayroll, updateItem: updatePayroll } = useContent('payroll');
     const navigate = useNavigate();
 
+    // Finance Config Settings
+    const [settings, setSettings] = React.useState({ payDay: 22 });
+    const payDay = settings.payDay;
+
+    React.useEffect(() => {
+        const fetchSettings = async () => {
+            const configDoc = await getDoc(doc(db, 'financeConfig', 'settings'));
+            if (configDoc.exists()) {
+                setSettings(configDoc.data());
+            }
+        };
+        fetchSettings();
+    }, []);
+
     // Employee form state
     const [showEmployeeForm, setShowEmployeeForm] = useState(false);
     const [editingEmployee, setEditingEmployee] = useState(null);
@@ -35,6 +47,8 @@ const FinanceDashboard = () => {
     const [payrollMonth, setPayrollMonth] = useState(getCurrentPayPeriod().month);
     const [payrollYear, setPayrollYear] = useState(getCurrentPayPeriod().year);
     const [payrollEdits, setPayrollEdits] = useState({});
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     // Confirm delete
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
@@ -126,52 +140,62 @@ const FinanceDashboard = () => {
     const calcNetPay = (emp) => calcTotalEarnings(emp) - calcTotalDeductions(emp);
 
     const handleApprovePayroll = async () => {
-        const finalEmployees = payrollEmployees.map(emp => ({
-            ...emp,
-            baseSalary: getVal(emp, 'baseSalary'),
-            bonus: getVal(emp, 'bonus'),
-            overtime: getVal(emp, 'overtime'),
-            allowances: getVal(emp, 'allowances'),
-            taxDeduction: getVal(emp, 'taxDeduction'),
-            pensionDeduction: getVal(emp, 'pensionDeduction'),
-            otherDeductions: getVal(emp, 'otherDeductions'),
-            totalEarnings: calcTotalEarnings(emp),
-            totalDeductions: calcTotalDeductions(emp),
-            netPay: calcNetPay(emp),
-        }));
+        setIsProcessing(true);
+        try {
+            const finalEmployees = payrollEmployees.map(emp => ({
+                ...emp,
+                baseSalary: getVal(emp, 'baseSalary'),
+                bonus: getVal(emp, 'bonus'),
+                overtime: getVal(emp, 'overtime'),
+                allowances: getVal(emp, 'allowances'),
+                taxDeduction: getVal(emp, 'taxDeduction'),
+                pensionDeduction: getVal(emp, 'pensionDeduction'),
+                otherDeductions: getVal(emp, 'otherDeductions'),
+                totalEarnings: calcTotalEarnings(emp),
+                totalDeductions: calcTotalDeductions(emp),
+                netPay: calcNetPay(emp),
+            }));
 
-        const payrollData = {
-            periodKey: payrollKey,
-            month: payrollMonth,
-            year: payrollYear,
-            payDay: PAY_DAY,
-            status: 'approved',
-            approvedAt: new Date().toISOString(),
-            approvedBy: auth.currentUser?.email || 'unknown',
-            employees: finalEmployees,
-            totalPayroll: finalEmployees.reduce((sum, e) => sum + e.netPay, 0),
-        };
+            const payrollData = {
+                periodKey: payrollKey,
+                month: payrollMonth,
+                year: payrollYear,
+                payDay: payDay,
+                status: 'approved',
+                approvedAt: new Date().toISOString(),
+                approvedBy: auth.currentUser?.email || 'unknown',
+                employees: finalEmployees,
+                totalPayroll: finalEmployees.reduce((sum, e) => sum + e.netPay, 0),
+            };
 
-        if (existingPayroll) {
-            await updatePayroll(existingPayroll.id, payrollData);
-        } else {
-            await addPayroll(payrollData);
+            if (existingPayroll) {
+                await updatePayroll(existingPayroll.id, payrollData);
+            } else {
+                await addPayroll(payrollData);
+            }
+            setPayrollEdits({});
+        } finally {
+            setIsProcessing(false);
         }
-        setPayrollEdits({});
     };
 
     const handleAuthorize = async () => {
         if (!existingPayroll) return;
-        await updatePayroll(existingPayroll.id, {
-            status: 'authorized',
-            authorizedAt: new Date().toISOString(),
-            authorizedBy: auth.currentUser?.email || 'unknown',
-        });
+        setIsProcessing(true);
+        try {
+            await updatePayroll(existingPayroll.id, {
+                status: 'authorized',
+                authorizedAt: new Date().toISOString(),
+                authorizedBy: auth.currentUser?.email || 'unknown',
+            });
+        } finally {
+            setIsProcessing(false);
+        }
     };
 
     const isPayDayOrAfter = () => {
         const now = new Date();
-        return now.getDate() >= PAY_DAY &&
+        return now.getDate() >= payDay &&
             now.getMonth() === payrollMonth &&
             now.getFullYear() === payrollYear;
     };
@@ -225,7 +249,18 @@ const FinanceDashboard = () => {
                     {activeTab === 'employees' && (
                         <div className={styles.section}>
                             <div className={styles.sectionHeader}>
-                                <h3>Employee Directory</h3>
+                                <div className={styles.searchGroup}>
+                                    <h3>Employee Directory</h3>
+                                    <div className={styles.searchBox}>
+                                        <span className="material-symbols-outlined">search</span>
+                                        <input
+                                            type="text"
+                                            placeholder="Search name or ID..."
+                                            value={searchTerm}
+                                            onChange={e => setSearchTerm(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
                                 <button className={styles.addBtn} onClick={() => { resetEmployeeForm(); setShowEmployeeForm(true); }}>
                                     <span className="material-symbols-outlined">person_add</span>
                                     Add Employee
@@ -284,40 +319,50 @@ const FinanceDashboard = () => {
                             )}
 
                             <div className={styles.employeeList}>
-                                {employees.length === 0 ? (
-                                    <p className={styles.emptyMsg}>No employees added yet. Start by adding your team members.</p>
+                                {employees.filter(e =>
+                                    e.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    e.employeeId?.toLowerCase().includes(searchTerm.toLowerCase())
+                                ).length === 0 ? (
+                                    <p className={styles.emptyMsg}>
+                                        {searchTerm ? 'No employees found matching your search.' : 'No employees added yet. Start by adding your team members.'}
+                                    </p>
                                 ) : (
-                                    employees.map(emp => (
-                                        <div key={emp.id} className={styles.employeeCard}>
-                                            <div className={styles.empInfo}>
-                                                <div className={styles.empAvatar}>{emp.name?.charAt(0)?.toUpperCase() || '?'}</div>
-                                                <div>
-                                                    <h4>{emp.name}</h4>
-                                                    <p className={styles.empDesignation}>{emp.designation}</p>
-                                                    <p className={styles.empMeta}>{emp.email} • {emp.employeeId}</p>
+                                    employees
+                                        .filter(e =>
+                                            e.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                            e.employeeId?.toLowerCase().includes(searchTerm.toLowerCase())
+                                        )
+                                        .map(emp => (
+                                            <div key={emp.id} className={styles.employeeCard}>
+                                                <div className={styles.empInfo}>
+                                                    <div className={styles.empAvatar}>{emp.name?.charAt(0)?.toUpperCase() || '?'}</div>
+                                                    <div>
+                                                        <h4>{emp.name}</h4>
+                                                        <p className={styles.empDesignation}>{emp.designation}</p>
+                                                        <p className={styles.empMeta}>{emp.email} • {emp.employeeId}</p>
+                                                    </div>
+                                                </div>
+                                                <div className={styles.empSalary}>{formatCurrency(emp.baseSalary)}<span>/mo</span></div>
+                                                <div className={styles.empActions}>
+                                                    {confirmDeleteId === emp.id ? (
+                                                        <div className={styles.confirmGroup}>
+                                                            <span>Delete?</span>
+                                                            <button onClick={() => { deleteEmployee(emp.id); setConfirmDeleteId(null); }} className={styles.deleteConfirmBtn}>Yes</button>
+                                                            <button onClick={() => setConfirmDeleteId(null)} className={styles.cancelSmBtn}>No</button>
+                                                        </div>
+                                                    ) : (
+                                                        <>
+                                                            <button onClick={() => startEditEmployee(emp)} className={styles.editBtn}>
+                                                                <span className="material-symbols-outlined">edit</span>
+                                                            </button>
+                                                            <button onClick={() => setConfirmDeleteId(emp.id)} className={styles.deleteBtn}>
+                                                                <span className="material-symbols-outlined">delete</span>
+                                                            </button>
+                                                        </>
+                                                    )}
                                                 </div>
                                             </div>
-                                            <div className={styles.empSalary}>{formatCurrency(emp.baseSalary)}<span>/mo</span></div>
-                                            <div className={styles.empActions}>
-                                                {confirmDeleteId === emp.id ? (
-                                                    <div className={styles.confirmGroup}>
-                                                        <span>Delete?</span>
-                                                        <button onClick={() => { deleteEmployee(emp.id); setConfirmDeleteId(null); }} className={styles.deleteConfirmBtn}>Yes</button>
-                                                        <button onClick={() => setConfirmDeleteId(null)} className={styles.cancelSmBtn}>No</button>
-                                                    </div>
-                                                ) : (
-                                                    <>
-                                                        <button onClick={() => startEditEmployee(emp)} className={styles.editBtn}>
-                                                            <span className="material-symbols-outlined">edit</span>
-                                                        </button>
-                                                        <button onClick={() => setConfirmDeleteId(emp.id)} className={styles.deleteBtn}>
-                                                            <span className="material-symbols-outlined">delete</span>
-                                                        </button>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))
+                                        ))
                                 )}
                             </div>
                         </div>
@@ -340,9 +385,20 @@ const FinanceDashboard = () => {
                                     </select>
                                 </div>
                                 <div className={styles.payrollMeta}>
+                                    <div className={styles.summaryStats}>
+                                        <div className={styles.statItem}>
+                                            <small>Headcount</small>
+                                            <strong>{payrollEmployees.length}</strong>
+                                        </div>
+                                        <div className={styles.statSeparator} />
+                                        <div className={styles.statItem}>
+                                            <small>Total Payroll</small>
+                                            <strong>{formatCurrency(payrollEmployees.reduce((sum, e) => sum + calcNetPay(e), 0))}</strong>
+                                        </div>
+                                    </div>
                                     <span className={styles.payDayBadge}>
                                         <span className="material-symbols-outlined">calendar_today</span>
-                                        Pay Day: {PAY_DAY}th
+                                        Pay Day: {payDay}th
                                     </span>
                                     {existingPayroll && (
                                         <span className={`${styles.statusBadge} ${styles[existingPayroll.status]}`}>
@@ -424,20 +480,24 @@ const FinanceDashboard = () => {
 
                                     <div className={styles.payrollActions}>
                                         {(!existingPayroll || existingPayroll.status === 'draft') && (
-                                            <button onClick={handleApprovePayroll} className={styles.approveBtn}>
+                                            <button
+                                                onClick={handleApprovePayroll}
+                                                className={styles.approveBtn}
+                                                disabled={isProcessing}
+                                            >
                                                 <span className="material-symbols-outlined">check_circle</span>
-                                                Approve Payroll
+                                                {isProcessing ? 'Saving...' : 'Approve Payroll'}
                                             </button>
                                         )}
                                         {existingPayroll?.status === 'approved' && (
                                             <button
                                                 onClick={handleAuthorize}
                                                 className={styles.authorizeBtn}
-                                                disabled={!isPayDayOrAfter()}
+                                                disabled={!isPayDayOrAfter() || isProcessing}
                                                 title={!isPayDayOrAfter() ? `Available on the ${PAY_DAY}th` : 'Send payslips'}
                                             >
                                                 <span className="material-symbols-outlined">send</span>
-                                                {isPayDayOrAfter() ? 'Authorize & Send Payslips' : `Available on ${PAY_DAY}th`}
+                                                {isProcessing ? 'Processing...' : (isPayDayOrAfter() ? 'Authorize & Send Payslips' : `Available on ${payDay}th`)}
                                             </button>
                                         )}
                                         {existingPayroll?.status === 'authorized' && (

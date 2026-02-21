@@ -216,23 +216,64 @@ exports.processPayroll = functions.region("europe-west2").runWith({
     });
 
 /**
- * Scheduled Reminder: Runs on 19th and 21st at 9AM
+ * Scheduled Reminder: Runs daily at 9AM to check if reminders are needed
  */
 exports.payrollApprovalReminder = functions.region("europe-west2").runWith({
     secrets: ["TWILIO_AUTH_TOKEN", "RESEND_API_KEY"]
 }).pubsub
-    .schedule("0 9 19,21 * *")
+    .schedule("0 9 * * *") // Run daily
     .timeZone("Asia/Colombo")
     .onRun(async (context) => {
         const db = admin.firestore();
-        const now = new Date();
-        const periodKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 
+        // 1. Fetch Finance Settings
+        const settingsDoc = await db.collection("financeConfig").doc("settings").get();
+        if (!settingsDoc.exists) return null;
+
+        const { payDay = 22, reminderDaysBefore = 3 } = settingsDoc.data();
+
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth();
+        const currentDate = now.getDate();
+
+        // Calculate the trigger date (e.g., 22 - 3 = 19th)
+        const triggerDate = payDay - reminderDaysBefore;
+
+        // Only run on the trigger day and the day before pay day (final warning)
+        if (currentDate !== triggerDate && currentDate !== (payDay - 1)) {
+            console.log("Not a reminder day. Skipping.");
+            return null;
+        }
+
+        const periodKey = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}`;
         const payrollQuery = await db.collection("payroll").where("periodKey", "==", periodKey).get();
         let needsApproval = payrollQuery.empty || payrollQuery.docs[0].data().status === "draft";
 
         if (needsApproval) {
-            console.log("Sending payroll approval reminders...");
-            // Logic for Email + WhatsApp via Twilio
+            const managerEmail = "rachelcooray@gmail.com";
+            const resend = new Resend(RESEND_API_KEY || "re_123");
+
+            console.log(`Sending payroll reminder for ${periodKey}...`);
+
+            // 1. Email Reminder
+            await resend.emails.send({
+                from: "Layer1 Alerts <alerts@layer1studio.org>",
+                to: managerEmail,
+                subject: "🚨 Action Required: Monthly Payroll Pending Approval",
+                html: `<p>Hi Manager,</p><p>This is a reminder that the payroll for ${periodKey} has not been approved yet. Please review and approve it before the ${payDay}th.</p><p><a href="https://layer1-studio.github.io/layer1studio/vault/internal/gate/secure/finance/login">Access Finance Portal</a></p>`
+            });
+
+            // 2. WhatsApp Reminder (Twilio)
+            // ... same twilio logic as before ...
+            if (process.env.TWILIO_SID && process.env.TWILIO_AUTH_TOKEN && process.env.MANAGER_WHATSAPP_TO) {
+                const client = require("twilio")(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+                await client.messages.create({
+                    from: `whatsapp:${process.env.TWILIO_WHATSAPP_FROM}`,
+                    to: `whatsapp:${process.env.MANAGER_WHATSAPP_TO}`,
+                    body: `🚨 Layer1 Studio Sync: Monthly payroll for ${periodKey} is pending approval. Please authorize it before the ${payDay}th.`
+                });
+            }
         }
+        return null;
     });
