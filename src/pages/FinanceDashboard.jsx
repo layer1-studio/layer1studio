@@ -5,7 +5,6 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp, getDoc, collection, addDoc } from 'firebase/firestore';
 import emailjs from '@emailjs/browser';
-import { generatePayslipPDFBase64 } from '../utils/makePayslip';
 import styles from './FinanceDashboard.module.css';
 
 const getCurrentPayPeriod = () => {
@@ -282,22 +281,17 @@ const FinanceDashboard = () => {
             const confirmSend = window.confirm(`Generate and email payslips to ${authorizedEmployees.length} employees now?`);
             if (!confirmSend) return;
 
-            // Generate PDFs & Send via EmailJS Loop
+            // Send Email via EmailJS Loop
             for (const emp of authorizedEmployees) {
                 try {
-                    console.log(`Generating PDF for ${emp.name}...`);
-                    const payDayStr = `${payDay}th`;
-                    const base64PDF = await generatePayslipPDFBase64(emp, existingPayroll.periodKey, payDayStr);
-
                     console.log(`Sending Email to ${emp.name} (${emp.email})...`);
                     await emailjs.send(
                         import.meta.env.VITE_EMAILJS_SERVICE_ID || 'dummy',
-                        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'dummy',
+                        import.meta.env.VITE_EMAILJS_PAYSLIP_TEMPLATE_ID || 'dummy',
                         {
                             to_name: emp.name,
                             to_email: emp.email,
                             period_key: existingPayroll.periodKey,
-                            attachment: base64PDF, // Base64 encoding passed as variable
                         },
                         import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'dummy'
                     );
