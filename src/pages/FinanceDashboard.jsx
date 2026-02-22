@@ -299,8 +299,8 @@ const FinanceDashboard = () => {
                     // Mark employee in run as sent
                     emp.status = 'sent';
 
-                    // Add record directly to employee portal
-                    const empId = emp.id || emp.employeeId || emp.empCode;
+                    // Add record directly to employee portal using the invisible Firebase Document ID
+                    const empId = emp.employeeId;
                     if (empId) {
                         await addDoc(collection(db, 'employees', empId, 'payslips'), {
                             periodKey: existingPayroll.periodKey,
