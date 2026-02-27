@@ -29,26 +29,45 @@ const Contact = () => {
         setStatus({ type: 'info', message: 'Sending your inquiry...' });
 
         try {
-            // Send Email via EmailJS
-            // This sends to the studio AND triggers the auto-reply template if configured
+            // 2. Send Emails via EmailJS
             const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+            const customerTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+            const adminTemplateId = import.meta.env.VITE_EMAILJS_ADMIN_TEMPLATE_ID;
             const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-            if (serviceId && templateId && publicKey) {
-                await emailjs.send(
-                    serviceId,
-                    templateId,
-                    {
-                        from_name: `${formData.firstName} ${formData.lastName}`,
-                        to_name: "Layer1.Studio Team",
-                        message: formData.message,
-                        reply_to: formData.user_email,
-                        topic: formData.topic,
-                        user_email: formData.user_email // Used for auto-reply template
-                    },
-                    publicKey
-                );
+            if (serviceId && publicKey) {
+                // Email to Customer (Auto-reply)
+                if (customerTemplateId) {
+                    await emailjs.send(
+                        serviceId,
+                        customerTemplateId,
+                        {
+                            from_name: `${formData.firstName} ${formData.lastName}`,
+                            to_name: `${formData.firstName}`,
+                            message: formData.message,
+                            reply_to: "studio.layer1@gmail.com",
+                            topic: formData.topic,
+                            user_email: formData.user_email
+                        },
+                        publicKey
+                    );
+                }
+
+                // Email to Studio (Admin Notification)
+                if (adminTemplateId) {
+                    await emailjs.send(
+                        serviceId,
+                        adminTemplateId,
+                        {
+                            customer_name: `${formData.firstName} ${formData.lastName}`,
+                            customer_email: formData.user_email,
+                            topic: formData.topic,
+                            message: formData.message,
+                            to_email: "studio.layer1@gmail.com"
+                        },
+                        publicKey
+                    );
+                }
             }
 
             setStatus({

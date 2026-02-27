@@ -263,6 +263,14 @@
     transform: translateY(-1px);
 }
 
+.emptyState {
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
