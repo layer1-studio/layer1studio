@@ -36,7 +36,7 @@ const Careers = () => {
                 <div className={styles.bannerContent}>
                     <p className={styles.eyebrow}>Join our mission</p>
                     <h1 className={styles.title}>
-                        Software Engineering<br />Careers at Layer1.Studio
+                        Discover Careers<br />at Layer1.Studio
                     </h1>
                     <p className={styles.subtitle}>
                         A London &amp; Colombo based studio where quality isn't a goal — it's the baseline.
